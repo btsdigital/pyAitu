@@ -1,0 +1,16 @@
+DEFAULT_USER = "USER"
+TYPE = "type"
+ID = "id"
+UI_STATE = "uiState"
+RECIPIENT = "recipient"
+CONTENT = "content"
+COMMANDS = "commands"
+CAPTION = "caption"
+METADATA = "metadata"
+ACTION = "action"
+
+
+SHOW_CAMERA_BUTTON = "showCameraButton"
+SHOW_SHARE_CONTACT_BUTTON = "showShareContactButton"
+SHOW_RECORD_AUDIO_BUTTON = "showRecordAudioButton"
+SHOW_GALLERY_BUTTON = "showGalleryButton"
