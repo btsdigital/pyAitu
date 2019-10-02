@@ -1,7 +1,7 @@
 import logging
 from pyAitu import Bot, Dispatcher, executor
 from pyAitu.types import Message, QuickButtonCommand, QuickButtonSelected,\
-    InlineCommand, InlineCommandSelected, ReplyCommand
+    InlineCommand, InlineCommandSelected, ReplyCommand, ContentType
 
 API_TOKEN = 'YOUR API TOKEN'
 
@@ -45,6 +45,18 @@ async def welcome(message: Message):
 @dp.message_handler(regexp='(^keyboard$)')
 async def send_menu(message: Message):
     await bot.send_message(message.chat.id, "Select button", quick_button_commands=WELCOME_MENUS)
+
+
+@dp.message_handler(regexp='^cat$')
+async def send_photo(message: Message):
+    await bot.send_photo(message.chat.id, 'images/cat.jpg')
+
+
+@dp.message_handler(content_types=ContentType.PHOTO)
+async def get_photo(message: Message):
+    await bot.download_file(message.media[0].fileId, destination='images/'+message.media[0].name)
+    await bot.send_message(message.chat.id, "I got a photo")
+    await bot.send_photo(message.chat.id, 'images/'+message.media[0].name)
 
 
 @dp.message_handler()

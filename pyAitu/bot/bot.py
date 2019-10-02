@@ -1,12 +1,12 @@
 from typing import List, Dict
 from .base import BaseBot
-from ..types import Update, Command, QuickButtonCommand, InlineCommand, ReplyCommand
-from ..utils.strings import COMMANDS
+from ..types import Update, Command, QuickButtonCommand, InlineCommand, ReplyCommand, Media
+from ..utils.strings import COMMANDS, SEND_MESSAGE, GET_UPDATES, UPLOADED_FILES, UI_STATE
 
 
 class Bot(BaseBot):
     async def get_updates(self) -> List[Update]:
-        result = await self.request(method="GetUpdates")
+        result = await self.request(method=GET_UPDATES)
         return [Update(update) for update in result.get("updates", [])]
 
     async def send_message(self,
@@ -17,27 +17,42 @@ class Bot(BaseBot):
                            reply_keyboard: List[ReplyCommand] = None
                            ) -> Dict:
 
-        command = Command(peer_id)
+        command = Command(peer_id, inline_commands=inline_commands)
 
         payload = {
-            COMMANDS: command.create_command("SendMessage", content)
+            COMMANDS: command.create_command(
+                SEND_MESSAGE,
+                content=content,
+                reply_keyboard=reply_keyboard,
+                quick_button_commands=quick_button_commands
+            )
         }
 
-        if quick_button_commands is not None:
-            keyboard = []
-            for command in quick_button_commands:
-                keyboard.append(command.to_dict())
-            payload['commands'][0]['uiState']['quickButtonCommands'] = keyboard
-        if inline_commands is not None:
-            keyboard = []
-            for command in inline_commands:
-                keyboard.append(command.to_dict())
-            payload['commands'][0]['inlineCommands'] = keyboard
-        if reply_keyboard is not None:
-            keyboard = []
-            for command in reply_keyboard:
-                keyboard.append(command.to_dict())
-            payload['commands'][0]['uiState']['replyKeyboard'] = keyboard
-
-        result = await self.request("SendMessage", payload)
+        result = await self.request(SEND_MESSAGE, payload)
         return result
+
+    async def send_photo(self,
+                         chat_id: str,
+                         photo: str):
+        result = await self.upload_file(photo)
+        if result.get(UPLOADED_FILES):
+            command = Command(chat_id)
+            media = Media(
+                file_id=result.get(UPLOADED_FILES)[0]["fileId"],
+                name=result.get(UPLOADED_FILES)[0]["fileName"],
+                file_type="IMAGE"
+            )
+
+            payload = {
+                COMMANDS: command.create_command(SEND_MESSAGE, media=media.to_dict())
+            }
+            result = await self.request(SEND_MESSAGE, payload)
+
+            return result
+
+    async def upload_file(self, file):
+        files = {
+            "file": file
+        }
+
+        return await self.request("UploadFile", None, files)

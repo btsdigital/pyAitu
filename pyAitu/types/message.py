@@ -1,6 +1,7 @@
 import functools
 from .peer import Peer
 from .peer_user import PeerUser
+from .image import Image
 from ..utils import helper
 
 
@@ -12,6 +13,11 @@ class Message:
         if json_object.get("author").get("type") == 'USER':
             self.author = PeerUser(json_object.get("author"))
         self.media = []
+
+        if json_object.get("media"):
+            for item in json_object.get("media"):
+                if item.get("type") == "Image":
+                    self.media.append(Image(item))
 
     def is_command(self):
         return self.content and self.content.startswith('/')
