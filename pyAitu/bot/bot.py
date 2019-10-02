@@ -1,6 +1,7 @@
 from typing import List, Dict
 from .base import BaseBot
-from ..types import Update, Command, QuickButtonCommand, InlineCommand, ReplyCommand, Media
+from ..models import Update, Media
+from ..commands import Command, QuickButtonCommand, InlineCommand, ReplyCommand
 from ..utils.strings import COMMANDS, SEND_MESSAGE, GET_UPDATES, UPLOADED_FILES, UI_STATE
 
 

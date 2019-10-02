@@ -1,4 +1,4 @@
-from ..utils.strings import FILE_ID, FILE_TYPE, NAME
+from pyAitu.utils.strings import FILE_ID, FILE_TYPE, NAME
 
 
 class Media:

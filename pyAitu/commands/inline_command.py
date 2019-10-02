@@ -1,4 +1,4 @@
-from ..utils.strings import CAPTION, METADATA
+from pyAitu.utils.strings import CAPTION, METADATA
 
 
 class InlineCommand:

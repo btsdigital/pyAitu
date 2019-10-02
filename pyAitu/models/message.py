@@ -1,8 +1,8 @@
 import functools
-from .peer import Peer
-from .peer_user import PeerUser
-from .image import Image
-from ..utils import helper
+from pyAitu.models.peer import Peer
+from pyAitu.models.peer_user import PeerUser
+from pyAitu.models.image import Image
+from pyAitu.utils import helper
 
 
 class Message:

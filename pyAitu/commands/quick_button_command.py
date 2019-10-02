@@ -1,4 +1,4 @@
-from ..utils.strings import CAPTION, METADATA, ACTION
+from pyAitu.utils.strings import CAPTION, METADATA, ACTION
 
 
 class QuickButtonCommand:

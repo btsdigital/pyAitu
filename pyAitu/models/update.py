@@ -1,6 +1,6 @@
-from .message import Message
-from .quick_button_selected import QuickButtonSelected
-from .inline_command_selected import InlineCommandSelected
+from pyAitu.models.message import Message
+from pyAitu.models.quick_button_selected import QuickButtonSelected
+from pyAitu.models.inline_command_selected import InlineCommandSelected
 
 
 class Update:

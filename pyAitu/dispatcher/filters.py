@@ -1,7 +1,7 @@
 import inspect
 import re
 from ..utils import context
-from ..types.message import ContentType, Message
+from pyAitu.models.message import ContentType, Message
 
 USER_STATE = 'USER_STATE'
 

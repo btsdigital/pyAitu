@@ -1,4 +1,4 @@
-from .peer import Peer
+from pyAitu.models.peer import Peer
 
 
 class PeerUser(Peer):

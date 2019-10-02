@@ -1,7 +1,7 @@
 import logging
 from pyAitu import Bot, Dispatcher, executor
-from pyAitu.types import Message, QuickButtonCommand, QuickButtonSelected,\
-    InlineCommand, InlineCommandSelected, ReplyCommand, ContentType
+from pyAitu.commands import QuickButtonCommand, InlineCommand, ReplyCommand
+from pyAitu.models import Message, QuickButtonSelected, InlineCommandSelected, ContentType
 
 API_TOKEN = 'YOUR API TOKEN'
 

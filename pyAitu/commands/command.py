@@ -1,6 +1,6 @@
-from .uiState import UiState
-from .recipient import Recipient
-from ..utils.strings import UI_STATE, RECIPIENT, TYPE, CONTENT, INLINE_COMMANDS
+from pyAitu.models.uiState import UiState
+from pyAitu.models.recipient import Recipient
+from pyAitu.utils.strings import UI_STATE, RECIPIENT, TYPE, CONTENT, INLINE_COMMANDS
 
 
 class Command:
