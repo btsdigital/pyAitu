@@ -1,4 +1,4 @@
-from pyAitu.utils.strings import DEFAULT_USER, TYPE, ID
+from ...utils.strings import DEFAULT_USER, TYPE, ID
 
 
 class Recipient:

@@ -5,7 +5,7 @@ from .storage import BaseStorage, DisabledStorage
 from .handler import Handler
 from .middlewares import MiddlewareManager
 from .filters import generate_default_filters
-from pyAitu.models.message import ContentType
+from ..models import ContentType
 from ..bot import Bot
 from ..utils import context
 

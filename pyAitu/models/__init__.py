@@ -1,8 +1,6 @@
-from .message import Message, ContentType
-from .update import Update
-from .quick_button_selected import QuickButtonSelected
-from .inline_command_selected import InlineCommandSelected
+from .update import Update, QuickButtonSelected, InlineCommandSelected, Message, ContentType
 from .media import Media
+from .command import InlineCommand, ReplyCommand, QuickButtonCommand, Command
 
 __all__ = [
     Message,
@@ -10,5 +8,9 @@ __all__ = [
     Update,
     QuickButtonSelected,
     InlineCommandSelected,
-    Media
+    Media,
+    InlineCommand,
+    ReplyCommand,
+    QuickButtonCommand,
+    Command
 ]

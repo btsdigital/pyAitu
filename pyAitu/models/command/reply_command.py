@@ -1,4 +1,4 @@
-from pyAitu.utils.strings import CAPTION
+from ...utils.strings import CAPTION
 
 
 class ReplyCommand:

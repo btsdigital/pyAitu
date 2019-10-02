@@ -1,4 +1,4 @@
-from pyAitu.models.peer import Peer
+from ..peer import Peer
 
 
 class InlineCommandSelected:
