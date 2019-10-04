@@ -1,5 +1,7 @@
 from .uiState import UiState
+from .form_message import FormMessage
 from ..peer import Recipient
+from ..form import Form
 from ...utils.strings import UI_STATE, RECIPIENT, TYPE, CONTENT, INLINE_COMMANDS
 
 
@@ -19,12 +21,15 @@ class Command:
             media=None,
             content: str = "",
             reply_keyboard: list = None,
-            quick_button_commands: list = None
+            quick_button_commands: list = None,
+            form: Form = None
     ):
         commands = []
+        form_message = FormMessage(form).__dict__ if form is not None else {}
         ui_state = UiState(
             reply_keyboard=reply_keyboard,
-            quick_button_commands=quick_button_commands
+            quick_button_commands=quick_button_commands,
+            form_message=form_message
         )
 
         body = {
@@ -39,6 +44,9 @@ class Command:
             media_list = [media]
             body['mediaList'] = media_list
 
-        commands.append(body)
+        commands.append(self.remove_none(body))
 
         return commands
+
+    def remove_none(self, command: dict):
+        return {k: v for k, v in command.items() if v is not None}

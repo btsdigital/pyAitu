@@ -1,6 +1,7 @@
 from .message import Message
 from .quick_button_selected import QuickButtonSelected
 from .inline_command_selected import InlineCommandSelected
+from .form_closed import FormClosed
 
 
 class Update:
@@ -19,3 +20,5 @@ class Update:
             self.quick_button_selected = QuickButtonSelected(json_object)
         if self.updateType == "InlineCommandSelected":
             self.inline_command_selected = InlineCommandSelected(json_object)
+        if self.updateType == "FormClosed":
+            self.form_closed = FormClosed(json_object)

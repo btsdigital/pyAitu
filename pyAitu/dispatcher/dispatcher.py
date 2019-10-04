@@ -33,6 +33,7 @@ class Dispatcher:
         self.message_handlers = Handler(self, middleware_key='message')
         self.quick_button_handlers = Handler(self, middleware_key='quick_button')
         self.inline_command_handlers = Handler(self, middleware_key='inline_command')
+        self.form_closed_handlers = Handler(self, middleware_key='form_closed')
         self.error_handlers = Handler(self, once=False, middleware_key='error')
         self.middleware = MiddlewareManager(self)
 
@@ -138,12 +139,13 @@ class Dispatcher:
     def inline_command_handler(self, *custom_filters, func=None, state=None, run_task=None, **kwargs):
         def decorator(callback):
             self.register_inline_command_handler(callback, func=func, state=state,
-                                                custom_filters=custom_filters, run_task=run_task, **kwargs)
+                                                 custom_filters=custom_filters, run_task=run_task, **kwargs)
             return callback
+
         return decorator
 
     def register_inline_command_handler(self, callback, *, func=None, state=None,
-                                       custom_filters=None, run_task=None, **kwargs):
+                                        custom_filters=None, run_task=None, **kwargs):
         if custom_filters is None:
             custom_filters = []
         filter_set = generate_default_filters(self,
@@ -152,6 +154,25 @@ class Dispatcher:
                                               state=state,
                                               **kwargs)
         self.inline_command_handlers.register(self._wrap_async_task(callback, run_task), filter_set)
+
+    def form_closed_handler(self, *custom_filters, func=None, state=None, run_task=None, **kwargs):
+        def decorator(callback):
+            self.register_form_closed_handler(callback, *custom_filters, func=func,
+                                              state=state, run_task=run_task, **kwargs)
+            return callback
+
+        return decorator
+
+    def register_form_closed_handler(self, callback, *, func=None, state=None,
+                                     custom_filters=None, run_task=None, **kwargs):
+        if custom_filters is None:
+            custom_filters = []
+        filter_set = generate_default_filters(self,
+                                              *custom_filters,
+                                              func=func,
+                                              state=state,
+                                              **kwargs)
+        self.form_closed_handlers.register(self._wrap_async_task(callback, run_task), filter_set)
 
     def _wrap_async_task(self, callback, run_task=None) -> callable:
         if run_task is None:
@@ -195,6 +216,16 @@ class Dispatcher:
                     state=state
                 )
                 return await self.inline_command_handlers.notify(update.inline_command_selected)
+            if update.form_closed:
+                state = await self.storage.get_state(
+                    chat=update.form_closed.dialog.id if update.form_closed else None,
+                    user=update.form_closed.sender.id
+                )
+                context.update_state(
+                    user=update.form_closed.sender.id,
+                    state=state
+                )
+                return await self.form_closed_handlers.notify(update.form_closed)
             else:
                 print(update)
         except Exception as e:

@@ -1,6 +1,7 @@
-from .update import Update, QuickButtonSelected, InlineCommandSelected, Message, ContentType
+from .update import Update, QuickButtonSelected, InlineCommandSelected, Message, ContentType, FormClosed
 from .media import Media
-from .command import InlineCommand, ReplyCommand, QuickButtonCommand, Command
+from .command import InlineCommand, ReplyCommand, QuickButtonCommand, Command, UiState
+from .form import SimpleCatalog, Item, Options, Form, Header
 
 __all__ = [
     Message,
@@ -12,5 +13,12 @@ __all__ = [
     InlineCommand,
     ReplyCommand,
     QuickButtonCommand,
-    Command
+    Command,
+    UiState,
+    SimpleCatalog,
+    Item,
+    Options,
+    Form,
+    Header,
+    FormClosed
 ]

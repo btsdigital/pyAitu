@@ -36,7 +36,7 @@ class BaseBot:
             destination = io.BytesIO()
 
         url = "{}?fileId={}".format(api.FILE_DOWNLOAD_URL, file_id)
-        destination_ = destination if isinstance(destination,io.IOBase) else open(destination, 'wb')
+        destination_ = destination if isinstance(destination, io.IOBase) else open(destination, 'wb')
         async with self.session.get(url, headers={"X-BOT-TOKEN": self.token}) as response:
             while True:
                 chunk = await response.content.read(chunk_size)
