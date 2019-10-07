@@ -3,7 +3,7 @@ from pyAitu import Bot, Dispatcher, executor
 from pyAitu.models import Message, QuickButtonSelected, InlineCommandSelected, ContentType,\
     QuickButtonCommand, InlineCommand, ReplyCommand
 
-API_TOKEN = 'YOUR_API_TOKEN'
+API_TOKEN = '59418cd3-6aad-4150-8a99-f892cb2f9cbf'
 
 logging.basicConfig(level=logging.INFO)
 
@@ -45,6 +45,11 @@ async def welcome(message: Message):
 @dp.message_handler(regexp='(^keyboard$)')
 async def send_menu(message: Message):
     await bot.send_message(message.chat.id, "Select button", quick_button_commands=WELCOME_MENUS)
+
+
+@dp.message_handler(regexp='^uistate$')
+async def send_ui_state(message: Message):
+    await bot.send_ui_state(message.chat.id, show_share_contact_button=False, show_gallery_button=False)
 
 
 @dp.message_handler(regexp='^cat$')

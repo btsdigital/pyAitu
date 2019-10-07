@@ -2,12 +2,11 @@ from .uiState import UiState
 from .form_message import FormMessage
 from ..peer import Recipient
 from ..form import Form
-from ...utils.strings import UI_STATE, RECIPIENT, TYPE, CONTENT, INLINE_COMMANDS
+from ...utils.strings import UI_STATE, RECIPIENT, TYPE, CONTENT, INLINE_COMMANDS, DIALOG
 
 
 class Command:
-    def __init__(self, peer_id, inline_commands: list = None):
-        self.recipient = Recipient(peer_id)
+    def __init__(self, inline_commands: list = None):
         self.media = []
         self.inline_commands = []
 
@@ -18,10 +17,16 @@ class Command:
     def create_command(
             self,
             _type: str,
+            recipient: Recipient = None,
             media=None,
             content: str = "",
             reply_keyboard: list = None,
             quick_button_commands: list = None,
+            show_camera_button=True,
+            show_share_contact_button=True,
+            show_record_audio_button=True,
+            show_gallery_button=True,
+            can_write_text=True,
             form: Form = None
     ):
         commands = []
@@ -29,12 +34,18 @@ class Command:
         ui_state = UiState(
             reply_keyboard=reply_keyboard,
             quick_button_commands=quick_button_commands,
+            show_camera_button=show_camera_button,
+            show_share_contact_button=show_share_contact_button,
+            show_record_audio_button=show_record_audio_button,
+            show_gallery_button=show_gallery_button,
+            can_write_text=can_write_text,
             form_message=form_message
         )
 
         body = {
             TYPE: _type,
-            RECIPIENT: self.recipient.get_recipient(),
+            RECIPIENT: recipient.get_recipient(),
+            DIALOG: recipient.get_recipient(),
             CONTENT: content,
             UI_STATE: ui_state.to_dict(),
             INLINE_COMMANDS: self.inline_commands
