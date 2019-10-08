@@ -52,8 +52,6 @@ class Options:
         self.fullscreen = fullscreen
         self.has_back_action = has_back_action
         self.height = height
-        self.text_size = text_size
-        self.text_style = text_style
         if indent_inner is not None:
             self.indent_inner = indent_inner.__dict__
         if indent_outer is not None:
@@ -74,4 +72,6 @@ class Options:
         self.should_open_editor = should_open_editor
         self.text_color = text_color
         self.title = title
+        self.text_size = text_size
+        self.text_style = text_style
         self.width = width
