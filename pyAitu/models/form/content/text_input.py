@@ -1,6 +1,6 @@
 from .content import Content
 from ..options import Options
-from ..validation_rules import ValidationRules
+from ..validation_rule import ValidationRule
 from pyAitu.utils.context import serialize_item
 
 
@@ -12,7 +12,7 @@ class TextInput(Content):
             title: str,
             text: str,
             placeholder: str,
-            validations_rules: [ValidationRules] = None,
+            validations_rules: [ValidationRule] = None,
             options: Options = None):
 
         super().__init__(content_type, content_id)
