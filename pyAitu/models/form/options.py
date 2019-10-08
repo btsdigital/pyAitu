@@ -48,8 +48,7 @@ class Options:
         self.columns_count = columns_count
         self.currency = currency
         self.divider_type = divider_type
-        if flex_options is not None:
-            self.flex_options = flex_options.__dict__
+        self.flex_options = flex_options
         self.fullscreen = fullscreen
         self.has_back_action = has_back_action
         self.height = height
@@ -57,10 +56,8 @@ class Options:
         self.text_style = text_style
         self.text_color = text_color
         self.fullscreen = fullscreen
-        if indent_inner is not None:
-            self.indent_inner = indent_inner.__dict__
-        if indent_outer is not None:
-            self.indent_outer = indent_outer.__dict__
+        self.indent_inner = indent_inner
+        self.indent_outer = indent_outer
         self.input_type = input_type
         self.item_left_icon_resource = item_left_icon_resource
         self.item_right_icon_resource = item_right_icon_resource

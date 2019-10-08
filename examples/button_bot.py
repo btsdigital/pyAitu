@@ -2,7 +2,7 @@ import logging
 from pyAitu import executor, Bot, Dispatcher
 from pyAitu.models import Message, Options, Form, Header, FormClosed, Button, FormAction
 
-API_TOKEN = '0efb7990-7d8b-4782-9919-8a254e768fc6'
+API_TOKEN = 'YOUR_API_TOKEN'
 
 bot = Bot(token=API_TOKEN)
 dp = Dispatcher(bot)
@@ -35,7 +35,6 @@ async def send_ui(message: Message):
     # Form setting
     form = Form(_id="form_id", header=button_header, content=button_content)
 
-    print(button_content.__dict__)
 
     # Form sending
     await bot.send_form(message.chat.id, form=form)
