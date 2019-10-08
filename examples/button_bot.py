@@ -24,17 +24,15 @@ async def send_ui(message: Message):
 
     # Content setting
     button_content = Button(
-        id="button_id",
-        type="button",
+        content_id="button_id",
         title="Custom button",
         button_type="default",
-        options=Options(background_color="filled_dark", item_left_icon_resource="ic_search"),
+        options=Options(background_color="filled_dark"),
         form_action=FormAction(action="send_message", data_template="")
     )
 
     # Form setting
     form = Form(_id="form_id", header=button_header, content=button_content)
-
 
     # Form sending
     await bot.send_form(message.chat.id, form=form)
