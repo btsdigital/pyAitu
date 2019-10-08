@@ -34,6 +34,8 @@ class Dispatcher:
         self.quick_button_handlers = Handler(self, middleware_key='quick_button')
         self.inline_command_handlers = Handler(self, middleware_key='inline_command')
         self.form_closed_handlers = Handler(self, middleware_key='form_closed')
+        self.form_submitted_handlers = Handler(self, middleware_key='form_submitted')
+        self.form_message_sent_handlers = Handler(self, middleware_key='form_message_sent')
         self.error_handlers = Handler(self, once=False, middleware_key='error')
         self.middleware = MiddlewareManager(self)
 
@@ -174,6 +176,44 @@ class Dispatcher:
                                               **kwargs)
         self.form_closed_handlers.register(self._wrap_async_task(callback, run_task), filter_set)
 
+    def form_submitted_handler(self, *custom_filters, func=None, state=None, run_task=None, **kwargs):
+        def decorator(callback):
+            self.register_form_submitted_handler(callback, *custom_filters, func=func,
+                                                 state=state, run_task=run_task, **kwargs)
+            return callback
+
+        return decorator
+
+    def register_form_submitted_handler(self, callback, *, func=None, state=None,
+                                        custom_filters=None, run_task=None, **kwargs):
+        if custom_filters is None:
+            custom_filters = []
+        filter_set = generate_default_filters(self,
+                                              *custom_filters,
+                                              func=func,
+                                              state=state,
+                                              **kwargs)
+        self.form_submitted_handlers.register(self._wrap_async_task(callback, run_task), filter_set)
+
+    def form_message_sent_handler(self, *custom_filters, func=None, state=None, run_task=None, **kwargs):
+        def decorator(callback):
+            self.register_form_message_sent_handler(callback, *custom_filters, func=func,
+                                                    state=state, run_task=run_task, **kwargs)
+            return callback
+
+        return decorator
+
+    def register_form_message_sent_handler(self, callback, *, func=None, state=None,
+                                           custom_filters=None, run_task=None, **kwargs):
+        if custom_filters is None:
+            custom_filters = []
+        filter_set = generate_default_filters(self,
+                                              *custom_filters,
+                                              func=func,
+                                              state=state,
+                                              **kwargs)
+        self.form_message_sent_handlers.register(self._wrap_async_task(callback, run_task), filter_set)
+
     def _wrap_async_task(self, callback, run_task=None) -> callable:
         if run_task is None:
             run_task = self.run_tasks_by_default
@@ -196,7 +236,7 @@ class Dispatcher:
                                      user=update.message.author.id,
                                      state=state)
                 return await self.message_handlers.notify(update.message)
-            if update.quick_button_selected:
+            elif update.quick_button_selected:
                 state = await self.storage.get_state(
                     chat=update.quick_button_selected.dialog.id if update.quick_button_selected else None,
                     user=update.quick_button_selected.sender.id
@@ -206,7 +246,7 @@ class Dispatcher:
                     state=state
                 )
                 return await self.quick_button_handlers.notify(update.quick_button_selected)
-            if update.inline_command_selected:
+            elif update.inline_command_selected:
                 state = await self.storage.get_state(
                     chat=update.inline_command_selected.dialog.id if update.inline_command_selected else None,
                     user=update.inline_command_selected.sender.id
@@ -216,7 +256,7 @@ class Dispatcher:
                     state=state
                 )
                 return await self.inline_command_handlers.notify(update.inline_command_selected)
-            if update.form_closed:
+            elif update.form_closed:
                 state = await self.storage.get_state(
                     chat=update.form_closed.dialog.id if update.form_closed else None,
                     user=update.form_closed.sender.id
@@ -226,6 +266,26 @@ class Dispatcher:
                     state=state
                 )
                 return await self.form_closed_handlers.notify(update.form_closed)
+            elif update.form_message_sent:
+                state = await self.storage.get_state(
+                    chat=update.form_message_sent.dialog.id if update.form_message_sent else None,
+                    user=update.form_message_sent.sender.id
+                )
+                context.update_state(
+                    user=update.form_message_sent.sender.id,
+                    state=state
+                )
+                return await self.form_message_sent_handlers.notify(update.form_message_sent)
+            elif update.form_submitted:
+                state = await self.storage.get_state(
+                    chat=update.form_submitted.dialog.id if update.form_submitted else None,
+                    user=update.form_submitted.sender.id
+                )
+                context.update_state(
+                    user=update.form_submitted.sender.id,
+                    state=state
+                )
+                return await self.form_submitted_handlers.notify(update.form_submitted)
             else:
                 print(update)
         except Exception as e:

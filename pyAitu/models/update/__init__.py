@@ -3,6 +3,8 @@ from .quick_button_selected import QuickButtonSelected
 from .inline_command_selected import InlineCommandSelected
 from .message import Message, ContentType
 from .form_closed import FormClosed
+from .form_submitted import FormSubmitted
+from .form_message_sent import FormMessageSent
 
 __all__ = [
     Update,
@@ -10,5 +12,7 @@ __all__ = [
     InlineCommandSelected,
     Message,
     ContentType,
-    FormClosed
+    FormClosed,
+    FormSubmitted,
+    FormMessageSent
 ]
