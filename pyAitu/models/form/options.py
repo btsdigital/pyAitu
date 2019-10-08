@@ -48,7 +48,8 @@ class Options:
         self.columns_count = columns_count
         self.currency = currency
         self.divider_type = divider_type
-        self.flex_options = flex_options
+        if flex_options is not None:
+            self.flex_options = flex_options.__dict__
         self.fullscreen = fullscreen
         self.has_back_action = has_back_action
         self.height = height
