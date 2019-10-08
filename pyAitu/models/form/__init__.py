@@ -3,6 +3,9 @@ from .options import Options
 from .form import Form
 from .header import Header
 from .validation_rules import ValidationRules
+from .flex_options import FlexOptions
+from .form_action import FormAction
+
 
 __all__ = [
     SimpleCatalog,
@@ -11,5 +14,9 @@ __all__ = [
     Options,
     Form,
     Header,
-    ValidationRules
+    ValidationRules,
+    FlexOptions,
+    Button,
+    Submit,
+    FormAction
 ]

@@ -1,7 +1,9 @@
-from .update import Update, QuickButtonSelected, InlineCommandSelected, Message, ContentType, FormClosed
+from .update import Update, QuickButtonSelected, InlineCommandSelected, Message, ContentType, FormClosed, \
+    FormSubmitted, FormMessageSent
 from .media import Media
 from .command import InlineCommand, ReplyCommand, QuickButtonCommand, Command, UiState
-from .form import SimpleCatalog, Item, Options, Form, Header, TextInput, ValidationRules
+from .form import SimpleCatalog, Item, Options, Form, Header, TextInput, ValidationRules, FlexOptions, Button, \
+    FormAction, Submit
 
 __all__ = [
     Message,
@@ -22,5 +24,11 @@ __all__ = [
     Header,
     FormClosed,
     TextInput,
-    ValidationRules
+    ValidationRules,
+    FlexOptions,
+    Button,
+    FormSubmitted,
+    Submit,
+    FormAction,
+    FormMessageSent
 ]

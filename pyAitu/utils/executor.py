@@ -62,7 +62,6 @@ class Executor:
         finally:
             loop.run_until_complete(self._shutdown_polling())
 
-
     async def _skip_updates(self):
         print('skip updates')
 

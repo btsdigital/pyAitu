@@ -28,7 +28,6 @@ class Options:
             max_length: int = None,
             media_type: str = None,
             min_date: str = None,
-            option_type: str = None,
             orientation: str = None,
             search_enabled: bool = None,
             show_divider: bool = None,
@@ -38,7 +37,7 @@ class Options:
             text_size: str = None,
             text_style: str = None,
             text_color: str = None,
-            width: int = None,
+            width: int = None
     ):
         self.alignment = alignment
         self.background = background
@@ -66,14 +65,11 @@ class Options:
         self.max_length = max_length
         self.media_type = media_type
         self.min_date = min_date
-        self.option_type = option_type
         self.orientation = orientation
         self.search_enabled = search_enabled
         self.show_divider = show_divider
         self.shape = shape
         self.should_open_editor = should_open_editor
-        self.title = title
-        self.text_size = text_size
-        self.text_style = text_style
         self.text_color = text_color
+        self.title = title
         self.width = width
