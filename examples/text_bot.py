@@ -2,6 +2,7 @@ import logging
 from pyAitu import executor, Bot, Dispatcher
 from pyAitu.models import Message, Options, Form, Header, FormClosed
 from pyAitu.models.form.content.text import Text
+from pyAitu.models.form.indent import Indent
 
 API_TOKEN = 'YOUR_API_TOKEN'
 
@@ -16,10 +17,16 @@ async def send_ui(message: Message):
     header_options = Options(
         closeable=True
     )
+    indent = Indent(
+        right=5,
+        top=5,
+        bottom=10
+    )
     text_options = Options(
         text_size="H1",
         text_style="bold",
         text_color="#000000",
+        indent_inner=indent
     )
     header = Header(
         _type="toolbar",
