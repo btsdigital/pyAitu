@@ -45,3 +45,11 @@ def check_value(key):
 
 def get_value(key, default=None):
     return get_current_state().get(key, default)
+
+# Function helps to serialize a list. Ex.: If you want to POST JSON with array, you can use this function.
+def serialize_item(items: list):
+    result = []
+    for i in items:
+        result.append(i.__dict__)
+
+    return result
