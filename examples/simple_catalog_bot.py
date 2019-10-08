@@ -2,7 +2,7 @@ import logging
 from pyAitu import executor, Bot, Dispatcher
 from pyAitu.models import Message, SimpleCatalog, Item, Options, Form, Header, FormClosed
 
-API_TOKEN = 'YOUR_API_TOKEN'
+API_TOKEN = '0efb7990-7d8b-4782-9919-8a254e768fc6'
 
 bot = Bot(token=API_TOKEN)
 dp = Dispatcher(bot)
