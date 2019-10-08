@@ -72,4 +72,6 @@ class Options:
         self.should_open_editor = should_open_editor
         self.text_color = text_color
         self.title = title
+        self.text_size = text_size
+        self.text_style = text_style
         self.width = width

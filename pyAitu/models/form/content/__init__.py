@@ -6,7 +6,7 @@ from .submit import Submit
 
 __all__ = [
     SimpleCatalog,
-    Submit
+    Submit,
     TextInput,
     Item,
     Button
