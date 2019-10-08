@@ -38,7 +38,7 @@ class Options:
             text_size: str = None,
             text_style: str = None,
             text_color: str = None,
-            width: int = None,
+            width: int = None
     ):
         self.alignment = alignment
         self.background = background
@@ -48,10 +48,15 @@ class Options:
         self.columns_count = columns_count
         self.currency = currency
         self.divider_type = divider_type
-        self.flex_options = flex_options
+        if flex_options is not None:
+            self.flex_options = flex_options.__dict__
         self.fullscreen = fullscreen
         self.has_back_action = has_back_action
         self.height = height
+        self.text_size = text_size
+        self.text_style = text_style
+        self.text_color = text_color
+        self.fullscreen = fullscreen
         if indent_inner is not None:
             self.indent_inner = indent_inner.__dict__
         if indent_outer is not None:

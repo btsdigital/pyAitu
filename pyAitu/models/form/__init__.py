@@ -1,4 +1,4 @@
-from .content import SimpleCatalog, Item, TextInput, Button
+from .content import SimpleCatalog, Item, Submit, TextInput, Button
 from .options import Options
 from .form import Form
 from .header import Header
@@ -17,5 +17,6 @@ __all__ = [
     ValidationRules,
     FlexOptions,
     Button,
+    Submit,
     FormAction
 ]
