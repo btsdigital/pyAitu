@@ -1,8 +1,12 @@
+from .options import Options
+
+
 class Form:
-    def __init__(self, _id: str, content, header):
+    def __init__(self, _id: str, content, header, options: Options = None):
         self.id = _id
         self.header = header
         self.content = content
+        self.options = options
 
     def make_form(self):
         result = []
@@ -15,7 +19,8 @@ class Form:
             "form": {
                 "id": self.id,
                 "header": self.header.__dict__,
-                "content": result
+                "content": result,
+                "options": self.options.__dict__ if self.options is not None else {}
             }
         }
 
