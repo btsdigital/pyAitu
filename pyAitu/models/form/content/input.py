@@ -2,16 +2,11 @@ from .content import Content
 from ..options import Options
 from ..validation_rule import ValidationRule
 from typing import Dict, Optional, List
+from pyAitu.utils.serializer import serialized
+from pyAitu.utils.dictionary_extractor import extract_dictionary_if_exist_from
 
 # Type alias
 ValidationRules = List[ValidationRule]
-
-
-def serialized(validation_rules: Optional[ValidationRules] = None) -> Optional[List[Dict[str, any]]]:
-    if validation_rules is None:
-        return None
-    return list(map(lambda validation_rule: validation_rule.__dict__, validation_rules))
-
 
 class Input(Content):
     def __init__(
@@ -30,5 +25,5 @@ class Input(Content):
         self.title = title
         self.mask = mask
         self.text = text
-        self.options = options.__dict__
+        self.options = extract_dictionary_if_exist_from(options)
         self.validations_rules = serialized(validation_rules)
