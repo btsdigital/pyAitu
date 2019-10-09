@@ -1,5 +1,5 @@
-from pyAitu.models import Options
-from pyAitu.models.form.content.content import Content
+from ..options import Options
+from .content import Content
 
 
 class LabeledText(Content):

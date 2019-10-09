@@ -5,6 +5,7 @@ from .item import Item
 from .item_info import ItemInfo
 from .button import Button
 from .submit import Submit
+from .divider import Divider
 
 
 __all__ = [
@@ -14,5 +15,6 @@ __all__ = [
     LabeledText,
     Item,
     ItemInfo,
-    Button
+    Button,
+    Divider
 ]

@@ -1,6 +1,6 @@
-from pyAitu.models.form.content.content import Content
-from pyAitu.models.form.options import Options
-from pyAitu.models.form.form_action import FormAction
+from .content import Content
+from ..options import Options
+from ..form_action import FormAction
 
 
 class Button(Content):
