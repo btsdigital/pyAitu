@@ -8,7 +8,6 @@ class TextInput(Content):
     def __init__(
             self,
             content_type: str,
-            # content id
             content_id,
             title: str,
             text: str,

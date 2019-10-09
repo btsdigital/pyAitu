@@ -10,6 +10,12 @@ class Form:
 
     def make_form(self):
         result = []
+
+        # Above three lines return self.options without None in value
+        dict_options = dict
+        if self.options is not None:
+            dict_options = {k: v for k, v in self.options.__dict__.items() if v is not None}
+
         if isinstance(self.content, list):
             for el in self.content:
                 result.append(remove_none(el.__dict__))
@@ -20,7 +26,7 @@ class Form:
                 "id": self.id,
                 "header": self.header.__dict__,
                 "content": result,
-                "options": self.options.__dict__ if self.options is not None else {}
+                "options": dict_options if self.options is not None else {}
             }
         }
 

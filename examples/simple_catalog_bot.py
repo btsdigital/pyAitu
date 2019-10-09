@@ -3,6 +3,7 @@ from pyAitu import executor, Bot, Dispatcher
 from pyAitu.models import Message, SimpleCatalog, Item, Options, Form, Header, FormClosed, FormSubmitted, Submit, \
     FormAction, FormMessageSent
 
+
 API_TOKEN = 'YOUR API TOKEN'
 
 bot = Bot(token=API_TOKEN)
