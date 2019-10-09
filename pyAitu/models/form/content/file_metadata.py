@@ -7,4 +7,4 @@ class FileMetadata:
     ):
         self.file_type = file_type
         self.file_id = file_id
-        self.file_name = file_name
+        self.filename = file_name
