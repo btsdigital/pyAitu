@@ -1,8 +1,8 @@
 import logging
 from pyAitu import executor, Bot, Dispatcher
-from pyAitu.models import Message, Item, Options, Form, Header, FormClosed, TextInput, ValidationRule
+from pyAitu.models import Message, Item, Options, Form, Header, FormClosed, TextArea, ValidationRule
 
-API_TOKEN = 'YOUR_API_TOKEN'
+API_TOKEN = '7e26eb35-2b45-46d5-8e1b-f79a4bfcccc4'
 
 bot = Bot(token=API_TOKEN)
 dp = Dispatcher(bot)
@@ -23,18 +23,16 @@ async def send_ui(message: Message):
     )
 
     # Content setting
-    text_input_content = TextInput(
+    text_area = TextArea(
         content_id="text_area_content_id",
         content_type="input",
         title="Cost",
         text="",
-        placeholder="Enter your price",
-        validations_rules=[ValidationRule(type="min", value="100000", error="Min. value is 100,000")],
-        options=Options(input_type="money", currency="RUB"),
+        placeholder="Enter your price"
     )
 
     # Form setting
-    form = Form(_id="form_id", header=text_input_header, content=text_input_content)
+    form = Form(_id="form_id", header=text_input_header, content=text_area)
 
     # Form sending
     await bot.send_form(message.chat.id, form=form)
