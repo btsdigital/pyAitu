@@ -4,6 +4,7 @@ from .options import Options
 from .form import Form
 from .header import Header
 from .validation_rules import ValidationRules
+from .content import SimpleCatalog, Item, Submit
 from .flex_options import FlexOptions
 from .form_action import FormAction
 
