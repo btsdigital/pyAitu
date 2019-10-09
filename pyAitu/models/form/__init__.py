@@ -7,8 +7,6 @@ from .validation_rule import ValidationRule
 from .content import SimpleCatalog, Item, Submit
 from .flex_options import FlexOptions
 from .form_action import FormAction
-from .input_type import InputType
-from .currency import Currency
 
 
 __all__ = [
@@ -19,8 +17,6 @@ __all__ = [
     Options,
     Form,
     Header,
-    InputType,
-    Currency,
     ValidationRule,
     FlexOptions,
     Button,

@@ -1,6 +1,6 @@
 from typing import Optional
-from pyAitu.models.form import InputType
-from pyAitu.models.form import Currency
+import pyAitu.models.form.input_type as input_type
+import pyAitu.models.form.currency as currency
 from pyAitu.models.form.indent import Indent
 from pyAitu.models.form.flex_options import FlexOptions
 
@@ -14,7 +14,7 @@ class Options:
             choice_type: Optional[str] = None,
             closeable: Optional[bool] = None,
             columns_count: Optional[int] = None,
-            currency: Optional[Currency] = None,
+            currency: Optional[currency.Currency] = None,
             divider_type: Optional[str] = None,
             flex_options: Optional[FlexOptions] = None,
             fullscreen: Optional[bool] = None,
@@ -22,7 +22,7 @@ class Options:
             height: Optional[int] = None,
             indent_inner: Optional[Indent] = None,
             indent_outer: Optional[Indent] = None,
-            input_type: Optional[InputType] = None,
+            input_type: Optional[input_type.InputType] = None,
             item_left_icon_resource: Optional[str] = None,
             item_right_icon_resource: Optional[str] = None,
             item_type: Optional[str] = None,

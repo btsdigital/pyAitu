@@ -1,6 +1,6 @@
 import logging
 from pyAitu import executor, Bot, Dispatcher
-from pyAitu.models import Message, Item, Options, Form, Header, FormClosed, TextInput, ValidationRules
+from pyAitu.models import Message, Item, Options, Form, Header, FormClosed, TextInput, ValidationRule
 
 API_TOKEN = 'YOUR_API_TOKEN'
 
@@ -29,7 +29,7 @@ async def send_ui(message: Message):
         title="Cost",
         text="",
         placeholder="Enter your price",
-        validations_rules=[ValidationRules(type="min", value="100000", error="Min. value is 100,000")],
+        validations_rules=[ValidationRule(type="min", value="100000", error="Min. value is 100,000")],
         options=Options(input_type="money", currency="RUB"),
     )
 
