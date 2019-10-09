@@ -1,5 +1,6 @@
 from .content import Content
-from pyAitu.models.form import Options, ValidationRule
+from ..options import Options
+from ..validation_rule import ValidationRule
 from typing import Dict, Optional, List
 
 # Type alias
@@ -30,4 +31,4 @@ class Input(Content):
         self.mask = mask
         self.text = text
         self.options = options.__dict__
-        self.validation_rules = serialized(validation_rules)
+        self.validations_rules = serialized(validation_rules)
