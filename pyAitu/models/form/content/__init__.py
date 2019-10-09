@@ -4,6 +4,7 @@ from .item import Item
 from .item_info import ItemInfo
 from .button import Button
 from .submit import Submit
+from .input import Input
 
 
 __all__ = [
@@ -12,5 +13,6 @@ __all__ = [
     TextInput,
     Item,
     ItemInfo,
-    Button
+    Button,
+    Input
 ]
