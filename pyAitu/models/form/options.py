@@ -36,10 +36,12 @@ class Options:
             show_divider: Optional[bool] = None,
             shape: Optional[str] = None,
             should_open_editor: Optional[bool] = None,
-            title: Optional[str] = None,
+            subtitle_lines_count: Optional[int] = None,
+            text_color: Optional[str] = None,
             text_size: Optional[str] = None,
             text_style: Optional[str] = None,
-            text_color: Optional[str] = None,
+            title: Optional[str] = None,
+            title_lines_count: Optional[int] = None,
             width: Optional[int] = None
     ):
         self.alignment = alignment
@@ -53,10 +55,9 @@ class Options:
         if flex_options is not None:
             self.flex_options = flex_options.__dict__
         self.fullscreen = fullscreen
+        self.input_type = input_type
         self.has_back_action = has_back_action
         self.height = height
-        self.text_size = text_size
-        self.text_style = text_style
         if indent_inner is not None:
             self.indent_inner = indent_inner.__dict__
         if indent_outer is not None:
@@ -77,4 +78,8 @@ class Options:
         self.should_open_editor = should_open_editor
         self.text_color = text_color
         self.title = title
+        self.title_lines_count = title_lines_count
+        self.subtitle_lines_count = subtitle_lines_count
+        self.text_size = text_size
+        self.text_style = text_style
         self.width = width
