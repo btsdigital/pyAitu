@@ -34,6 +34,8 @@ class Options:
             shape: str = None,
             should_open_editor: bool = None,
             title: str = None,
+            title_lines_count: int = None,
+            subtitle_lines_count: int = None,
             text_size: str = None,
             text_style: str = None,
             text_color: str = None,
@@ -72,6 +74,8 @@ class Options:
         self.should_open_editor = should_open_editor
         self.text_color = text_color
         self.title = title
+        self.title_lines_count = title_lines_count
+        self.subtitle_lines_count = subtitle_lines_count
         self.text_size = text_size
         self.text_style = text_style
         self.width = width
