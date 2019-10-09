@@ -1,14 +1,14 @@
 from .content import Content
-from pyAitu.models.form import Options
-from pyAitu.models.form import ValidationRule
+from pyAitu.models.form import Options, ValidationRule
 from typing import Dict, Optional, List
 
 # Type alias
 ValidationRules = List[ValidationRule]
 
 
-# Static function
-def serialized(validation_rules: Optional[ValidationRules] = None) -> [Dict[str, any]]:
+def serialized(validation_rules: Optional[ValidationRules] = None) -> Optional[List[Dict[str, any]]]:
+    if validation_rules is None:
+        return None
     return list(map(lambda validation_rule: validation_rule.__dict__, validation_rules))
 
 
@@ -17,12 +17,12 @@ class Input(Content):
             self,
             content_type: str,
             content_id: str,
-            placeholder: str = None,
-            title: str = None,
-            mask: str = None,
-            text: str = None,
-            options: Options = None,
-            validation_rules: [ValidationRule] = None,
+            placeholder: Optional[str] = None,
+            title: Optional[str] = None,
+            mask: Optional[str] = None,
+            text: Optional[str] = None,
+            options: Optional[Options] = None,
+            validation_rules: Optional[ValidationRules] = None,
     ):
         super().__init__(content_type, content_id)
         self.placeholder = placeholder
