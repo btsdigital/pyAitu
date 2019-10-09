@@ -1,5 +1,5 @@
 from pyAitu.models.form.content import Button, Submit
-from .content import SimpleCatalog, Item, TextInput, ItemInfo
+from .content import SimpleCatalog, Item, TextArea, ItemInfo
 from .options import Options
 from .form import Form
 from .header import Header
@@ -13,7 +13,7 @@ __all__ = [
     SimpleCatalog,
     Item,
     ItemInfo,
-    TextInput,
+    TextArea,
     Options,
     Form,
     Header,

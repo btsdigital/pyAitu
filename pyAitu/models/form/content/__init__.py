@@ -1,5 +1,5 @@
 from .simple_catalog import SimpleCatalog
-from .text_input import TextInput
+from .text_area import TextArea
 from .item import Item
 from .item_info import ItemInfo
 from .button import Button
@@ -10,7 +10,7 @@ from .input import Input
 __all__ = [
     SimpleCatalog,
     Submit,
-    TextInput,
+    TextArea,
     Item,
     ItemInfo,
     Button,
