@@ -1,14 +1,14 @@
 class FlexOptions:
     def __init__(
             self,
-            flex_glow: float = None,
+            flex_grow: float = None,
             flex_basis: float = None,
             flex_direction: str = None,
             flex_wrap: str = None,
             align_items: str = None,
             align_self: str = None,
             justify_content: str = None):
-        self.flex_glow = flex_glow
+        self.flex_grow = flex_grow
         self.flex_basis = flex_basis
         self.flex_direction = flex_direction
         self.flex_wrap = flex_wrap

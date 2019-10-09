@@ -1,10 +1,9 @@
 from pyAitu.models.form.content import Button, Submit
-from .content import SimpleCatalog, Item, TextArea, ItemInfo
+from .content import SimpleCatalog, Item, LabeledText, TextArea, ItemInfo, SimpleCatalog, Item, Submit, Divider
 from .options import Options
 from .form import Form
 from .header import Header
 from .validation_rule import ValidationRule
-from .content import SimpleCatalog, Item, Submit
 from .flex_options import FlexOptions
 from .form_action import FormAction
 
@@ -18,8 +17,10 @@ __all__ = [
     Form,
     Header,
     ValidationRule,
+    LabeledText,
     FlexOptions,
     Button,
     Submit,
-    FormAction
+    FormAction,
+    Divider
 ]
