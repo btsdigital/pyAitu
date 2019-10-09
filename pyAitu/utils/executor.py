@@ -75,4 +75,4 @@ class Executor:
         await self._shutdown()
 
     async def _shutdown(self):
-        self.dispatcher.stop_polling()
+        await self.dispatcher.stop_polling()
