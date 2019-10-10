@@ -5,7 +5,7 @@ from pyAitu.models.form.content.divider import Divider
 from pyAitu.models.form.content.text import Text
 from pyAitu.models.form.indent import Indent
 
-API_TOKEN = '59418cd3-6aad-4150-8a99-f892cb2f9cbf'
+API_TOKEN = 'YOUR_API_TOKEN'
 
 bot = Bot(token=API_TOKEN)
 dp = Dispatcher(bot)
