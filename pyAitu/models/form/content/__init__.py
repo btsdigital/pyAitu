@@ -9,6 +9,7 @@ from .image import Image
 from .file_metadata import FileMetadata
 from .input import Input
 from .divider import Divider
+from .text import Text
 
 
 __all__ = [
@@ -22,5 +23,6 @@ __all__ = [
     Divider,
     Button,
     Image,
-    FileMetadata
+    FileMetadata,
+    Text
 ]

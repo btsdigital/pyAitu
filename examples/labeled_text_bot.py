@@ -1,8 +1,6 @@
 import logging
 from pyAitu import executor, Bot, Dispatcher
-from pyAitu.models import Message, Options, Form, Header, FormClosed
-from pyAitu.models.form.content.labeled_text import LabeledText
-from pyAitu.models.form.indent import Indent
+from pyAitu.models import Message, Options, Form, Header, FormClosed, LabeledText, Indent
 
 API_TOKEN = 'YOUR_API_TOKEN'
 

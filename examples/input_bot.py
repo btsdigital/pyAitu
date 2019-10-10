@@ -1,7 +1,7 @@
 import logging
 from pyAitu import executor, Bot, Dispatcher
-from pyAitu.models import Message, Options, Form, Header, FormClosed, ValidationRule, Submit, FormAction, FormSubmitted
-from pyAitu.models.form.content import Input
+from pyAitu.models import Message, Options, Form, Header, FormClosed, ValidationRule, Submit, FormAction, \
+    FormSubmitted, Input
 import pyAitu.models.form.input_type as input_type
 import pyAitu.models.form.currency as currency
 

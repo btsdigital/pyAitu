@@ -1,7 +1,6 @@
 import logging
 from pyAitu import executor, Bot, Dispatcher
-from pyAitu.models import Message, Options, Form, Header, FormClosed
-from pyAitu.models.form.content.item_info import ItemInfo
+from pyAitu.models import Message, Options, Form, Header, FormClosed, ItemInfo
 
 API_TOKEN = 'YOUR_API_TOKEN'
 
