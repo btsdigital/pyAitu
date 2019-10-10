@@ -15,9 +15,10 @@ class Bot(BaseBot):
                            quick_button_commands: List[QuickButtonCommand] = None,
                            inline_commands: List[InlineCommand] = None,
                            reply_keyboard: List[ReplyCommand] = None,
+                           media_list: List[Media] = None
                            ) -> Dict:
 
-        command = Command(peer_id, inline_commands=inline_commands)
+        command = Command(peer_id, inline_commands=inline_commands, media=media_list)
 
         payload = {
             COMMANDS: command.create_command(

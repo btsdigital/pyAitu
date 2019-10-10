@@ -1,12 +1,14 @@
+from typing import List
 from .uiState import UiState
 from .form_message import FormMessage
 from ..peer import Recipient
 from ..form import Form
-from ...utils.strings import UI_STATE, RECIPIENT, TYPE, CONTENT, INLINE_COMMANDS
+from ..media import Media
+from ...utils.strings import UI_STATE, RECIPIENT, TYPE, CONTENT, INLINE_COMMANDS, MEDIA_LIST
 
 
 class Command:
-    def __init__(self, peer_id, inline_commands: list = None):
+    def __init__(self, peer_id, inline_commands: list = None, media: List[Media] = None):
         self.recipient = Recipient(peer_id)
         self.media = []
         self.inline_commands = []
@@ -15,10 +17,13 @@ class Command:
             for command in inline_commands:
                 self.inline_commands.append(command.to_dict())
 
+        if media:
+            for item in media:
+                self.media.append(item.to_dict())
+
     def create_command(
             self,
             _type: str,
-            media=None,
             content: str = "",
             reply_keyboard: list = None,
             quick_button_commands: list = None,
@@ -37,12 +42,9 @@ class Command:
             RECIPIENT: self.recipient.get_recipient(),
             CONTENT: content,
             UI_STATE: ui_state.to_dict(),
-            INLINE_COMMANDS: self.inline_commands
+            INLINE_COMMANDS: self.inline_commands,
+            MEDIA_LIST: self.media
         }
-
-        if media:
-            media_list = [media]
-            body['mediaList'] = media_list
 
         commands.append(self.remove_none(body))
 

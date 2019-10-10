@@ -1,7 +1,7 @@
 import logging
 from pyAitu import Bot, Dispatcher, executor
 from pyAitu.models import Message, QuickButtonSelected, InlineCommandSelected, ContentType,\
-    QuickButtonCommand, InlineCommand, ReplyCommand
+    QuickButtonCommand, InlineCommand, ReplyCommand, Media
 
 API_TOKEN = 'YOUR_API_TOKEN'
 
@@ -50,6 +50,19 @@ async def send_menu(message: Message):
 @dp.message_handler(regexp='^cat$')
 async def send_photo(message: Message):
     await bot.send_photo(message.chat.id, 'images/cat.jpg')
+
+
+@dp.message_handler(commands=['media'])
+async def send_media_message(message: Message):
+    await bot.send_message(
+        message.chat.id, "",
+        media_list=[
+            Media(
+                file_id="your_video_id",
+                file_type="VIDEO",
+                name="lol"
+            )
+        ])
 
 
 @dp.message_handler(content_types=ContentType.PHOTO)
