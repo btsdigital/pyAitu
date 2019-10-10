@@ -31,7 +31,7 @@ async def send_ui(message: Message):
                 file_metadata=FileMetadata(
                     file_id=file.get(UPLOADED_FILES)[0]["fileId"],
                     file_type="image",
-                    filename=file.get(UPLOADED_FILES)[0]["fileName"]
+                    file_name=file.get(UPLOADED_FILES)[0]["fileName"]
                 )
             )
         )
