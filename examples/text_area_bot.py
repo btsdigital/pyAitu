@@ -16,7 +16,6 @@ def make_form() -> Form:
     header = Header(_type="title", title="Text area component", options=Options(closeable=True))
     text_area = TextArea(
         content_id="text_area_id",
-        content_type="text_area",
         title="Text Area",
         text="",
         placeholder="Enter your text here",
@@ -24,7 +23,6 @@ def make_form() -> Form:
     )
     submit = Submit(
         content_id="submit_id",
-        content_type="submit",
         title="Send",
         form_action=FormAction(action="submit_form", data_template="{"+form_id+".text_area_id}")
     )

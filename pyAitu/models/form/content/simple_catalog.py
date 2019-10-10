@@ -3,8 +3,8 @@ from ..options import Options
 
 
 class SimpleCatalog(Content):
-    def __init__(self, content_type: str, content_id, items: list, options: Options = None):
-        super().__init__(content_type, content_id)
+    def __init__(self, content_id, items: list, options: Options = None):
+        super().__init__(content_type="simple_catalog", content_id=content_id)
         self.options = options.__dict__
         self.items = self.serialize_items(items)
 
