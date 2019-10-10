@@ -1,3 +1,6 @@
+from typing import Optional
+import pyAitu.models.form.input_type as input_type
+import pyAitu.models.form.currency as Currency
 from pyAitu.models.form.indent import Indent
 from pyAitu.models.form.flex_options import FlexOptions
 
@@ -5,39 +8,41 @@ from pyAitu.models.form.flex_options import FlexOptions
 class Options:
     def __init__(
             self,
-            alignment: str = None,
-            background: str = None,
-            background_color: str = None,
-            choice_type: str = None,
-            closeable: bool = None,
-            columns_count: int = None,
-            currency: str = None,
-            divider_type: str = None,
-            flex_options: FlexOptions = None,
-            fullscreen: bool = None,
-            has_back_action: bool = None,
-            height: int = None,
-            indent_inner: Indent = None,
-            indent_outer: Indent = None,
-            input_type: str = None,
-            item_left_icon_resource: str = None,
-            item_right_icon_resource: str = None,
-            item_type: str = None,
-            max_count: int = None,
-            max_date: str = None,
-            max_length: int = None,
-            media_type: str = None,
-            min_date: str = None,
-            orientation: str = None,
-            search_enabled: bool = None,
-            show_divider: bool = None,
-            shape: str = None,
-            should_open_editor: bool = None,
-            title: str = None,
-            text_size: str = None,
-            text_style: str = None,
-            text_color: str = None,
-            width: int = None
+            alignment: Optional[str] = None,
+            background: Optional[str] = None,
+            background_color: Optional[str] = None,
+            choice_type: Optional[str] = None,
+            closeable: Optional[bool] = None,
+            columns_count: Optional[int] = None,
+            currency: Optional[Currency.Currency] = None,
+            divider_type: Optional[str] = None,
+            flex_options: Optional[FlexOptions] = None,
+            fullscreen: Optional[bool] = None,
+            has_back_action: Optional[bool] = None,
+            height: Optional[int] = None,
+            indent_inner: Optional[Indent] = None,
+            indent_outer: Optional[Indent] = None,
+            input_type: Optional[input_type.InputType] = None,
+            item_left_icon_resource: Optional[str] = None,
+            item_right_icon_resource: Optional[str] = None,
+            item_type: Optional[str] = None,
+            max_count: Optional[int] = None,
+            max_date: Optional[str] = None,
+            max_length: Optional[int] = None,
+            media_type: Optional[str] = None,
+            min_date: Optional[str] = None,
+            orientation: Optional[str] = None,
+            search_enabled: Optional[bool] = None,
+            show_divider: Optional[bool] = None,
+            shape: Optional[str] = None,
+            should_open_editor: Optional[bool] = None,
+            subtitle_lines_count: Optional[int] = None,
+            text_color: Optional[str] = None,
+            text_size: Optional[str] = None,
+            text_style: Optional[str] = None,
+            title: Optional[str] = None,
+            title_lines_count: Optional[int] = None,
+            width: Optional[int] = None
     ):
         self.alignment = alignment
         self.background = background
@@ -50,6 +55,7 @@ class Options:
         if flex_options is not None:
             self.flex_options = flex_options.__dict__
         self.fullscreen = fullscreen
+        self.input_type = input_type
         self.has_back_action = has_back_action
         self.height = height
         if indent_inner is not None:
@@ -72,6 +78,8 @@ class Options:
         self.should_open_editor = should_open_editor
         self.text_color = text_color
         self.title = title
+        self.title_lines_count = title_lines_count
+        self.subtitle_lines_count = subtitle_lines_count
         self.text_size = text_size
         self.text_style = text_style
         self.width = width

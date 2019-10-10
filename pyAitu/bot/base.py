@@ -16,7 +16,7 @@ class BaseBot:
             loop = asyncio.get_event_loop()
         self.loop = loop
         self.token = token
-        connector = aiohttp.TCPConnector(loop=self.loop)
+        connector = aiohttp.TCPConnector(loop=self.loop, verify_ssl=False)
         self.session = aiohttp.ClientSession(connector=connector, loop=self.loop, json_serialize=json.dumps)
 
     async def request(self,
