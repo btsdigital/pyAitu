@@ -1,6 +1,6 @@
 from pyAitu.models.form.content import Button, Submit
 from .content import SimpleCatalog, Item, LabeledText, TextArea, ItemInfo, SimpleCatalog, Item, Submit, Divider, Image,\
-    FileMetadata, Text, Input, UserInfo
+    FileMetadata, Text, Input, UserInfo, Checkbox
 from .options import Options
 from .form import Form
 from .header import Header
@@ -34,5 +34,6 @@ __all__ = [
     Input,
     InputType,
     Currency,
+    Checkbox,
     UserInfo,
 ]

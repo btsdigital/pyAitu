@@ -10,6 +10,7 @@ from .file_metadata import FileMetadata
 from .input import Input
 from .divider import Divider
 from .text import Text
+from .checkbox import Checkbox
 from .user_info import UserInfo
 
 
@@ -26,5 +27,6 @@ __all__ = [
     Image,
     FileMetadata,
     Text,
+    Checkbox,
     UserInfo,
 ]
