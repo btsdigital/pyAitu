@@ -14,15 +14,13 @@ class Radiogroup(Content):
     def __init__(
             self,
             content_id: str,
-            content_type: str,
             title: Optional[str] = None,
             items: [RadioItem] = None,
             validation_rules: Optional[List[ValidationRule]] = None,
             options: Optional[Optional] = None,
             default_value: Optional[RadioItem] = None
     ):
-        self.content_id = content_id
-        self.content_type = content_type
+        super().__init__(content_type="radiogroup", content_id=content_id)
         self.title = title
         self.items = items
         self.validation_rules = validation_rules
