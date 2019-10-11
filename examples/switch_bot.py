@@ -1,6 +1,6 @@
 import logging
 from pyAitu import executor, Bot, Dispatcher
-from pyAitu.models import Message, Options, Form, Header, FormClosed, Divider, Text, Indent
+from pyAitu.models import Message, Options, Form, Header, FormClosed, Indent
 from pyAitu.models.form.content.switch import Switch
 
 API_TOKEN = 'YOUR_API_TOKEN'
@@ -22,7 +22,15 @@ async def send_ui(message: Message):
     )
     switch1 = Switch(
         content_id="switch_id1",
-        title="Вы согласны с условиями?"
+        title="Вы согласны с условиями?",
+        options=Options(
+            indent_outer=Indent(
+                left=30,
+                right=30,
+                top=30,
+                bottom=30
+            )
+        )
     )
     switch2 = Switch(
         content_id="switch_id2",
