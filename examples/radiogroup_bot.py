@@ -3,8 +3,6 @@ from pyAitu import executor, Bot, Dispatcher
 from pyAitu.models import Message, Options, Form, Header, FormClosed, \
     FormSubmitted, Radiogroup, Submit, FormAction, ValidationRule, Item
 
-from pprint import pprint as pp
-
 API_TOKEN = 'YOUR_API_TOKEN'
 
 bot = Bot(token=API_TOKEN)
@@ -43,7 +41,6 @@ def make_form() -> Form:
 @dispatcher.message_handler()
 async def handle(message: Message):
     form = make_form()
-    pp(form.__dict__)
     await bot.send_form(message.chat.id, form=form)
 
 
