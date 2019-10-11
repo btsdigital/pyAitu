@@ -17,7 +17,7 @@ class Radiogroup(Content):
             title: Optional[str] = None,
             items: [RadioItem] = None,
             validation_rules: Optional[List[ValidationRule]] = None,
-            options: Optional[Optional] = None,
+            options: Optional[Options] = None,
             default_value: Optional[RadioItem] = None
     ):
         super().__init__(content_type="radiogroup", content_id=content_id)
