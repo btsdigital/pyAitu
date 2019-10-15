@@ -3,8 +3,8 @@ from .content import Content
 
 
 class Slider(Content):
-    def __init__(self, content_id: str, items: list, options: Options = None, content_type: str = "slider"):
-        super().__init__(content_type, content_id)
+    def __init__(self, content_id: str, items: list, options: Options = None):
+        super().__init__(content_type="slider", content_id=content_id)
         self.items = self.serialize_items(items)
         if options is not None:
             self.options = options.__dict__
