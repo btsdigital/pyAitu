@@ -10,7 +10,8 @@ from .file_metadata import FileMetadata
 from .input import Input
 from .divider import Divider
 from .text import Text
-from  .radiogroup import Radiogroup
+from .radiogroup import Radiogroup
+from .custom_container import CustomContainer
 
 
 __all__ = [
@@ -26,5 +27,6 @@ __all__ = [
     Image,
     FileMetadata,
     Text,
-    Radiogroup
+    Radiogroup,
+    CustomContainer
 ]
