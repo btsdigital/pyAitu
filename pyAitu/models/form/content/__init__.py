@@ -12,7 +12,8 @@ from .input import Input
 from .switch import Switch
 from .divider import Divider
 from .text import Text
-from  .radiogroup import Radiogroup
+from .radiogroup import Radiogroup
+from .custom_container import CustomContainer
 from .checkbox import Checkbox
 from .user_info import UserInfo
 
@@ -33,6 +34,7 @@ __all__ = [
     FileMetadata,
     Text,
     Radiogroup,
+    CustomContainer,
     Checkbox,
-    UserInfo,
+    UserInfo
 ]
