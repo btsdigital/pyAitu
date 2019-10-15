@@ -17,7 +17,6 @@ def make_form() -> Form:
     form_id = "bottom_bar_form_id"
     header = Header(_type="title", title="Bottom bar component", options=Options(closeable=True))
     bottom_bar = BottomBar(
-        content_type="bottom_bar",
         content_id="bottom_bar_id",
         title="Bottom Bar",
         form_action=FormAction(action="submit_form", data_template="Message from bottom bar")
