@@ -1,7 +1,8 @@
 from typing import List, Dict, Optional
 from .base import BaseBot
 from ..models import Update, Media, Command, QuickButtonCommand, InlineCommand, ReplyCommand, Form
-from ..utils.strings import COMMANDS, SEND_MESSAGE, GET_UPDATES, UPLOADED_FILES, SEND_UI_STATE
+from ..models.media.contact import Contact
+from ..utils.strings import COMMANDS, SEND_MESSAGE, GET_UPDATES, UPLOADED_FILES, SEND_UI_STATE, SEND_CONTACT_MESSAGE
 
 
 class Bot(BaseBot):
@@ -70,3 +71,16 @@ class Bot(BaseBot):
         }
 
         return await self.request("UploadFile", None, files)
+
+    async def send_contact(
+            self,
+            chat_id: str,
+            contact: Contact
+    ):
+        command = Command(chat_id)
+        payload = {
+            COMMANDS: command.create_command(SEND_CONTACT_MESSAGE, input_media=contact)
+        }
+
+        result = await self.request(SEND_UI_STATE, payload)
+        return result
