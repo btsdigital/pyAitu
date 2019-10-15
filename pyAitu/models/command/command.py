@@ -1,11 +1,11 @@
 from typing import List
 from .uiState import UiState
 from .form_message import FormMessage
-from ..media.contact import Contact
 from ..peer import Recipient
 from ..form import Form
-from ..media import Media
+from ..media import Media, Contact
 from ...utils.strings import UI_STATE, RECIPIENT, TYPE, CONTENT, INLINE_COMMANDS, MEDIA_LIST, INPUT_MEDIA
+
 
 class Command:
     def __init__(self, peer_id, inline_commands: list = None, media: List[Media] = None):
@@ -33,7 +33,7 @@ class Command:
         commands = []
         form_message = FormMessage(form).__dict__ if form is not None else {}
         if input_media is not None:
-            input_media = input_media.to_dict()
+            input_media = input_media.__dict__
         ui_state = UiState(
             reply_keyboard=reply_keyboard,
             quick_button_commands=quick_button_commands,

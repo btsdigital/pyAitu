@@ -1,7 +1,6 @@
 from typing import List, Dict, Optional
 from .base import BaseBot
-from ..models import Update, Media, Command, QuickButtonCommand, InlineCommand, ReplyCommand, Form
-from ..models.media.contact import Contact
+from ..models import Update, Media, Command, QuickButtonCommand, InlineCommand, ReplyCommand, Form, Contact
 from ..utils.strings import COMMANDS, SEND_MESSAGE, GET_UPDATES, UPLOADED_FILES, SEND_UI_STATE, SEND_CONTACT_MESSAGE
 
 
