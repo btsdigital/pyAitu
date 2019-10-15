@@ -1,24 +1,31 @@
 from typing import List, Optional
-from .content import Content
 from ..options import Options
+from .content import Content
 from ..validation_rule import ValidationRule
+from .item import Item
 from pyAitu.utils.serializer import serialized
 from pyAitu.utils.dictionary_extractor import extract_dictionary_if_exist_from
 
 
-class TextArea(Content):
+class RadioItem:
+    def __init__(self, content_id: str, title: str):
+        self.content_id = content_id
+        self.title = title
+
+
+class Radiogroup(Content):
     def __init__(
             self,
             content_id: str,
             title: Optional[str] = None,
-            text: Optional[str] = None,
-            placeholder: Optional[str] = None,
+            items: List[Item] = None,
             validations_rules: Optional[List[ValidationRule]] = None,
-            options: Optional[Options] = None
+            options: Optional[Options] = None,
+            default_value: Optional[Item] = None
     ):
-        super().__init__(content_type="text_area", content_id=content_id)
+        super().__init__(content_type="radiogroup", content_id=content_id)
         self.title = title
-        self.text = text
+        self.items = serialized(items)
         self.validations_rules = serialized(validations_rules)
-        self.placeholder = placeholder
         self.options = extract_dictionary_if_exist_from(options)
+        self.default_value = serialized(default_value)

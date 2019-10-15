@@ -8,10 +8,9 @@ class LabeledText(Content):
             content_id: str,
             label: str,
             title: str,
-            content_type: str = "labeled_text",
             options: Options = None
     ):
-        super().__init__(content_type, content_id)
+        super().__init__(content_type="labeled_text", content_id=content_id)
         self.label = label
         self.title = title
         if options is not None:

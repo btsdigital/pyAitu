@@ -1,7 +1,7 @@
 import logging
 from pyAitu import executor, Bot, Dispatcher
 from pyAitu.models import Message, Options, Form, Header, FormClosed, \
-    FormSubmitted, TextArea, Submit, FormAction, ValidationRule
+    FormSubmitted, Radiogroup, Submit, FormAction, ValidationRule, Item
 
 API_TOKEN = 'YOUR_API_TOKEN'
 
@@ -12,21 +12,28 @@ logging.basicConfig(level=logging.INFO)
 
 
 def make_form() -> Form:
-    form_id = "text_area_form_id"
-    header = Header(_type="title", title="Text area component", options=Options(closeable=True))
-    text_area = TextArea(
-        content_id="text_area_id",
-        title="Text Area",
-        text="",
-        placeholder="Enter your text here",
-        validations_rules=[ValidationRule(type="required", value="true", error="You must fill this area")]
+    form_id = "radiogroup_form_id"
+
+    header = Header(_type="title", title="Radiogroup component", options=Options(closeable=True))
+
+    radiogroup = Radiogroup(
+        content_id="radiogroup",
+        title="Radiogroup",
+        options=Options(orientation="horizontal"),
+        default_value=Item(item_id="radio_1", title="Default value"),
+        items=[Item(item_id="radio_1", title="First"),
+               Item(item_id="radio_2", title="Second")],
+        validations_rules=[ValidationRule(type="required", value="true", error="Have to fill it!")]
     )
+
     submit = Submit(
         content_id="submit_id",
         title="Send",
-        form_action=FormAction(action="submit_form", data_template="{"+form_id+".text_area_id}")
+        form_action=FormAction(action="submit_form", data_template="{"+form_id+".radiogroup_id}")
     )
-    content = [text_area, submit]
+
+    content = [radiogroup, submit]
+
     return Form(_id=form_id, header=header, content=content)
 
 

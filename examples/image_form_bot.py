@@ -23,7 +23,6 @@ async def send_image_form(message: Message):
     )
     image = Image(
         content_id="pic",
-        content_type="image",
         file_metadata=file_metadata,
         options=image_options
     )
