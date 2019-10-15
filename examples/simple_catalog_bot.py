@@ -31,7 +31,6 @@ async def send_submit_form(message: Message):
     )
     submit = Submit(
         content_id="lol",
-        content_type="submit",
         form_action=form_action,
         title="отправь мой номер"
     )
@@ -59,7 +58,6 @@ async def send_ui(message: Message):
     )
     simple_catalog = SimpleCatalog(
         content_id="lol",
-        content_type="simple_catalog",
         items=list_item,
         options=options
     )

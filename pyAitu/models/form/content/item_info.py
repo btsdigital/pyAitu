@@ -7,13 +7,12 @@ class ItemInfo(Content):
     def __init__(
             self,
             content_id: str,
-            content_type: str = "item_info",
             title: str = None,
             subtitle: str = None,
             file_metadata: FileMetadata = None,
             options: Options = None
     ):
-        super().__init__(content_type, content_id)
+        super().__init__(content_type="item_info", content_id=content_id)
         self.title = title
         self.subtitle = subtitle
         if file_metadata is not None:
