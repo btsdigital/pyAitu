@@ -1,7 +1,7 @@
 from .content import Content
 from ..options import Options
 from ..validation_rule import ValidationRule
-from typing import Dict, Optional, List
+from typing import Optional, List
 from pyAitu.utils.serializer import serialized
 from pyAitu.utils.dictionary_extractor import extract_dictionary_if_exist_from
 
