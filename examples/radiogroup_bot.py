@@ -28,7 +28,6 @@ def make_form() -> Form:
 
     submit = Submit(
         content_id="submit_id",
-        content_type="submit",
         title="Send",
         form_action=FormAction(action="submit_form", data_template="{"+form_id+".radiogroup_id}")
     )
