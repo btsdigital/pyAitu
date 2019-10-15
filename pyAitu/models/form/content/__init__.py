@@ -8,6 +8,7 @@ from .submit import Submit
 from .image import Image
 from .file_metadata import FileMetadata
 from .input import Input
+from .switch import Switch
 from .divider import Divider
 from .text import Text
 from .checkbox import Checkbox
@@ -25,6 +26,7 @@ __all__ = [
     Divider,
     Button,
     Image,
+    Switch,
     FileMetadata,
     Text,
     Checkbox,

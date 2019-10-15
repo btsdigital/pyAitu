@@ -4,7 +4,7 @@ from .media import Media
 from .command import InlineCommand, ReplyCommand, QuickButtonCommand, Command, UiState
 from .form import SimpleCatalog, Item, ItemInfo, Options, Form, Header, TextArea, ValidationRule, FlexOptions, Button, \
     FormAction, Submit, LabeledText, Divider, Image, FileMetadata, Text, Indent, Input, InputType, Currency, UserInfo, \
-    Checkbox
+    Checkbox, Switch
 
 __all__ = [
     Message,
@@ -37,6 +37,7 @@ __all__ = [
     Divider,
     Image,
     FileMetadata,
+    Switch,
     Text,
     Indent,
     Input,
