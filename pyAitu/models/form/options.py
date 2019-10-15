@@ -55,7 +55,6 @@ class Options:
         if flex_options is not None:
             self.flex_options = flex_options.__dict__
         self.fullscreen = fullscreen
-        self.input_type = input_type
         self.has_back_action = has_back_action
         self.height = height
         if indent_inner is not None:
@@ -83,3 +82,11 @@ class Options:
         self.text_size = text_size
         self.text_style = text_style
         self.width = width
+        # Clean None values up
+        self.purify_none_attributes()
+
+    # Removes all None attributes of self
+    # Mutating function, with side effect
+    def purify_none_attributes(self):
+        new_attributes_dictionary = dict(filter(lambda item: item[1], self.__dict__.items()))
+        self.__dict__ = new_attributes_dictionary
