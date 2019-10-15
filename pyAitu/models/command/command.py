@@ -3,8 +3,8 @@ from .uiState import UiState
 from .form_message import FormMessage
 from ..peer import Recipient
 from ..form import Form
-from ..media import Media
-from ...utils.strings import UI_STATE, RECIPIENT, TYPE, CONTENT, INLINE_COMMANDS, MEDIA_LIST
+from ..media import Media, Contact
+from ...utils.strings import UI_STATE, RECIPIENT, TYPE, CONTENT, INLINE_COMMANDS, MEDIA_LIST, INPUT_MEDIA
 
 
 class Command:
@@ -27,10 +27,13 @@ class Command:
             content: str = "",
             reply_keyboard: list = None,
             quick_button_commands: list = None,
-            form: Form = None
+            form: Form = None,
+            input_media: Contact = None
     ):
         commands = []
         form_message = FormMessage(form).__dict__ if form is not None else {}
+        if input_media is not None:
+            input_media = input_media.__dict__
         ui_state = UiState(
             reply_keyboard=reply_keyboard,
             quick_button_commands=quick_button_commands,
@@ -43,12 +46,13 @@ class Command:
             CONTENT: content,
             UI_STATE: ui_state.to_dict(),
             INLINE_COMMANDS: self.inline_commands,
-            MEDIA_LIST: self.media
-        }
+            MEDIA_LIST: self.media,
+            INPUT_MEDIA: input_media
+         }
 
         commands.append(self.remove_none(body))
 
         return commands
 
     def remove_none(self, command: dict):
-        return {k: v for k, v in command.items() if v is not None}
+        return {k: v for k, v in command.items() if v is not None or {} or ''}
