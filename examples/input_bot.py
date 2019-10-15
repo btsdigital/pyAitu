@@ -19,7 +19,6 @@ def make_form() -> Form:
     header = Header(_type="title", title="Input component", options=Options(closeable=True))
     money_input = Input(
         content_id="input_money_id",
-        content_type="input",
         title="Input Money",
         placeholder="Enter tenge here",
         options=Options(input_type=input_type.MONEY, currency=currency.KZT),
@@ -27,7 +26,6 @@ def make_form() -> Form:
     )
     double_input = Input(
         content_id="input_double_id",
-        content_type="input",
         title="Input Double",
         placeholder="Enter double value here",
         options=Options(input_type=input_type.DOUBLE),
@@ -35,7 +33,6 @@ def make_form() -> Form:
     )
     number_input = Input(
         content_id="input_number_id",
-        content_type="input",
         title="Input Number",
         placeholder="Enter decimal value here",
         options=Options(input_type=input_type.NUMBER),
@@ -43,7 +40,6 @@ def make_form() -> Form:
     )
     text_input = Input(
         content_id="input_text_id",
-        content_type="input",
         title="Input Text",
         placeholder="Enter text here",
         options=Options(input_type=input_type.TEXT),
@@ -52,7 +48,6 @@ def make_form() -> Form:
     )
     submit = Submit(
         content_id="submit_id",
-        content_type="submit",
         title="Send",
         form_action=FormAction(
             action="submit_form",

@@ -43,5 +43,6 @@ class ContentType(helper.Helper):
 
     TEXT = helper.ListItem()
     PHOTO = helper.ListItem()
+    VIDEO = helper.ListItem()
     ANY = helper.ListItem()
 

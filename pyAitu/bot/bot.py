@@ -37,15 +37,15 @@ class Bot(BaseBot):
                          photo: str):
         result = await self.upload_file(photo)
         if result.get(UPLOADED_FILES):
-            command = Command(chat_id)
             media = Media(
                 file_id=result.get(UPLOADED_FILES)[0]["fileId"],
                 name=result.get(UPLOADED_FILES)[0]["fileName"],
                 file_type="IMAGE"
             )
+            command = Command(chat_id, media=[media])
 
             payload = {
-                COMMANDS: command.create_command(SEND_MESSAGE, media=media.to_dict())
+                COMMANDS: command.create_command(SEND_MESSAGE)
             }
             result = await self.request(SEND_MESSAGE, payload)
 
