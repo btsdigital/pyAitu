@@ -55,7 +55,6 @@ class Options:
         if flex_options is not None:
             self.flex_options = flex_options.__dict__
         self.fullscreen = fullscreen
-        self.input_type = input_type
         self.has_back_action = has_back_action
         self.height = height
         if indent_inner is not None:

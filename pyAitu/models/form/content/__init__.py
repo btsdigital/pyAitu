@@ -6,6 +6,7 @@ from .item_info import ItemInfo
 from .button import Button
 from .submit import Submit
 from .image import Image
+from .date_picker import DatePicker
 from .file_metadata import FileMetadata
 from .input import Input
 from .switch import Switch
@@ -23,6 +24,7 @@ __all__ = [
     Item,
     ItemInfo,
     Input,
+    DatePicker,
     Divider,
     Button,
     Image,
