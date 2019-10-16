@@ -1,7 +1,7 @@
 import logging
 from pyAitu import Bot, Dispatcher, executor
-from pyAitu.models import Message, QuickButtonSelected, InlineCommandSelected, ContentType,\
-    QuickButtonCommand, InlineCommand, ReplyCommand, Media
+from pyAitu.models import Message, QuickButtonSelected, InlineCommandSelected, ContentType, \
+    QuickButtonCommand, InlineCommand, ReplyCommand, Media, Contact
 
 API_TOKEN = 'YOUR_API_TOKEN'
 
@@ -50,6 +50,18 @@ async def send_menu(message: Message):
 @dp.message_handler(regexp='^cat$')
 async def send_photo(message: Message):
     await bot.send_photo(message.chat.id, 'images/cat.jpg')
+
+
+@dp.message_handler(regexp="^contact$")
+async def send_contact(message: Message):
+    await bot.send_contact(
+        chat_id=message.chat.id,
+        contact=Contact(
+            first_name="contact_fname",
+            last_name="contact_lname",
+            phone_number="48884354864"
+        )
+    )
 
 
 @dp.message_handler(commands=['media'])
