@@ -4,7 +4,7 @@ from .content import Content
 from ..validation_rule import ValidationRule
 from .item import Item
 from pyAitu.utils.serializer import serialized
-from pyAitu.utils.dictionary_extractor import extract_dictionary_if_exist_from
+from pyAitu.utils.dictionary_extractor import dictionary_of_object_if_exist
 
 
 class RadioItem:
@@ -27,5 +27,5 @@ class Radiogroup(Content):
         self.title = title
         self.items = serialized(items)
         self.validations_rules = serialized(validations_rules)
-        self.options = extract_dictionary_if_exist_from(options)
+        self.options = dictionary_of_object_if_exist(options)
         self.default_value = serialized(default_value)

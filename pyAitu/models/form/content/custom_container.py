@@ -4,7 +4,7 @@ from .content import Content
 from ..validation_rule import ValidationRule
 from .item import Item
 from pyAitu.utils.serializer import serialized
-from pyAitu.utils.dictionary_extractor import extract_dictionary_if_exist_from
+from pyAitu.utils.dictionary_extractor import dictionary_of_object_if_exist
 
 
 class CustomContainer(Content):
@@ -17,4 +17,4 @@ class CustomContainer(Content):
     ):
         super().__init__(content_type="custom_container", content_id=content_id)
         self.content = serialized(content)
-        self.options = extract_dictionary_if_exist_from(options)
+        self.options = dictionary_of_object_if_exist(options)
