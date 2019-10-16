@@ -1,8 +1,6 @@
 import logging
 from pyAitu import executor, Bot, Dispatcher
 from pyAitu.models import Message, Options, Form, Header, FormClosed, BottomBar, FormAction, FormSubmitted
-import pyAitu.models.form.input_type as input_type
-import pyAitu.models.form.currency as currency
 
 
 API_TOKEN = 'YOUR_API_TOKEN'
@@ -21,7 +19,7 @@ def make_form() -> Form:
         title="Bottom Bar",
         form_action=FormAction(action="submit_form", data_template="Message from bottom bar")
     )
-    return Form(_id=form_id, header=header, content=bottom_bar, options=Options(fullscreen=True))
+    return Form(_id=form_id, header=header, content=[], bottom_bar=bottom_bar)
 
 
 @dispatcher.message_handler()
