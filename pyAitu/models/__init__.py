@@ -1,10 +1,10 @@
 from .update import Update, QuickButtonSelected, InlineCommandSelected, Message, ContentType, FormClosed, \
     FormSubmitted, FormMessageSent
-from .media import Media
+from .media import Media, Contact
 from .command import InlineCommand, ReplyCommand, QuickButtonCommand, Command, UiState
 from .form import SimpleCatalog, Item, ItemInfo, Options, Form, Header, TextArea, ValidationRule, FlexOptions, Button, \
     FormAction, Submit, LabeledText, Divider, Image, FileMetadata, Text, Indent, Input, InputType, Currency, UserInfo, \
-    DatePicker, Checkbox, Switch, Radiogroup
+    DatePicker, Checkbox, Switch, CustomContainer
 
 __all__ = [
     Message,
@@ -13,6 +13,7 @@ __all__ = [
     QuickButtonSelected,
     InlineCommandSelected,
     Media,
+    Contact,
     InlineCommand,
     ReplyCommand,
     QuickButtonCommand,
@@ -44,7 +45,7 @@ __all__ = [
     Input,
     InputType,
     Currency,
-    Radiogroup,
+    CustomContainer,
     Checkbox,
-    UserInfo,
+    UserInfo
 ]
