@@ -1,7 +1,8 @@
 from typing import List, Dict, Optional
 from .base import BaseBot
 from ..models import Update, Media, Command, QuickButtonCommand, InlineCommand, ReplyCommand, Form, Contact
-from ..utils.strings import COMMANDS, SEND_MESSAGE, GET_UPDATES, UPLOADED_FILES, SEND_UI_STATE, SEND_CONTACT_MESSAGE
+from ..utils.strings import COMMANDS, SEND_MESSAGE, GET_UPDATES, UPLOADED_FILES, SEND_UI_STATE, SEND_CONTACT_MESSAGE, \
+    EDIT_MESSAGE
 
 
 class Bot(BaseBot):
@@ -18,7 +19,6 @@ class Bot(BaseBot):
                            media_list: List[Media] = None,
                            local_id: str = None
                            ) -> Dict:
-
         command = Command(peer_id, inline_commands=inline_commands, media=media_list)
 
         payload = {
@@ -32,6 +32,25 @@ class Bot(BaseBot):
         }
 
         result = await self.request(SEND_MESSAGE, payload)
+        return result
+
+    async def edit_message(self,
+                           peer_id: str,
+                           message_id: str,
+                           content: str,
+                           inline_commands: List[InlineCommand] = None
+                           ):
+        command = Command(peer_id, inline_commands=inline_commands)
+
+        payload = {
+            COMMANDS: command.create_command(
+                EDIT_MESSAGE,
+                content=content,
+                message_id=message_id
+            )
+        }
+
+        result = await self.request(EDIT_MESSAGE, payload)
         return result
 
     async def send_photo(self,

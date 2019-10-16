@@ -69,6 +69,20 @@ async def send_message(message: Message):
     await bot.send_message(message.chat.id, "New message for messageIdAssigned update", local_id="123456")
 
 
+@dp.message_handler(regexp="^edit$")
+async def send_message_for_edit(message: Message):
+    await bot.send_message(message.chat.id, "This message will be edited", local_id="224421345")
+
+
+@dp.message_id_assigned_handler(lambda message_id_assigned: message_id_assigned.localId == "224421345")
+async def get_message_id(message_id_assigned: MessageIdAssigned):
+    await bot.edit_message(
+        peer_id=message_id_assigned.dialog.id,
+        message_id=message_id_assigned.id,
+        content="Now it is edited message"
+    )
+
+
 @dp.message_handler(commands=['media'])
 async def send_media_message(message: Message):
     await bot.send_message(
