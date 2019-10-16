@@ -15,7 +15,8 @@ class Bot(BaseBot):
                            quick_button_commands: List[QuickButtonCommand] = None,
                            inline_commands: List[InlineCommand] = None,
                            reply_keyboard: List[ReplyCommand] = None,
-                           media_list: List[Media] = None
+                           media_list: List[Media] = None,
+                           local_id: str = None
                            ) -> Dict:
 
         command = Command(peer_id, inline_commands=inline_commands, media=media_list)
@@ -25,7 +26,8 @@ class Bot(BaseBot):
                 SEND_MESSAGE,
                 content=content,
                 reply_keyboard=reply_keyboard,
-                quick_button_commands=quick_button_commands
+                quick_button_commands=quick_button_commands,
+                local_id=local_id
             )
         }
 

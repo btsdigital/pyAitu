@@ -5,6 +5,7 @@ from .message import Message, ContentType
 from .form_closed import FormClosed
 from .form_submitted import FormSubmitted
 from .form_message_sent import FormMessageSent
+from .message_id_assigned import MessageIdAssigned
 
 __all__ = [
     Update,
@@ -14,5 +15,6 @@ __all__ = [
     ContentType,
     FormClosed,
     FormSubmitted,
-    FormMessageSent
+    FormMessageSent,
+    MessageIdAssigned,
 ]
