@@ -1,5 +1,5 @@
 from .update import Update, QuickButtonSelected, InlineCommandSelected, Message, ContentType, FormClosed, \
-    FormSubmitted, FormMessageSent
+    FormSubmitted, FormMessageSent, MessageIdAssigned
 from .media import Media, Contact
 from .command import InlineCommand, ReplyCommand, QuickButtonCommand, Command, UiState
 from .form import SimpleCatalog, Item, ItemInfo, Options, Form, Header, TextArea, ValidationRule, FlexOptions, Button, \
@@ -35,6 +35,7 @@ __all__ = [
     Submit,
     FormAction,
     FormMessageSent,
+    MessageIdAssigned,
     Divider,
     Image,
     DatePicker,
@@ -49,5 +50,5 @@ __all__ = [
     Radiogroup,
     CustomContainer,
     Checkbox,
-    UserInfo
+    UserInfo,
 ]

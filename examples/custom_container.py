@@ -84,7 +84,6 @@ async def handle(message: Message):
     # Child Component
     file = await bot.upload_file("images/cat.jpg")
     child_image = Image(
-        content_type="image",
         content_id="image_id",
         options=Options(width=37, height=6,
                         flex_options=FlexOptions(align_self="center")),
