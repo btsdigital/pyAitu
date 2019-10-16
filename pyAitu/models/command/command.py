@@ -4,7 +4,7 @@ from .form_message import FormMessage
 from ..peer import Recipient
 from ..form import Form
 from ..media import Media, Contact
-from ...utils.strings import UI_STATE, RECIPIENT, TYPE, CONTENT, INLINE_COMMANDS, MEDIA_LIST, INPUT_MEDIA
+from ...utils.strings import UI_STATE, RECIPIENT, TYPE, CONTENT, INLINE_COMMANDS, MEDIA_LIST, INPUT_MEDIA, LOCAL_ID
 
 
 class Command:
@@ -28,7 +28,8 @@ class Command:
             reply_keyboard: list = None,
             quick_button_commands: list = None,
             form: Form = None,
-            input_media: Contact = None
+            input_media: Contact = None,
+            local_id: str = None
     ):
         commands = []
         form_message = FormMessage(form).__dict__ if form is not None else {}
@@ -47,7 +48,8 @@ class Command:
             UI_STATE: ui_state.to_dict(),
             INLINE_COMMANDS: self.inline_commands,
             MEDIA_LIST: self.media,
-            INPUT_MEDIA: input_media
+            INPUT_MEDIA: input_media,
+            LOCAL_ID: local_id
          }
 
         commands.append(self.remove_none(body))

@@ -1,7 +1,7 @@
 import logging
 from pyAitu import Bot, Dispatcher, executor
 from pyAitu.models import Message, QuickButtonSelected, InlineCommandSelected, ContentType, \
-    QuickButtonCommand, InlineCommand, ReplyCommand, Media, Contact
+    QuickButtonCommand, InlineCommand, ReplyCommand, Media, Contact, MessageIdAssigned
 
 API_TOKEN = 'YOUR_API_TOKEN'
 
@@ -63,6 +63,11 @@ async def send_contact(message: Message):
         )
     )
 
+    
+@dp.message_handler(regexp="^messageid$")
+async def send_message(message: Message):
+    await bot.send_message(message.chat.id, "New message for messageIdAssigned update", local_id="123456")
+
 
 @dp.message_handler(commands=['media'])
 async def send_media_message(message: Message):
@@ -87,6 +92,14 @@ async def get_photo(message: Message):
 @dp.message_handler()
 async def echo(message: Message):
     await bot.send_message(message.chat.id, message.text)
+
+
+@dp.message_id_assigned_handler(lambda message_id_assigned: message_id_assigned.localId == "123456")
+async def get_message_id(message_id_assigned: MessageIdAssigned):
+    await bot.send_message(
+        peer_id=message_id_assigned.dialog.id,
+        content="got messageIdAssigned update with messageId " + message_id_assigned.id
+    )
 
 
 @dp.quick_button_handler(state="*", func=(lambda call: call.metadata.startswith('welcome-menu-')))

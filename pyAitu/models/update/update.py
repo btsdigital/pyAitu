@@ -1,4 +1,5 @@
 from .message import Message
+from .message_id_assigned import MessageIdAssigned
 from .quick_button_selected import QuickButtonSelected
 from .inline_command_selected import InlineCommandSelected
 from .form_closed import FormClosed
@@ -14,6 +15,7 @@ class Update:
     form_closed: FormClosed = None
     form_submitted: FormSubmitted = None
     form_message_sent: FormMessageSent = None
+    message_id_assigned: MessageIdAssigned = None
 
     def __init__(self, json_object):
         self.updateId = json_object.get("updateId")
@@ -31,3 +33,5 @@ class Update:
             self.form_submitted = FormSubmitted(json_object)
         if self.updateType == "FormClosed":
             self.form_closed = FormClosed(json_object)
+        if self.updateType == "MessageIdAssigned":
+            self.message_id_assigned = MessageIdAssigned(json_object)

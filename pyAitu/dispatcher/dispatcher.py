@@ -32,6 +32,7 @@ class Dispatcher:
         self.updates_handler = Handler(self, middleware_key='update')
         self.message_handlers = Handler(self, middleware_key='message')
         self.quick_button_handlers = Handler(self, middleware_key='quick_button')
+        self.message_id_assigned_handlers = Handler(self, middleware_key='message_id_assigned')
         self.inline_command_handlers = Handler(self, middleware_key='inline_command')
         self.form_closed_handlers = Handler(self, middleware_key='form_closed')
         self.form_submitted_handlers = Handler(self, middleware_key='form_submitted')
@@ -125,6 +126,26 @@ class Dispatcher:
             return callback
 
         return decorator
+
+    def message_id_assigned_handler(self, *custom_filters, func=None, state=None, run_task=None, **kwargs):
+        def decorator(callback):
+            self.register_message_id_assigned_handler(callback, func=func, state=state,
+                                                      custom_filters=custom_filters, run_task=run_task, **kwargs)
+            return callback
+
+        return decorator
+
+    def register_message_id_assigned_handler(self, callback, *, func=None,
+                                             state=None, custom_filters=None, run_task=None, **kwargs):
+        if custom_filters is None:
+            custom_filters = []
+
+        filters_set = generate_default_filters(self,
+                                               *custom_filters,
+                                               func=func,
+                                               state=state,
+                                               **kwargs)
+        self.message_id_assigned_handlers.register(self._wrap_async_task(callback, run_task), filters_set)
 
     def register_quick_button_handler(self, callback, *, func=None,
                                       state=None, custom_filters=None, run_task=None, **kwargs):
@@ -286,8 +307,18 @@ class Dispatcher:
                     state=state
                 )
                 return await self.form_submitted_handlers.notify(update.form_submitted)
+            elif update.message_id_assigned:
+                state = await self.storage.get_state(
+                    chat=update.message_id_assigned.dialog.id if update.message_id_assigned else None,
+                    user=update.message_id_assigned.dialog.id
+                )
+                context.update_state(
+                    user=update.message_id_assigned.dialog.id,
+                    state=state
+                )
+                return await self.message_id_assigned_handlers.notify(update.message_id_assigned)
             else:
-                print(update)
+                print("Undefined update " + update.updateType)
         except Exception as e:
             err = await self.error_handlers.notify(self, update, e)
             if err:
