@@ -9,6 +9,7 @@ log = logging.getLogger('pyAitu')
 API_URL = "https://messapi.btsdapps.net/bot/v1/updates/"
 FILE_UPLOAD_URL = "https://messapi.btsdapps.net/bot/v1/upload/"
 FILE_DOWNLOAD_URL = "https://messapi.btsdapps.net/bot/v1/download/"
+WEBHOOK_INFO_URL = "https://messapi.btsdapps.net/bot/v1/webhook/"
 
 
 def _compose_data(params=None, files=None):
@@ -34,6 +35,26 @@ async def request(session, token, method, data=None, files=None, **kwargs) -> bo
                 return await _check_result(method, response)
         except aiohttp.ClientError as e:
             raise Exception(f"aiohttp client throws an error: {e.__class__.__name__}: {e}")
+    elif method in ["SetWebhook", "GetWebhook", "DeleteWebhook"]:
+        if method == "GetWebhook":
+            try:
+                async with session.get(WEBHOOK_INFO_URL, headers={"X-BOT-TOKEN": token}, **kwargs) as response:
+                    return await _check_result(method, response)
+            except aiohttp.ClientError as e:
+                raise Exception(f"aiohttp client throws an error: {e.__class__.__name__}: {e}")
+        elif method == "SetWebhook":
+            try:
+                async with session.post(WEBHOOK_INFO_URL, json=data, headers={"X-BOT-TOKEN": token}, **kwargs) \
+                        as response:
+                    return await _check_result(method, response)
+            except aiohttp.ClientError as e:
+                raise Exception(f"aiohttp client throws an error: {e.__class__.__name__}: {e}")
+        elif method == "DeleteWebhook":
+            try:
+                async with session.delete(WEBHOOK_INFO_URL, headers={"X-BOT-TOKEN": token}, **kwargs) as response:
+                    return await _check_result(method, response)
+            except aiohttp.ClientError as e:
+                raise Exception(f"aiohttp client throws an error: {e.__class__.__name__}: {e}")
     else:
         try:
             if method == "GetUpdates":

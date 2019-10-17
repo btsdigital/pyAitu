@@ -4,12 +4,12 @@ from .form_message import FormMessage
 from ..peer import Recipient
 from ..form import Form
 from ..media import Media, Contact
-from ...utils.strings import UI_STATE, RECIPIENT, TYPE, CONTENT, INLINE_COMMANDS, MEDIA_LIST, INPUT_MEDIA, LOCAL_ID, MESSAGE_ID
+from ...utils.strings import UI_STATE, RECIPIENT, TYPE, CONTENT, INLINE_COMMANDS, MEDIA_LIST, INPUT_MEDIA, LOCAL_ID, \
+    MESSAGE_ID, FROM_DIALOG, TO_DIALOG
 
 
 class Command:
-    def __init__(self, peer_id, inline_commands: list = None, media: List[Media] = None):
-        self.recipient = Recipient(peer_id)
+    def __init__(self, inline_commands: list = None, media: List[Media] = None):
         self.media = []
         self.inline_commands = []
 
@@ -24,13 +24,16 @@ class Command:
     def create_command(
             self,
             _type: str,
+            peer_id: str = None,
             content: str = "",
             reply_keyboard: list = None,
             quick_button_commands: list = None,
             form: Form = None,
             input_media: Contact = None,
             local_id: str = None,
-            message_id: str = None
+            message_id: str = None,
+            from_dialog: str = None,
+            to_dialog: str = None
     ):
         commands = []
         form_message = FormMessage(form).__dict__ if form is not None else {}
@@ -44,14 +47,16 @@ class Command:
 
         body = {
             TYPE: _type,
-            RECIPIENT: self.recipient.get_recipient(),
+            RECIPIENT: Recipient(peer_id).get_recipient(),
             CONTENT: content,
             UI_STATE: ui_state.to_dict(),
             INLINE_COMMANDS: self.inline_commands,
             MEDIA_LIST: self.media,
             INPUT_MEDIA: input_media,
             LOCAL_ID: local_id,
-            MESSAGE_ID: message_id
+            MESSAGE_ID: message_id,
+            FROM_DIALOG: Recipient(from_dialog).get_recipient(),
+            TO_DIALOG: Recipient(to_dialog).get_recipient()
          }
 
         commands.append(self.remove_none(body))

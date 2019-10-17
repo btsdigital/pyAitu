@@ -10,6 +10,7 @@ from .form_action import FormAction
 from .indent import Indent
 from .input_type import InputType
 from .currency import Currency
+from .bottom_bar import BottomBar
 
 __all__ = [
     SimpleCatalog,
@@ -35,6 +36,7 @@ __all__ = [
     Input,
     InputType,
     Currency,
+    BottomBar,
     Radiogroup,
     CustomContainer,
     Checkbox,

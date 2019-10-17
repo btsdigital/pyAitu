@@ -63,7 +63,24 @@ async def send_contact(message: Message):
         )
     )
 
-    
+
+@dp.message_handler(regexp="^forward$")
+async def forward_message(message: Message):
+    await bot.forward_message(
+        from_dialog=message.dialog.id,
+        to_dialog=message.dialog.id,
+        message_id=message.messageId
+    )
+
+
+@dp.message_handler(regexp="^webhook$")
+async def send_webhook_info(message: Message):
+    await bot.set_webhook("https://helloworld.com/path?q=query")
+    webhook = await bot.get_webhook()
+    await bot.send_message(message.chat.id, "you webhook is " + webhook.url)
+    await bot.delete_webhook()
+
+
 @dp.message_handler(regexp="^messageid$")
 async def send_message(message: Message):
     await bot.send_message(message.chat.id, "New message for messageIdAssigned update", local_id="123456")
