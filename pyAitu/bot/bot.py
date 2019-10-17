@@ -1,6 +1,7 @@
 from typing import List, Dict, Optional
 from .base import BaseBot
-from ..models import Update, Media, Command, QuickButtonCommand, InlineCommand, ReplyCommand, Form, Contact
+from ..models import Update, Media, Command, QuickButtonCommand, InlineCommand, ReplyCommand, Form, Contact, \
+    WebhookInfo, SetWebhook
 from ..utils.strings import COMMANDS, SEND_MESSAGE, GET_UPDATES, UPLOADED_FILES, SEND_UI_STATE, SEND_CONTACT_MESSAGE, \
     EDIT_MESSAGE, FORWARD_MESSAGE
 
@@ -127,3 +128,14 @@ class Bot(BaseBot):
 
         result = await self.request(SEND_UI_STATE, payload)
         return result
+
+    async def get_webhook(self) -> WebhookInfo:
+        result = await self.request("GetWebhook")
+        return WebhookInfo(result)
+
+    async def set_webhook(self, url: str):
+        result = await self.request("SetWebhook", SetWebhook(url).__dict__)
+        return result
+
+    async def delete_webhook(self):
+        return await self.request("DeleteWebhook")
