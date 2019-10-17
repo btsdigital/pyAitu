@@ -7,6 +7,7 @@ from ...utils import helper
 class Message:
     def __init__(self, json_object):
         self.updateId = json_object.get("updateId")
+        self.messageId = json_object.get("messageId")
         self.dialog = Peer(json_object.get("dialog"))
         self.content = json_object.get("content")
         if json_object.get("author").get("type") == 'USER':
