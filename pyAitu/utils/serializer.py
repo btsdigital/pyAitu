@@ -1,10 +1,16 @@
-from typing import Optional, List, Dict
-from pyAitu.utils.dictionary_extractor import extract_dictionary_if_exist_from
+from typing import Optional, List, Dict, Any
+from pyAitu.utils.dictionary_extractor import dictionary_of_object_if_exist
+
+# Type aliases
+Object = Any
+Array = List
+Objects = Array[Object]
+Dictionaries = Array[Dict[Any, Any]]
 
 
-def serialized(objects: Optional[list]) -> Optional[List[Dict[str, any]]]:
-    if not isinstance(objects, list) or not objects:
+def serialized(objects: Optional[Objects]) -> Optional[Dictionaries]:
+    if not isinstance(objects, Array) or objects is None:
         return None
-    objects = list(map(lambda object: extract_dictionary_if_exist_from(object), objects))
+    objects = list(map(lambda object: dictionary_of_object_if_exist(object), objects))
     objects = list(filter(None, objects))
     return objects

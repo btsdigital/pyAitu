@@ -1,35 +1,68 @@
+from typing import Optional, Union, List, Dict, Any
+from pyAitu.utils.dictionary_extractor import dictionary_purified_from_none, dictionary_of_object_if_exist
 from .options import Options
+from .content.content import Content
+from .header import Header
+from .bottom_bar import BottomBar
+
+# Type aliases
+Void = None
+Array = List
+Object = Any
+String = str
+Dictionaries = List[Dict[String, Object]]
+ArrayOrObject = Union[Array[Object], Object]
+
+
+# Function with side effect on input dictionaries
+def add_purified_object_dictionary_if_possible_to(dictionaries: Dictionaries, object: Object) -> Void:
+    object_dictionary = dictionary_of_object_if_exist(object)
+    if object_dictionary is not None:
+        dictionaries.append(dictionary_purified_from_none(object_dictionary))
+
+
+def make_dictionaries_from(array_or_object: ArrayOrObject) -> Dictionaries:
+    dictionaries: Dictionaries = []
+    if isinstance(array_or_object, Array):
+        array = array_or_object
+        for object in array:
+            add_purified_object_dictionary_if_possible_to(dictionaries, object)
+    else:
+        object = array_or_object
+        add_purified_object_dictionary_if_possible_to(dictionaries, object)
+    return dictionaries
 
 
 class Form:
-    def __init__(self, _id: str, content, header, options: Options = None):
+    def __init__(
+            self,
+            _id: String,
+            content: ArrayOrObject,
+            header: Header,
+            options: Optional[Options] = None,
+            bottom_bar: Optional[BottomBar] = None
+    ):
         self.id = _id
         self.header = header
         self.content = content
         self.options = options
+        self.bottom_bar = bottom_bar
 
-    def make_form(self):
-        result = []
-
-        # Above three lines return self.options without None in value
-        dict_options = dict
-        if self.options is not None:
-            dict_options = {k: v for k, v in self.options.__dict__.items() if v is not None}
-
-        if isinstance(self.content, list):
-            for el in self.content:
-                result.append(remove_none(el.__dict__))
-        else:
-            result.append(self.content.__dict__)
-        return {
-            "form": {
-                "id": self.id,
-                "header": self.header.__dict__,
-                "content": result,
-                "options": dict_options if self.options is not None else {}
-            }
+    def make_dictionary(self) -> Dict[String, Any]:
+        dictionary = {
+            "id": self.id,
+            "content": make_dictionaries_from(self.content)
         }
+        header_dictionary = dictionary_of_object_if_exist(self.header)
+        if header_dictionary:
+            dictionary["header"] = header_dictionary
+        else:
+            print("ERROR: Form(make_dictionary): Can not get Dictionary of Header! Header is required attribute")
+            return None
 
+        if self.options:
+            dictionary["options"] = dictionary_of_object_if_exist(self.options)
 
-def remove_none(command: dict):
-    return {k: v for k, v in command.items() if v is not None}
+        if self.bottom_bar:
+            dictionary["bottom_bar"] = dictionary_of_object_if_exist(self.bottom_bar)
+        return { "form": dictionary }

@@ -3,6 +3,7 @@ import pyAitu.models.form.input_type as input_type
 import pyAitu.models.form.currency as Currency
 from pyAitu.models.form.indent import Indent
 from pyAitu.models.form.flex_options import FlexOptions
+from pyAitu.utils.dictionary_extractor import dictionary_purified_from_none, dictionary_of_object_if_exist
 
 
 class Options:
@@ -88,5 +89,7 @@ class Options:
     # Removes all None attributes of self
     # Mutating function, with side effect
     def purify_none_attributes(self):
-        new_attributes_dictionary = dict(filter(lambda item: item[1], self.__dict__.items()))
-        self.__dict__ = new_attributes_dictionary
+        options_dictionary = dictionary_of_object_if_exist(object=self)
+        if options_dictionary:
+            self.__dict__ = dictionary_purified_from_none(options_dictionary)
+

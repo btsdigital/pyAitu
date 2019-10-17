@@ -3,7 +3,7 @@ from .content import Content
 from ..options import Options
 from ..validation_rule import ValidationRule
 from pyAitu.utils.serializer import serialized
-from pyAitu.utils.dictionary_extractor import extract_dictionary_if_exist_from
+from pyAitu.utils.dictionary_extractor import dictionary_of_object_if_exist
 
 
 class TextArea(Content):
@@ -21,4 +21,4 @@ class TextArea(Content):
         self.text = text
         self.validations_rules = serialized(validations_rules)
         self.placeholder = placeholder
-        self.options = extract_dictionary_if_exist_from(options)
+        self.options = dictionary_of_object_if_exist(options)
