@@ -2,7 +2,7 @@ from typing import List, Dict, Optional
 from .base import BaseBot
 from ..models import Update, Media, Command, QuickButtonCommand, InlineCommand, ReplyCommand, Form, Contact
 from ..utils.strings import COMMANDS, SEND_MESSAGE, GET_UPDATES, UPLOADED_FILES, SEND_UI_STATE, SEND_CONTACT_MESSAGE, \
-    EDIT_MESSAGE
+    EDIT_MESSAGE, FORWARD_MESSAGE
 
 
 class Bot(BaseBot):
@@ -19,14 +19,36 @@ class Bot(BaseBot):
                            media_list: List[Media] = None,
                            local_id: str = None
                            ) -> Dict:
-        command = Command(peer_id, inline_commands=inline_commands, media=media_list)
+        command = Command(inline_commands=inline_commands, media=media_list)
 
         payload = {
             COMMANDS: command.create_command(
                 SEND_MESSAGE,
+                peer_id = peer_id,
                 content=content,
                 reply_keyboard=reply_keyboard,
                 quick_button_commands=quick_button_commands,
+                local_id=local_id
+            )
+        }
+
+        result = await self.request(SEND_MESSAGE, payload)
+        return result
+
+    async def forward_message(self,
+                              from_dialog,
+                              to_dialog: str,
+                              message_id: str,
+                              local_id: str = None
+                              ):
+        command = Command()
+
+        payload = {
+            COMMANDS: command.create_command(
+                FORWARD_MESSAGE,
+                from_dialog=from_dialog,
+                to_dialog=to_dialog,
+                message_id=message_id,
                 local_id=local_id
             )
         }
@@ -40,11 +62,12 @@ class Bot(BaseBot):
                            content: str,
                            inline_commands: List[InlineCommand] = None
                            ):
-        command = Command(peer_id, inline_commands=inline_commands)
+        command = Command(inline_commands=inline_commands)
 
         payload = {
             COMMANDS: command.create_command(
                 EDIT_MESSAGE,
+                peer_id=peer_id,
                 content=content,
                 message_id=message_id
             )
@@ -63,10 +86,10 @@ class Bot(BaseBot):
                 name=result.get(UPLOADED_FILES)[0]["fileName"],
                 file_type="IMAGE"
             )
-            command = Command(chat_id, media=[media])
+            command = Command(media=[media])
 
             payload = {
-                COMMANDS: command.create_command(SEND_MESSAGE)
+                COMMANDS: command.create_command(SEND_MESSAGE, chat_id)
             }
             result = await self.request(SEND_MESSAGE, payload)
 
@@ -77,9 +100,9 @@ class Bot(BaseBot):
             chat_id: str,
             form: Form
     ):
-        command = Command(chat_id)
+        command = Command()
         payload = {
-            COMMANDS: command.create_command(SEND_UI_STATE, form=form)
+            COMMANDS: command.create_command(SEND_UI_STATE, chat_id, form=form)
         }
 
         result = await self.request(SEND_UI_STATE, payload)
@@ -97,9 +120,9 @@ class Bot(BaseBot):
             chat_id: str,
             contact: Contact
     ):
-        command = Command(chat_id)
+        command = Command()
         payload = {
-            COMMANDS: command.create_command(SEND_CONTACT_MESSAGE, input_media=contact)
+            COMMANDS: command.create_command(SEND_CONTACT_MESSAGE, chat_id, input_media=contact)
         }
 
         result = await self.request(SEND_UI_STATE, payload)
