@@ -1,7 +1,7 @@
 from typing import List, Dict, Optional
 from .base import BaseBot
 from ..models import Update, Media, Command, QuickButtonCommand, InlineCommand, ReplyCommand, Form, Contact, \
-    WebhookInfo, SetWebhook
+    WebhookInfo, SetWebhook, FileType
 from ..utils.strings import COMMANDS, SEND_MESSAGE, GET_UPDATES, UPLOADED_FILES, SEND_UI_STATE, SEND_CONTACT_MESSAGE, \
     EDIT_MESSAGE, FORWARD_MESSAGE
 
@@ -80,7 +80,7 @@ class Bot(BaseBot):
     async def send_media(self,
                          chat_id: str,
                          file: str,
-                         file_type: str):
+                         file_type: FileType):
         result = await self.upload_file(file)
         if result.get(UPLOADED_FILES):
             media = Media(

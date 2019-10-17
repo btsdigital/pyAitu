@@ -2,6 +2,7 @@ import logging
 from pyAitu import Bot, Dispatcher, executor
 from pyAitu.models import Message, QuickButtonSelected, InlineCommandSelected, ContentType, \
     QuickButtonCommand, InlineCommand, ReplyCommand, Media, Contact, MessageIdAssigned
+import pyAitu.models.media.file_type as file_type
 
 API_TOKEN = 'YOUR_API_TOKEN'
 
@@ -49,12 +50,12 @@ async def send_menu(message: Message):
 
 @dp.message_handler(regexp='^cat$')
 async def send_photo(message: Message):
-    await bot.send_media(message.chat.id, 'images/cat.jpg', "IMAGE")
+    await bot.send_media(message.chat.id, 'images/cat.jpg', file_type.IMAGE)
 
 
 @dp.message_handler(regexp='^sound$')
 async def send_audio(message: Message):
-    await bot.send_media(message.chat.id, 'audio/sample.mp3', "AUDIO")
+    await bot.send_media(message.chat.id, 'audio/sample.mp3', file_type=file_type.AUDIO)
 
 
 @dp.message_handler(regexp="^contact$")
@@ -122,14 +123,14 @@ async def send_media_message(message: Message):
 async def get_photo(message: Message):
     await bot.download_file(message.media[0].fileId, destination='images/'+message.media[0].name)
     await bot.send_message(message.chat.id, "I got a photo")
-    await bot.send_media(message.chat.id, 'images/' + message.media[0].name, "IMAGE")
+    await bot.send_media(message.chat.id, 'images/' + message.media[0].name, file_type=file_type.IMAGE)
 
 
 @dp.message_handler(content_types=ContentType.AUDIO)
 async def get_photo(message: Message):
     await bot.download_file(message.media[0].fileId, destination='audio/'+message.media[0].name)
     await bot.send_message(message.chat.id, "I got an audio")
-    await bot.send_media(message.chat.id, 'audio/' + message.media[0].name, "AUDIO")
+    await bot.send_media(message.chat.id, 'audio/' + message.media[0].name, file_type=file_type.AUDIO)
 
 
 @dp.message_handler()

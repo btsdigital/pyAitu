@@ -1,6 +1,6 @@
 from .update import Update, QuickButtonSelected, InlineCommandSelected, Message, ContentType, FormClosed, \
     FormSubmitted, FormMessageSent, MessageIdAssigned
-from .media import Media, Contact, Audio
+from .media import Media, Contact, Audio, FileType
 from .webhook import WebhookInfo, SetWebhook
 from .command import InlineCommand, ReplyCommand, QuickButtonCommand, Command, UiState
 from .form import SimpleCatalog, Item, ItemInfo, Options, Form, Header, TextArea, ValidationRule, FlexOptions, Button, \
@@ -16,6 +16,7 @@ __all__ = [
     Media,
     Contact,
     Audio,
+    FileType,
     InlineCommand,
     ReplyCommand,
     QuickButtonCommand,
