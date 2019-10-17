@@ -1,6 +1,6 @@
 import functools
 from ..peer import Peer, PeerUser
-from ..media import Image
+from ..media import Image, Audio
 from ...utils import helper
 
 
@@ -18,6 +18,8 @@ class Message:
             for item in json_object.get("media"):
                 if item.get("type") == "Image":
                     self.media.append(Image(item))
+                elif item.get("type") == "Audio":
+                    self.media.append(Audio(item))
 
     def is_command(self):
         return self.content and self.content.startswith('/')
@@ -35,6 +37,8 @@ class Message:
     def content_type(self):
         if self.media and self.media[0].type == "Image":
             return ContentType.PHOTO[0]
+        elif self.media and self.media[0].type == "Audio":
+            return ContentType.AUDIO[0]
         else:
             return ContentType.TEXT[0]
 
@@ -45,5 +49,6 @@ class ContentType(helper.Helper):
     TEXT = helper.ListItem()
     PHOTO = helper.ListItem()
     VIDEO = helper.ListItem()
+    AUDIO = helper.ListItem()
     ANY = helper.ListItem()
 

@@ -49,7 +49,12 @@ async def send_menu(message: Message):
 
 @dp.message_handler(regexp='^cat$')
 async def send_photo(message: Message):
-    await bot.send_photo(message.chat.id, 'images/cat.jpg')
+    await bot.send_media(message.chat.id, 'images/cat.jpg', "IMAGE")
+
+
+@dp.message_handler(regexp='^sound$')
+async def send_audio(message: Message):
+    await bot.send_media(message.chat.id, 'audio/sample.mp3', "AUDIO")
 
 
 @dp.message_handler(regexp="^contact$")
@@ -117,7 +122,14 @@ async def send_media_message(message: Message):
 async def get_photo(message: Message):
     await bot.download_file(message.media[0].fileId, destination='images/'+message.media[0].name)
     await bot.send_message(message.chat.id, "I got a photo")
-    await bot.send_photo(message.chat.id, 'images/'+message.media[0].name)
+    await bot.send_media(message.chat.id, 'images/' + message.media[0].name, "IMAGE")
+
+
+@dp.message_handler(content_types=ContentType.AUDIO)
+async def get_photo(message: Message):
+    await bot.download_file(message.media[0].fileId, destination='audio/'+message.media[0].name)
+    await bot.send_message(message.chat.id, "I got an audio")
+    await bot.send_media(message.chat.id, 'audio/' + message.media[0].name, "AUDIO")
 
 
 @dp.message_handler()
