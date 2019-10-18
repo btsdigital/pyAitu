@@ -1,6 +1,15 @@
 import asyncio
+from uuid import UUID
 
 from . import context
+
+
+def _check_token(token: str) -> bool:
+    try:
+        UUID(token, version=4)
+        return True
+    except ValueError:
+        return False
 
 
 def _setup_callbacks(executor, on_startup=None, on_shutdown=None):
@@ -12,6 +21,8 @@ def _setup_callbacks(executor, on_startup=None, on_shutdown=None):
 
 def start_polling(dispatcher, *, loop=None, skip_updates=False, timeout=None,
                   on_startup=None, on_shutdown=None):
+    if not _check_token(dispatcher.bot.token):
+        raise Exception('Token ' + dispatcher.bot.token + ' is not valid')
     executor = Executor(dispatcher, loop=loop)
     _setup_callbacks(executor, on_startup, on_shutdown)
     executor.start_polling(timeout=timeout)
