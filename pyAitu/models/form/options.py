@@ -3,6 +3,7 @@ import pyAitu.models.form.input_type as input_type
 import pyAitu.models.form.currency as Currency
 from pyAitu.models.form.indent import Indent
 from pyAitu.models.form.flex_options import FlexOptions
+from pyAitu.models.form.option_media_type import OptionMediaType
 from pyAitu.utils.dictionary_extractor import dictionary_purified_from_none, dictionary_of_object_if_exist
 
 
@@ -30,7 +31,7 @@ class Options:
             max_count: Optional[int] = None,
             max_date: Optional[str] = None,
             max_length: Optional[int] = None,
-            media_type: Optional[str] = None,
+            media_type: Optional[OptionMediaType] = None,
             min_date: Optional[str] = None,
             orientation: Optional[str] = None,
             search_enabled: Optional[bool] = None,
@@ -89,7 +90,7 @@ class Options:
     # Removes all None attributes of self
     # Mutating function, with side effect
     def purify_none_attributes(self):
-        options_dictionary = dictionary_of_object_if_exist(object=self)
+        options_dictionary = dictionary_of_object_if_exist(obj=self)
         if options_dictionary:
             self.__dict__ = dictionary_purified_from_none(options_dictionary)
 

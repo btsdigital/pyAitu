@@ -13,11 +13,10 @@ class MediaPicker(Content):
             self,
             content_id: str,
             title: str,
-            options: Optional[Options] = None,
+            options: Options,
             validations_rules: Optional[ValidationRules] = None,
     ):
         super().__init__(content_id=content_id, content_type="media_picker")
         self.title = title
-        if options is not None:
-            self.options = options.__dict__
+        self.options = options.__dict__
         self.validations_rules = serialized(validations_rules)
