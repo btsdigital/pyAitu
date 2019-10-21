@@ -61,8 +61,8 @@ async def handle(message: Message):
             indent_outer=Indent(left=12, top=2, right=12),
             text_color="#0075EB"
         ),
-        # form_action=FormAction(action="open_url",
-        #                        data_template="https://eubank.kz")
+        form_action=FormAction(action="open_url",
+                               data_template="https://eubank.kz")
     )
 
     # Child Component
