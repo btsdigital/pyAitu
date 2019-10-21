@@ -1,11 +1,11 @@
 from .update import Update, QuickButtonSelected, InlineCommandSelected, Message, ContentType, FormClosed, \
     FormSubmitted, FormMessageSent, MessageIdAssigned
-from .media import Media, Contact
+from .media import Media, Contact, Audio, FileType
 from .webhook import WebhookInfo, SetWebhook
 from .command import InlineCommand, ReplyCommand, QuickButtonCommand, Command, UiState
 from .form import SimpleCatalog, Item, ItemInfo, Options, Form, Header, TextArea, ValidationRule, FlexOptions, Button, \
     FormAction, Submit, LabeledText, Divider, Image, FileMetadata, Text, Indent, Input, InputType, Currency, UserInfo,\
-    DatePicker, Checkbox, Switch, Radiogroup, CustomContainer, BottomBar
+    DatePicker, Checkbox, Switch, Radiogroup, CustomContainer, BottomBar, MediaPicker
 
 __all__ = [
     Message,
@@ -15,6 +15,8 @@ __all__ = [
     InlineCommandSelected,
     Media,
     Contact,
+    Audio,
+    FileType,
     InlineCommand,
     ReplyCommand,
     QuickButtonCommand,
@@ -40,6 +42,7 @@ __all__ = [
     Divider,
     Image,
     DatePicker,
+    MediaPicker,
     FileMetadata,
     Switch,
     Text,

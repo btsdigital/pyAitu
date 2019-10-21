@@ -1,7 +1,7 @@
 from typing import List, Dict, Optional
 from .base import BaseBot
 from ..models import Update, Media, Command, QuickButtonCommand, InlineCommand, ReplyCommand, Form, Contact, \
-    WebhookInfo, SetWebhook
+    WebhookInfo, SetWebhook, FileType
 from ..utils.strings import COMMANDS, SEND_MESSAGE, GET_UPDATES, UPLOADED_FILES, SEND_UI_STATE, SEND_CONTACT_MESSAGE, \
     EDIT_MESSAGE, SEND_CONTAINER_MESSAGE, FORWARD_MESSAGE
 import json
@@ -78,15 +78,16 @@ class Bot(BaseBot):
         result = await self.request(EDIT_MESSAGE, payload)
         return result
 
-    async def send_photo(self,
+    async def send_media(self,
                          chat_id: str,
-                         photo: str):
-        result = await self.upload_file(photo)
+                         file: str,
+                         file_type: FileType):
+        result = await self.upload_file(file)
         if result.get(UPLOADED_FILES):
             media = Media(
                 file_id=result.get(UPLOADED_FILES)[0]["fileId"],
                 name=result.get(UPLOADED_FILES)[0]["fileName"],
-                file_type="IMAGE"
+                file_type=file_type
             )
             command = Command(media=[media])
 

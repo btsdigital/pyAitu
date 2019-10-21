@@ -1,6 +1,6 @@
 from pyAitu.models.form.content import Button, Submit
 from .content import SimpleCatalog, Item, LabeledText, TextArea, ItemInfo, SimpleCatalog, Item, Submit, Divider, Image,\
-    FileMetadata, DatePicker, Text, Input, UserInfo, Checkbox, Switch, Radiogroup, CustomContainer
+    FileMetadata, DatePicker, Text, Input, UserInfo, Checkbox, Switch, Radiogroup, CustomContainer, MediaPicker
 from .options import Options
 from .form import Form
 from .header import Header
@@ -29,6 +29,7 @@ __all__ = [
     Divider,
     Image,
     DatePicker,
+    MediaPicker,
     FileMetadata,
     Switch,
     Text,
