@@ -2,6 +2,9 @@ import logging
 from pyAitu import executor, Bot, Dispatcher
 from pyAitu.models import Message, Options, FormClosed, FormSubmitted, CustomContainer, Indent, \
     FlexOptions, Image, FileMetadata, Text, Divider
+from pyAitu.models.form.alignment import RIGHT
+from pyAitu.models.form.text_size import H3, H4
+from pyAitu.models.form.text_style import BOLD
 from pyAitu.utils.strings import UPLOADED_FILES
 
 
@@ -25,8 +28,8 @@ async def handle(message: Message):
         content_id="text_id",
         title="+7 (727) 332-77-22",
         options=Options(
-            text_size="H3",
-            text_style="bold",
+            text_size=H3,
+            text_style=BOLD,
             indent_outer=Indent(left=12, top=4, right=12, bottom=12),
             text_color="#A9ADB1"
         )
@@ -37,7 +40,7 @@ async def handle(message: Message):
         content_id="text_id",
         title="Контактный телефон:",
         options=Options(
-            text_size="H4",
+            text_size=H4,
             indent_outer=Indent(left=12, top=2, right=12),
             text_color="#A9ADB1"
         )
@@ -56,8 +59,8 @@ async def handle(message: Message):
         content_id="text_id",
         title="eubank.kz",
         options=Options(
-            text_size="H4",
-            alignment="right",
+            text_size=H4,
+            alignment=RIGHT,
             indent_outer=Indent(left=12, top=2, right=12),
             text_color="#0075EB"
         ),
@@ -70,8 +73,8 @@ async def handle(message: Message):
         content_id="text_cat_id",
         title="Евразийский банк",
         options=Options(
-            text_size="H3",
-            text_style="bold",
+            text_size=H3,
+            text_style=BOLD,
             indent_outer=Indent(left=12, top=12, right=12),
         )
     )

@@ -1,6 +1,8 @@
 import logging
 from pyAitu import executor, Bot, Dispatcher
 from pyAitu.models import Message, Options, Form, Header, FormClosed, Divider, Text, Indent
+from pyAitu.models.form.text_size import H1, H3
+from pyAitu.models.form.text_style import BOLD
 
 API_TOKEN = 'YOUR_API_TOKEN'
 
@@ -12,16 +14,6 @@ logging.basicConfig(level=logging.INFO)
 
 @dp.message_handler()
 async def send_ui(message: Message):
-    text_options = Options(
-        text_size="H1",
-        text_style="bold",
-        text_color="#000000",
-        indent_inner=Indent(
-            right=5,
-            top=5,
-            bottom=10
-        )
-    )
     header = Header(
         _type="toolbar",
         title="Title",
@@ -32,12 +24,29 @@ async def send_ui(message: Message):
     text1 = Text(
         content_id="testid",
         title="New test text for show before divider",
-        options=text_options
+        options=Options(
+            text_size=H1,
+            text_style=BOLD,
+            text_color="#000000",
+            indent_inner=Indent(
+                right=5,
+                top=5,
+                bottom=10
+            )
+        )
     )
     text2 = Text(
         content_id="testid2",
         title="New test text for show after divider",
-        options=text_options
+        options=Options(
+            text_size=H3,
+            text_color="#442B83",
+            indent_inner=Indent(
+                right=10,
+                top=10,
+                bottom=1
+            )
+        )
     )
     divider = Divider(
         content_id="dividerid"

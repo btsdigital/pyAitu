@@ -1,16 +1,20 @@
 from typing import Optional
 import pyAitu.models.form.input_type as input_type
 import pyAitu.models.form.currency as Currency
+from pyAitu.models.form.alignment import Alignment
 from pyAitu.models.form.indent import Indent
 from pyAitu.models.form.flex_options import FlexOptions
 from pyAitu.models.form.option_media_type import OptionMediaType
+from pyAitu.models.form.orientation import Orientation
+from pyAitu.models.form.text_size import TextSize
+from pyAitu.models.form.text_style import TextStyle
 from pyAitu.utils.dictionary_extractor import dictionary_purified_from_none, dictionary_of_object_if_exist
 
 
 class Options:
     def __init__(
             self,
-            alignment: Optional[str] = None,
+            alignment: Optional[Alignment] = None,
             background: Optional[str] = None,
             background_color: Optional[str] = None,
             choice_type: Optional[str] = None,
@@ -33,15 +37,15 @@ class Options:
             max_length: Optional[int] = None,
             media_type: Optional[OptionMediaType] = None,
             min_date: Optional[str] = None,
-            orientation: Optional[str] = None,
+            orientation: Optional[Orientation] = None,
             search_enabled: Optional[bool] = None,
             show_divider: Optional[bool] = None,
             shape: Optional[str] = None,
             should_open_editor: Optional[bool] = None,
             subtitle_lines_count: Optional[int] = None,
             text_color: Optional[str] = None,
-            text_size: Optional[str] = None,
-            text_style: Optional[str] = None,
+            text_size: Optional[TextSize] = None,
+            text_style: Optional[TextStyle] = None,
             title: Optional[str] = None,
             title_lines_count: Optional[int] = None,
             width: Optional[int] = None
