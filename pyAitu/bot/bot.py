@@ -3,7 +3,8 @@ from .base import BaseBot
 from ..models import Update, Media, Command, QuickButtonCommand, InlineCommand, ReplyCommand, Form, Contact, \
     WebhookInfo, SetWebhook, FileType
 from ..utils.strings import COMMANDS, SEND_MESSAGE, GET_UPDATES, UPLOADED_FILES, SEND_UI_STATE, SEND_CONTACT_MESSAGE, \
-    EDIT_MESSAGE, FORWARD_MESSAGE
+    EDIT_MESSAGE, SEND_CONTAINER_MESSAGE, FORWARD_MESSAGE
+import json
 
 
 class Bot(BaseBot):
@@ -108,6 +109,27 @@ class Bot(BaseBot):
         }
 
         result = await self.request(SEND_UI_STATE, payload)
+        return result
+
+    async def send_container_message(
+            self,
+            chat_id: str,
+            content: List
+    ):
+
+        dict_content = []
+
+        for i in content:
+            dict_content.append(i.__dict__)
+
+        str_content = json.dumps(dict_content)
+
+        command = Command()
+        payload = {
+            COMMANDS: command.create_command(SEND_CONTAINER_MESSAGE, chat_id, content=str_content)
+        }
+
+        result = await self.request(SEND_CONTAINER_MESSAGE, payload)
         return result
 
     async def upload_file(self, file):

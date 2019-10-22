@@ -1,9 +1,9 @@
 import logging
 from pyAitu import executor, Bot, Dispatcher
-from pyAitu.models import Message, Options, Form, Header, FormClosed, \
-    FormSubmitted, FormAction, CustomContainer, Indent, \
+from pyAitu.models import Message, Options, FormClosed, FormSubmitted, CustomContainer, Indent, \
     FlexOptions, Image, FileMetadata, Text, Divider
 from pyAitu.utils.strings import UPLOADED_FILES
+
 
 API_TOKEN = 'YOUR_API_TOKEN'
 
@@ -19,10 +19,6 @@ async def handle(message: Message):
     Layers of containers:
     Main Container <- Parent Container <- Child Container
     """
-
-    form_id = ""
-
-    header = Header(_type="title", title="Custom Container Component", options=Options(closeable=True))
 
     # Child Component
     child_contact_number_text = Text(
@@ -77,7 +73,6 @@ async def handle(message: Message):
             text_size="H3",
             text_style="bold",
             indent_outer=Indent(left=12, top=12, right=12),
-            text_color="#FFFFFF"
         )
     )
 
@@ -96,33 +91,31 @@ async def handle(message: Message):
 
     # Child Container
     child_custom_container = CustomContainer(
-        content_id="container_two_id",
-        options=Options(width=62, height=26,
+        content_id="child_id_1",
+        options=Options(width=62, height=16,
                         flex_options=FlexOptions(flex_direction="column", align_items="center"),
                         background_color="#2B296D"),
-        content=[child_image, child_title_text, child_subtitle_text, child_divider, child_contact_title_text,
-                 child_contact_number_text]
+        content=[child_image]
     )
 
     # Parent Container
     parent_custom_container = CustomContainer(
-        content_id="container_one_id",
-        options=Options(flex_options=FlexOptions(flex_direction="column", align_items="start")),
-        content=[child_custom_container, child_custom_container]
+        content_id="parent_id",
+        options=Options(width=62, flex_options=FlexOptions(flex_direction="column", align_items="start")),
+        content=[child_custom_container, child_title_text, child_subtitle_text, child_divider, child_contact_title_text,
+                 child_contact_number_text]
     )
 
     # Main Container
     main_custom_container = CustomContainer(
-        content_id="container_id",
-        options=Options(indent_outer=Indent(top=8, bottom=8), background="card"),
+        content_id="main_id",
+        options=Options(indent_outer=Indent(left=16, right=16, top=8, bottom=8), background="card"),
         content=[parent_custom_container]
     )
 
-    content = [main_custom_container]
+    content = [main_custom_container, main_custom_container, main_custom_container]
 
-    form = Form(_id=form_id, header=header, content=content)
-
-    await bot.send_form(message.chat.id, form=form)
+    await bot.send_container_message(message.chat.id, content=content)
 
 
 @dispatcher.form_submitted_handler()
