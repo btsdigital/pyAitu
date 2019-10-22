@@ -3,6 +3,7 @@ import aiohttp
 import json
 import os
 from http import HTTPStatus
+from pprint import pprint as pp
 
 log = logging.getLogger('pyAitu')
 
@@ -79,6 +80,12 @@ async def _check_result(method_name, response):
     except ValueError:
         result_json = {}
 
-    description = result_json.get('description') or body
+    if result_json.get('error') is not None:
+        print(result_json.get('error') + '\n')
+        pp(result_json.get('message'))
+        print('\n')
+
     if HTTPStatus.OK <= response.status <= HTTPStatus.IM_USED:
         return result_json
+
+# async def error_check():
