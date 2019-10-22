@@ -251,71 +251,25 @@ class Dispatcher:
 
         try:
             if update.message:
-                state = await self.storage.get_state(chat=update.message.dialog.id,
-                                                     user=update.message.author.id)
-                context.update_state(chat=update.message.dialog.id,
-                                     user=update.message.author.id,
-                                     state=state)
+                await self.state_updater(update.message)
                 return await self.message_handlers.notify(update.message)
             elif update.quick_button_selected:
-                state = await self.storage.get_state(
-                    chat=update.quick_button_selected.dialog.id if update.quick_button_selected else None,
-                    user=update.quick_button_selected.sender.id
-                )
-                context.update_state(
-                    user=update.quick_button_selected.sender.id,
-                    state=state
-                )
+                await self.state_updater(update.quick_button_selected)
                 return await self.quick_button_handlers.notify(update.quick_button_selected)
             elif update.inline_command_selected:
-                state = await self.storage.get_state(
-                    chat=update.inline_command_selected.dialog.id if update.inline_command_selected else None,
-                    user=update.inline_command_selected.sender.id
-                )
-                context.update_state(
-                    user=update.inline_command_selected.sender.id,
-                    state=state
-                )
+                await self.state_updater(update.inline_command_selected)
                 return await self.inline_command_handlers.notify(update.inline_command_selected)
             elif update.form_closed:
-                state = await self.storage.get_state(
-                    chat=update.form_closed.dialog.id if update.form_closed else None,
-                    user=update.form_closed.sender.id
-                )
-                context.update_state(
-                    user=update.form_closed.sender.id,
-                    state=state
-                )
+                await self.state_updater(update.form_closed)
                 return await self.form_closed_handlers.notify(update.form_closed)
             elif update.form_message_sent:
-                state = await self.storage.get_state(
-                    chat=update.form_message_sent.dialog.id if update.form_message_sent else None,
-                    user=update.form_message_sent.sender.id
-                )
-                context.update_state(
-                    user=update.form_message_sent.sender.id,
-                    state=state
-                )
+                await self.state_updater(update.form_message_sent)
                 return await self.form_message_sent_handlers.notify(update.form_message_sent)
             elif update.form_submitted:
-                state = await self.storage.get_state(
-                    chat=update.form_submitted.dialog.id if update.form_submitted else None,
-                    user=update.form_submitted.sender.id
-                )
-                context.update_state(
-                    user=update.form_submitted.sender.id,
-                    state=state
-                )
+                await self.state_updater(update.form_submitted)
                 return await self.form_submitted_handlers.notify(update.form_submitted)
             elif update.message_id_assigned:
-                state = await self.storage.get_state(
-                    chat=update.message_id_assigned.dialog.id if update.message_id_assigned else None,
-                    user=update.message_id_assigned.dialog.id
-                )
-                context.update_state(
-                    user=update.message_id_assigned.dialog.id,
-                    state=state
-                )
+                await self.state_updater(update.message_id_assigned)
                 return await self.message_id_assigned_handlers.notify(update.message_id_assigned)
             else:
                 print("Undefined update " + update.updateType)
@@ -324,3 +278,13 @@ class Dispatcher:
             if err:
                 return err
             raise
+
+    async def state_updater(self, update):
+        state = await self.storage.get_state(
+            chat=update.dialog.id,
+            user=update.sender.id if hasattr(update, "sender") else update.dialog.id
+        )
+        context.update_state(
+            user=update.sender.id if hasattr(update, "sender") else update.dialog.id,
+            state=state
+        )
