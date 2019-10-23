@@ -79,6 +79,12 @@ async def _check_result(method_name, response):
     except ValueError:
         result_json = {}
 
+    if result_json.get('error') is not None:
+        error = str(result_json.get('error'))
+        message = str(result_json.get('message'))
+        status = response.status
+        log.error(f' - {status}: {error} - {message}')
+
     description = result_json.get('description') or body
     if HTTPStatus.OK <= response.status <= HTTPStatus.IM_USED:
         return result_json
