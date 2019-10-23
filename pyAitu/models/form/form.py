@@ -4,6 +4,7 @@ from .options import Options
 from .content.content import Content
 from .header import Header
 from .bottom_bar import BottomBar
+import logging
 
 # Type aliases
 Void = None
@@ -57,7 +58,8 @@ class Form:
         if header_dictionary:
             dictionary["header"] = header_dictionary
         else:
-            print("ERROR: Form(make_dictionary): Can not get Dictionary of Header! Header is required attribute")
+            logger = logging.getLogger('Form(make_dictionary)')
+            logger.error('Can not get Dictionary of Header! Header is required attribute')
             return None
 
         if self.options:
