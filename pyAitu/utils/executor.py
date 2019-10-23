@@ -1,6 +1,6 @@
 import asyncio
 from uuid import UUID
-
+import logging
 from . import context
 
 
@@ -44,10 +44,12 @@ class Executor:
         return self._freeze
 
     def on_startup(self, callback: callable, polling=True, webhook=False):
-        print('on START')
+        logger = logging.getLogger('Executor(on_startup)')
+        logger.info('on START')
 
     def on_shutdown(self, callback: callable, polling=True, webhook=False):
-        print('on SHUT')
+        logger = logging.getLogger('Executor(on_shutdown)')
+        logger.info('on SHUT')
 
     def _check_frozen(self):
         if self.frozen:
