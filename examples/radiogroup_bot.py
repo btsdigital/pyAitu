@@ -2,7 +2,7 @@ import logging
 from pyAitu import executor, Bot, Dispatcher
 from pyAitu.models import Message, Options, Form, Header, FormClosed, \
     FormSubmitted, Radiogroup, Submit, FormAction, ValidationRule, Item
-from pyAitu.models.form.orientation import HORIZONTAL
+from pyAitu.models.constants.orientation import HORIZONTAL
 
 API_TOKEN = 'YOUR_API_TOKEN'
 

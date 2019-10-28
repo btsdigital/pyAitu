@@ -2,8 +2,8 @@ import logging
 from pyAitu import executor, Bot, Dispatcher
 from pyAitu.models import Message, Options, Form, Header, FormClosed, ValidationRule, Submit, FormAction, \
     FormSubmitted, Input
-import pyAitu.models.form.input_type as input_type
-import pyAitu.models.form.currency as currency
+import pyAitu.models.constants.input_type as input_type
+import pyAitu.models.constants.currency as currency
 
 
 API_TOKEN = 'YOUR_API_TOKEN'

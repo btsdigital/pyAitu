@@ -1,14 +1,8 @@
 from typing import Optional
-import pyAitu.models.form.input_type as input_type
-import pyAitu.models.form.currency as Currency
-from pyAitu.models.form.alignment import Alignment
-from pyAitu.models.form.indent import Indent
-from pyAitu.models.form.flex_options import FlexOptions
-from pyAitu.models.form.option_media_type import OptionMediaType
-from pyAitu.models.form.orientation import Orientation
-from pyAitu.models.form.text_size import TextSize
-from pyAitu.models.form.text_style import TextStyle
-from pyAitu.utils.dictionary_extractor import dictionary_purified_from_none, dictionary_of_object_if_exist
+from ..constants import Currency, Alignment, Orientation, TextSize, TextStyle, OptionMediaType, InputType
+from .indent import Indent
+from .flex_options import FlexOptions
+from ...utils.dictionary_extractor import dictionary_purified_from_none, dictionary_of_object_if_exist
 
 
 class Options:
@@ -20,7 +14,7 @@ class Options:
             choice_type: Optional[str] = None,
             closeable: Optional[bool] = None,
             columns_count: Optional[int] = None,
-            currency: Optional[Currency.Currency] = None,
+            currency: Optional[Currency] = None,
             divider_type: Optional[str] = None,
             flex_options: Optional[FlexOptions] = None,
             fullscreen: Optional[bool] = None,
@@ -28,7 +22,7 @@ class Options:
             height: Optional[int] = None,
             indent_inner: Optional[Indent] = None,
             indent_outer: Optional[Indent] = None,
-            input_type: Optional[input_type.InputType] = None,
+            input_type: Optional[InputType] = None,
             item_left_icon_resource: Optional[str] = None,
             item_right_icon_resource: Optional[str] = None,
             item_type: Optional[str] = None,

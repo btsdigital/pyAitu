@@ -2,9 +2,9 @@ import logging
 from pyAitu import executor, Bot, Dispatcher
 from pyAitu.models import Message, Options, FormClosed, FormSubmitted, CustomContainer, Indent, \
     FlexOptions, Image, FileMetadata, Text, Divider
-from pyAitu.models.form.alignment import RIGHT
-from pyAitu.models.form.text_size import H3, H4
-from pyAitu.models.form.text_style import BOLD
+from pyAitu.models.constants.alignment import RIGHT
+from pyAitu.models.constants.text_size import H3, H4
+from pyAitu.models.constants.text_style import BOLD
 from pyAitu.utils.strings import UPLOADED_FILES
 
 

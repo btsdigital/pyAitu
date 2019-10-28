@@ -1,9 +1,9 @@
 import logging
 from pyAitu import executor, Bot, Dispatcher
-from pyAitu.models import Message, Options, Form, Header, FormClosed, Divider, Text, Indent, ValidationRule, Submit, \
+from pyAitu.models import Message, Options, Form, Header, FormClosed, ValidationRule, Submit, \
     FormAction
 from pyAitu.models.form.content.checkbox import Checkbox
-from pyAitu.models.form.text_size import H1
+from pyAitu.models.constants.text_size import H1
 
 API_TOKEN = 'YOUR_API_TOKEN'
 

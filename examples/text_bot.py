@@ -1,8 +1,8 @@
 import logging
 from pyAitu import executor, Bot, Dispatcher
 from pyAitu.models import Message, Options, Form, Header, FormClosed, Divider, Text, Indent
-from pyAitu.models.form.text_size import H1, H3
-from pyAitu.models.form.text_style import BOLD
+from pyAitu.models.constants.text_size import H1, H3
+from pyAitu.models.constants.text_style import BOLD
 
 API_TOKEN = 'YOUR_API_TOKEN'
 

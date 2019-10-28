@@ -8,8 +8,7 @@ from .validation_rule import ValidationRule
 from .flex_options import FlexOptions
 from .form_action import FormAction
 from .indent import Indent
-from .input_type import InputType
-from .currency import Currency
+from ..constants import InputType, Currency
 from .bottom_bar import BottomBar
 
 __all__ = [
