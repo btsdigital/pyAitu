@@ -1,8 +1,9 @@
 import logging
 from pyAitu import executor, Bot, Dispatcher
-from pyAitu.models import Message, Options, Form, Header, FormClosed, Divider, Text, Indent, ValidationRule, Submit, \
+from pyAitu.models import Message, Options, Form, Header, FormClosed, ValidationRule, Submit, \
     FormAction
 from pyAitu.models.form.content.checkbox import Checkbox
+from pyAitu.models.constants.text_size import H1
 
 API_TOKEN = 'YOUR_API_TOKEN'
 
@@ -24,18 +25,19 @@ async def send_ui(message: Message):
     checkbox1 = Checkbox(
         content_id="checkbox1",
         title="Mark option 1",
-        default_state=False
+        default_state=True
     )
     checkbox2 = Checkbox(
         content_id="checkbox2",
         title="Mark option 2",
+        default_state=False,
         validations_rules=[ValidationRule(type="required", value="true", error="Поле не должно быть пустым")]
     )
     checkbox3 = Checkbox(
         content_id="checkbox3",
         title="Mark option 3",
         options=Options(
-            text_size="H1",
+            text_size=H1,
             text_color="#FFEF00"
         )
     )

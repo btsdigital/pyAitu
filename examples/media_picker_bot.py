@@ -1,7 +1,7 @@
 import logging
 from pyAitu import executor, Bot, Dispatcher
 from pyAitu.models import Message, Options, Form, Header, FormClosed, ValidationRule, Submit, FormAction, MediaPicker
-from pyAitu.models.form.option_media_type import PHOTO, VIDEO
+from pyAitu.models.constants.option_media_type import PHOTO, VIDEO
 
 API_TOKEN = 'YOUR_API_TOKEN'
 
@@ -22,10 +22,10 @@ async def send_ui(message: Message):
     )
     image_picker = MediaPicker(
         content_id="image_picker1",
-        title="Media image picker title",
+        title="Image media picker title",
         options=Options(
             media_type=PHOTO,
-            height=10,
+            height=20,
             width=80,
             max_count=1
         ),
@@ -33,11 +33,11 @@ async def send_ui(message: Message):
     )
     video_picker = MediaPicker(
         content_id="video_picker1",
-        title="Media video picker title",
+        title="Video media picker title",
         options=Options(
             should_open_editor=False,
             media_type=VIDEO,
-            height=10,
+            height=30,
             width=80,
             max_count=2
         ),

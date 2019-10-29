@@ -13,7 +13,7 @@ class Checkbox(Content):
             self,
             content_id: str,
             title: str,
-            default_state: bool = True,
+            default_state: bool = False,
             options: Optional[Options] = None,
             validations_rules: Optional[ValidationRules] = None,
     ):

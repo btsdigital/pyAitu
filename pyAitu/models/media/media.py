@@ -1,4 +1,4 @@
-from .file_type import FileType
+from pyAitu.models.constants.file_type import FileType
 from pyAitu.utils.strings import FILE_ID, FILE_TYPE, NAME
 
 

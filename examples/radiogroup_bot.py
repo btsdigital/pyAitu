@@ -2,6 +2,7 @@ import logging
 from pyAitu import executor, Bot, Dispatcher
 from pyAitu.models import Message, Options, Form, Header, FormClosed, \
     FormSubmitted, Radiogroup, Submit, FormAction, ValidationRule, Item
+from pyAitu.models.constants.orientation import HORIZONTAL
 
 API_TOKEN = 'YOUR_API_TOKEN'
 
@@ -19,7 +20,7 @@ def make_form() -> Form:
     radiogroup = Radiogroup(
         content_id="radiogroup",
         title="Radiogroup",
-        options=Options(orientation="horizontal"),
+        options=Options(orientation=HORIZONTAL),
         default_value=Item(item_id="radio_1", title="Default value"),
         items=[Item(item_id="radio_1", title="First"),
                Item(item_id="radio_2", title="Second")],
