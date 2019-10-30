@@ -36,6 +36,7 @@ async def send_ui(message: Message):
     checkbox3 = Checkbox(
         content_id="checkbox3",
         title="Mark option 3",
+        default_state=True,
         options=Options(
             text_size=H1,
             text_color="#FFEF00"

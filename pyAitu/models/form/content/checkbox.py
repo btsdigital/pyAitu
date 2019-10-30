@@ -3,7 +3,7 @@ from typing import Optional, List
 from ..options import Options
 from ..validation_rule import ValidationRule
 from .content import Content
-from pyAitu.utils.serializer import serialized
+from ....utils.serializer import serialized
 
 ValidationRules = List[ValidationRule]
 
@@ -17,7 +17,7 @@ class Checkbox(Content):
             options: Optional[Options] = None,
             validations_rules: Optional[ValidationRules] = None,
     ):
-        super().__init__(content_type="checkbox", content_id=content_id)
+        super().__init__(content_id=content_id, content_type="checkbox")
         self.title = title
         self.default_state = default_state
         if options is not None:

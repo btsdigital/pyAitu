@@ -1,7 +1,6 @@
 from typing import Optional, Union, List, Dict, Any
 from pyAitu.utils.dictionary_extractor import dictionary_purified_from_none, dictionary_of_object_if_exist
 from .options import Options
-from .content.content import Content
 from .header import Header
 from .bottom_bar import BottomBar
 import logging
@@ -16,8 +15,8 @@ ArrayOrObject = Union[Array[Object], Object]
 
 
 # Function with side effect on input dictionaries
-def add_purified_object_dictionary_if_possible_to(dictionaries: Dictionaries, object: Object) -> Void:
-    object_dictionary = dictionary_of_object_if_exist(object)
+def add_purified_object_dictionary_if_possible_to(dictionaries: Dictionaries, obj: Object) -> Void:
+    object_dictionary = dictionary_of_object_if_exist(obj)
     if object_dictionary is not None:
         dictionaries.append(dictionary_purified_from_none(object_dictionary))
 
@@ -26,11 +25,11 @@ def make_dictionaries_from(array_or_object: ArrayOrObject) -> Dictionaries:
     dictionaries: Dictionaries = []
     if isinstance(array_or_object, Array):
         array = array_or_object
-        for object in array:
-            add_purified_object_dictionary_if_possible_to(dictionaries, object)
+        for obj in array:
+            add_purified_object_dictionary_if_possible_to(dictionaries, obj)
     else:
-        object = array_or_object
-        add_purified_object_dictionary_if_possible_to(dictionaries, object)
+        obj = array_or_object
+        add_purified_object_dictionary_if_possible_to(dictionaries, obj)
     return dictionaries
 
 

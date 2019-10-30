@@ -21,7 +21,7 @@ def dictionary_of_object_if_exist(obj: Optional[Object]) -> Optional[Dict[Any, A
 
 # Shallow purification from None on arbitrary Python Dictionaries. Returns purified dictionary.
 def dictionary_purified_from_none(dictionary: Dict[Any, Any]) -> Dict[Any, Any]:
-    return dict(filter(lambda item: item[1], dictionary.items()))
+    return dict(filter(lambda item: item[1] is not None, dictionary.items()))
 
 
 # Shallow purification from None on arbitrary Python Objects. Returns purified deepcopy of object.
