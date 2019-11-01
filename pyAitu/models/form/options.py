@@ -8,6 +8,7 @@ from ...utils.dictionary_extractor import dictionary_purified_from_none, diction
 class Options:
     def __init__(
             self,
+            type: Optional[str] = None,
             alignment: Optional[Alignment] = None,
             background: Optional[str] = None,
             background_color: Optional[str] = None,
@@ -44,6 +45,7 @@ class Options:
             title_lines_count: Optional[int] = None,
             width: Optional[int] = None
     ):
+        self.type = type
         self.alignment = alignment
         self.background = background
         self.background_color = background_color
