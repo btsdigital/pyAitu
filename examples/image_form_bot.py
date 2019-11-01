@@ -14,8 +14,8 @@ logging.basicConfig(level=logging.INFO)
 async def send_image_form(message: Message):
     file_metadata = FileMetadata(
         file_type="image",
-        file_id="7f9b8a23-ea53-11e9-8c13-bee29cb312b9",
-        file_name="selected_69dba7ef-be13-49ca-af53-e012e7f09444"
+        file_id="YOUR IMAGE ID",
+        file_name="YOUR IMAGE NAME"
     )
     image_options = Options(
         width=100,
