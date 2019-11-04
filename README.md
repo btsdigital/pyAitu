@@ -1,8 +1,8 @@
-#pyAitu
+# pyAitu
 
 **pyAitu** is a fully asynchronous framework for [Aitu messenger](https://aitu.io) Bot Api
 
-##Developers
+## Developers
 
 <table>
     <tr>
