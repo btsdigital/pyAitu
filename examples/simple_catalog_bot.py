@@ -1,10 +1,10 @@
 import logging
 from pyAitu import executor, Bot, Dispatcher
-from pyAitu.models import Message, SimpleCatalog, Item, Options, Form, Header, FormClosed, FormSubmitted, Submit, \
-    FormAction, FormMessageSent
+from pyAitu.models import Message, SimpleCatalog, Item, Options, Form, Header, FormClosed, FormSubmitted, \
+    FormMessageSent
 
 
-API_TOKEN = 'YOUR API TOKEN'
+API_TOKEN = 'YOUR_API_TOKEN'
 
 bot = Bot(token=API_TOKEN)
 dp = Dispatcher(bot)
@@ -12,56 +12,29 @@ dp = Dispatcher(bot)
 logging.basicConfig(level=logging.INFO)
 
 
-@dp.message_handler(commands=['submit'])
-async def send_submit_form(message: Message):
-    form_options = Options(
-        fullscreen=True
-    )
-    header_options = Options(
-        closeable=True
-    )
-    header = Header(
-        _type="toolbar",
-        title="Title",
-        options=header_options
-    )
-    form_action = FormAction(
-        action="send_private_data",
-        data_template="phone"
-    )
-    submit = Submit(
-        content_id="lol",
-        form_action=form_action,
-        title="отправь мой номер"
-    )
-    form = Form(_id="any id", header=header, content=submit, options=form_options)
-    await bot.send_form(message.chat.id, form=form)
-
-
 @dp.message_handler()
 async def send_ui(message: Message):
-    list_item = []
-    item = Item(
-        item_id="123",
-        title="bro",
-        subtitle="lol"
-    )
-    list_item.append(item)
-    options = Options("list")
-    header_options = Options(
-        closeable=True
-    )
-    header = Header(
-        _type="toolbar",
-        title="Title",
-        options=header_options
-    )
+    header = Header(_type="toolbar", title="Simple Catalog", options=Options(closeable=True))
+
+    simple_catalog_items = []
+
+    for i in range(20):
+        simple_catalog_items.append(Item(item_id=f"item_id_{i}",
+                                         title=f"item_title_{i}",
+                                         subtitle=f"item_subtitle_{i}")
+                                    )
+
     simple_catalog = SimpleCatalog(
-        content_id="lol",
-        items=list_item,
-        options=options
+        content_id="simple_catalog_id",
+        items=simple_catalog_items,
+        options=Options(type="list",
+                        item_type="item_card",
+                        columns_count=2,
+                        show_divider=True,
+                        item_right_icon_resource="ic_right_arrow")
     )
-    form = Form(_id="lol", header=header, content=simple_catalog)
+
+    form = Form(_id="form_id", header=header, content=simple_catalog)
     await bot.send_form(message.chat.id, form=form)
 
 
