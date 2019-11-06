@@ -9,3 +9,6 @@ __pycache__/
 .coverage
 .coverage.*
 .cache
+.DS_Store
+docs/build/
+docs/html
