@@ -50,7 +50,7 @@ setup(
     packages=find_packages(exclude=('tests', 'tests.*', 'examples.*', 'docs')),
     classifiers=[
         "Programming Language :: Python :: 3",
-        "License :: OSI Approved :: Apache 2.0"
+        "License :: OSI Approved :: Apache License, Version 2.0 (Apache-2.0)"
     ],
     python_requires='>=3.7',
     install_requires=get_requirements(),
