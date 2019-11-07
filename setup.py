@@ -3,11 +3,6 @@ import re
 import sys
 from setuptools import setup, find_packages
 
-try:
-    from pip.req import parse_requirements
-except ImportError:
-    from pip._internal.req import parse_requirements
-
 WORK_DIR = pathlib.Path(__file__).parent
 
 MINIMAL_PY_VERSION = (3, 7)
@@ -28,19 +23,15 @@ def get_version():
         raise RuntimeError('Unable to determine version.')
 
 
-def get_requirements(filename=None):
-    if filename is None:
-        filename = 'requirements.txt'
-
-    file = WORK_DIR / filename
-
-    install_reqs = parse_requirements(str(file), session='hack')
-    return [str(ir.req) for ir in install_reqs]
+REQUIRED_PACKAGES = [
+    'aiohttp>=3.5.4, <4.0.0',
+    'certifi>=2018.8.24'
+]
 
 
 setup(
     name="pyAitu",
-    version="0.0.1",
+    version="0.0.3",
     author="Yerassyl Zeinolla",
     author_email="yerassyl.zeinolla@btsdigital.kz",
     description="Asynchronous Python framework for Aitu Bot API",
@@ -53,7 +44,7 @@ setup(
         "License :: OSI Approved :: Apache Software License",
     ],
     python_requires='>=3.7',
-    install_requires=get_requirements(),
+    install_requires=REQUIRED_PACKAGES,
     package_data={'': ['requirements.txt']},
     include_package_data=False,
     license='Apache 2.0'
