@@ -12,3 +12,11 @@ __pycache__/
 .DS_Store
 docs/build/
 docs/html
+dist
+*.egg-info/
+.installed.cfg
+*.egg
+eggs/
+.eggs/
+pip-log.txt
+pip-delete-this-directory.txt
