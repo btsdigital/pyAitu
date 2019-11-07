@@ -49,11 +49,12 @@ setup(
     url="https://github.com/btsdigital/pyAitu",
     packages=find_packages(exclude=('tests', 'tests.*', 'examples.*', 'docs')),
     classifiers=[
-        "Programming Language :: Python :: 3",
-        "License :: OSI Approved :: Apache License, Version 2.0 (Apache-2.0)"
+        "Programming Language :: Python :: 3.7",
+        "License :: OSI Approved :: Apache Software License",
     ],
     python_requires='>=3.7',
     install_requires=get_requirements(),
     package_data={'': ['requirements.txt']},
-    include_package_data=False
+    include_package_data=False,
+    license='Apache 2.0'
 )
