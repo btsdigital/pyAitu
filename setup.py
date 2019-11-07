@@ -36,7 +36,6 @@ setup(
     author_email="yerassyl.zeinolla@btsdigital.kz",
     description="Asynchronous Python framework for Aitu Bot API",
     long_description=get_description(),
-    long_description_content_type="text/markdown",
     url="https://github.com/btsdigital/pyAitu",
     packages=find_packages(exclude=('tests', 'tests.*', 'examples.*', 'docs')),
     classifiers=[

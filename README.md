@@ -8,7 +8,7 @@
 
 **pyAitu** is a fully asynchronous framework for [Aitu messenger](https://aitu.io) Bot Api
 
-##Resources:
+## Resources:
    - Pip: [pyAitu](https://pypi.org/project/pyAitu/)
    - Docs: [ReadTheDocs](https://pyaitu.readthedocs.io/en/latest/)
 
