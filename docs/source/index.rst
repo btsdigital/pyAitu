@@ -9,6 +9,10 @@ pyAitu: Python SDK for Aitu Bot API
         :target: https://pypi.org/project/pyAitu/
         :alt: Supported python version
 
+    .. image:: https://img.shields.io/pypi/dm/pyAitu.svg?style=flat-square
+        :target: https://pypi.python.org/pypi/pyAitu
+        :alt: PyPi downloads
+
     .. image:: https://img.shields.io/readthedocs/pip/stable.svg?style=flat-square
         :target: https://pyaitu.readthedocs.io/en/latest/
         :alt: Documentation status
