@@ -10,20 +10,27 @@ class BaseBot:
     def __init__(
             self,
             token: str,
+            proxy: str = None,
             loop: Optional[Union[asyncio.BaseEventLoop, asyncio.AbstractEventLoop]] = None
     ):
         if loop is None:
             loop = asyncio.get_event_loop()
         self.loop = loop
         self.token = token
-        connector = aiohttp.TCPConnector(loop=self.loop, verify_ssl=False)
+        self.proxy = proxy
+        connector = aiohttp.TCPConnector(loop=self.loop, ssl=False)
         self.session = aiohttp.ClientSession(connector=connector, loop=self.loop, json_serialize=json.dumps)
 
     async def request(self,
                       method: str,
                       data: Optional[Dict] = None,
                       files: Optional[Dict] = None) -> Union[List, Dict, bool]:
-        return await api.request(session=self.session, token=self.token, method=method, data=data, files=files)
+        return await api.request(session=self.session,
+                                 token=self.token,
+                                 method=method,
+                                 data=data,
+                                 proxy=self.proxy,
+                                 files=files)
 
     async def download_file(
             self,

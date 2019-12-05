@@ -25,43 +25,43 @@ def _compose_data(params=None, files=None):
     return data
 
 
-async def request(session, token, method, data=None, files=None, **kwargs) -> bool or dict:
+async def request(session, token, method, data=None, proxy=None, files=None, **kwargs) -> bool or dict:
     log.debug(f"Making request {method}")
 
     if files and method == "UploadFile":
         data = _compose_data(data, files)
         try:
-            async with session.post(FILE_UPLOAD_URL, data=data, headers={"X-BOT-TOKEN": token}, **kwargs) as response:
+            async with session.post(FILE_UPLOAD_URL, data=data, proxy=proxy, headers={"X-BOT-TOKEN": token}, **kwargs) as response:
                 return await _check_result(method, response)
         except aiohttp.ClientError as e:
             raise Exception(f"aiohttp client throws an error: {e.__class__.__name__}: {e}")
     elif method in ["SetWebhook", "GetWebhook", "DeleteWebhook"]:
         if method == "GetWebhook":
             try:
-                async with session.get(WEBHOOK_INFO_URL, headers={"X-BOT-TOKEN": token}, **kwargs) as response:
+                async with session.get(WEBHOOK_INFO_URL, proxy=proxy, headers={"X-BOT-TOKEN": token}, **kwargs) as response:
                     return await _check_result(method, response)
             except aiohttp.ClientError as e:
                 raise Exception(f"aiohttp client throws an error: {e.__class__.__name__}: {e}")
         elif method == "SetWebhook":
             try:
-                async with session.post(WEBHOOK_INFO_URL, json=data, headers={"X-BOT-TOKEN": token}, **kwargs) \
+                async with session.post(WEBHOOK_INFO_URL, proxy=proxy, json=data, headers={"X-BOT-TOKEN": token}, **kwargs) \
                         as response:
                     return await _check_result(method, response)
             except aiohttp.ClientError as e:
                 raise Exception(f"aiohttp client throws an error: {e.__class__.__name__}: {e}")
         elif method == "DeleteWebhook":
             try:
-                async with session.delete(WEBHOOK_INFO_URL, headers={"X-BOT-TOKEN": token}, **kwargs) as response:
+                async with session.delete(WEBHOOK_INFO_URL, proxy=proxy, headers={"X-BOT-TOKEN": token}, **kwargs) as response:
                     return await _check_result(method, response)
             except aiohttp.ClientError as e:
                 raise Exception(f"aiohttp client throws an error: {e.__class__.__name__}: {e}")
     else:
         try:
             if method == "GetUpdates":
-                async with session.get(API_URL, headers={"X-BOT-TOKEN": token}, **kwargs) as response:
+                async with session.get(API_URL, proxy=proxy, headers={"X-BOT-TOKEN": token}, **kwargs) as response:
                     return await _check_result(method, response)
             else:
-                async with session.post(API_URL, json=data, headers={"X-BOT-TOKEN": token}, **kwargs) as response:
+                async with session.post(API_URL, proxy=proxy, json=data, headers={"X-BOT-TOKEN": token}, **kwargs) as response:
                     return await _check_result(method, response)
         except aiohttp.ClientError as e:
             raise Exception(f"aiohttp client throws an error: {e.__class__.__name__}: {e}")
