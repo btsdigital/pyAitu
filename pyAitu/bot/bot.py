@@ -132,6 +132,24 @@ class Bot(BaseBot):
         result = await self.request(SEND_CONTAINER_MESSAGE, payload)
         return result
 
+    async def send_quick_button(
+            self,
+            chat_id: str,
+            quick_button_commands: List[QuickButtonCommand] = None) -> Dict:
+
+        command = Command()
+
+        payload = {
+            COMMANDS: command.create_command(
+                SEND_UI_STATE,
+                chat_id,
+                quick_button_commands=quick_button_commands,
+            )
+        }
+
+        result = await self.request(SEND_UI_STATE, payload)
+        return result
+
     async def upload_file(self, file):
         files = {
             "file": file
