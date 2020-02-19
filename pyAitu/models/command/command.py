@@ -5,7 +5,7 @@ from ..peer import Recipient
 from ..form import Form
 from ..media import Media, Contact
 from ...utils.strings import UI_STATE, RECIPIENT, TYPE, CONTENT, INLINE_COMMANDS, MEDIA_LIST, INPUT_MEDIA, LOCAL_ID, \
-    MESSAGE_ID, FROM_DIALOG, TO_DIALOG
+    MESSAGE_ID, FROM_DIALOG, TO_DIALOG, DIALOG, DELETE_MESSAGE
 
 
 class Command:
@@ -33,7 +33,8 @@ class Command:
             local_id: str = None,
             message_id: str = None,
             from_dialog: str = None,
-            to_dialog: str = None
+            to_dialog: str = None,
+            dialog: str = None
     ):
         commands = []
         form_message = FormMessage(form).__dict__ if form is not None else {}
@@ -56,7 +57,8 @@ class Command:
             LOCAL_ID: local_id,
             MESSAGE_ID: message_id,
             FROM_DIALOG: Recipient(from_dialog).get_recipient(),
-            TO_DIALOG: Recipient(to_dialog).get_recipient()
+            TO_DIALOG: Recipient(to_dialog).get_recipient(),
+            DIALOG: Recipient(dialog).get_recipient() if dialog else None
          }
 
         commands.append(self.remove_none(body))
@@ -64,4 +66,6 @@ class Command:
         return commands
 
     def remove_none(self, command: dict):
+        if command.get(TYPE) == DELETE_MESSAGE:
+            return {k: v for k, v in command.items() if k in [TYPE, DIALOG, MESSAGE_ID]}
         return {k: v for k, v in command.items() if v is not None or {} or ''}
