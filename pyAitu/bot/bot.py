@@ -3,7 +3,7 @@ from .base import BaseBot
 from ..models import Update, Media, Command, QuickButtonCommand, InlineCommand, ReplyCommand, Form, Contact, \
     WebhookInfo, SetWebhook, FileType
 from ..utils.strings import COMMANDS, SEND_MESSAGE, GET_UPDATES, UPLOADED_FILES, SEND_UI_STATE, SEND_CONTACT_MESSAGE, \
-    EDIT_MESSAGE, SEND_CONTAINER_MESSAGE, FORWARD_MESSAGE
+    EDIT_MESSAGE, SEND_CONTAINER_MESSAGE, FORWARD_MESSAGE, DELETE_MESSAGE
 import json
 
 
@@ -150,6 +150,20 @@ class Bot(BaseBot):
         }
 
         result = await self.request(SEND_UI_STATE, payload)
+        return result
+    
+    async def delete_message(self, dialog: str, message_id: str):
+        command = Command(inline_commands=None)
+
+        payload = {
+            COMMANDS: command.create_command(
+                DELETE_MESSAGE,
+                dialog=dialog,
+                content=None,
+                message_id=message_id
+            )
+        }
+        result = await self.request(DELETE_MESSAGE, payload)
         return result
 
     async def get_webhook(self) -> WebhookInfo:
