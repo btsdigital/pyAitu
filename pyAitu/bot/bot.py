@@ -5,11 +5,15 @@ from ..models import Update, Media, Command, QuickButtonCommand, InlineCommand, 
 from ..utils.strings import COMMANDS, SEND_MESSAGE, GET_UPDATES, UPLOADED_FILES, SEND_UI_STATE, SEND_CONTACT_MESSAGE, \
     EDIT_MESSAGE, SEND_CONTAINER_MESSAGE, FORWARD_MESSAGE, DELETE_MESSAGE
 import json
+import asyncio
 
 
 class Bot(BaseBot):
     async def get_updates(self) -> List[Update]:
         result = await self.request(method=GET_UPDATES)
+        for each in result.get("updates", []):
+            if each.get("type") == "MessageIdAssigned":
+                self.local_id_to_message_id[each.get("localId")] = each.get("id")
         return [Update(update) for update in result.get("updates", [])]
 
     async def send_message(self,
@@ -17,11 +21,12 @@ class Bot(BaseBot):
                            content: str,
                            quick_button_commands: List[QuickButtonCommand] = None,
                            inline_commands: List[InlineCommand] = None,
+                           inline_command_rows: List[List[InlineCommand]] = None,
                            reply_keyboard: List[ReplyCommand] = None,
                            media_list: List[Media] = None,
                            local_id: str = None
                            ) -> Dict:
-        command = Command(inline_commands=inline_commands, media=media_list)
+        command = Command(inline_commands=inline_commands, inline_command_rows=inline_command_rows, media=media_list)
 
         payload = {
             COMMANDS: command.create_command(
@@ -35,6 +40,10 @@ class Bot(BaseBot):
         }
 
         result = await self.request(SEND_MESSAGE, payload)
+        if local_id:
+            while not self.local_id_to_message_id.get(local_id):
+                await asyncio.sleep(0.5)
+            return self.local_id_to_message_id.pop(local_id)
         return result
 
     async def forward_message(self,
@@ -62,9 +71,10 @@ class Bot(BaseBot):
                            peer_id: str,
                            message_id: str,
                            content: str,
-                           inline_commands: List[InlineCommand] = None
+                           inline_commands: List[InlineCommand] = None,
+                           inline_command_rows: List[List[InlineCommand]] = None,
                            ):
-        command = Command(inline_commands=inline_commands)
+        command = Command(inline_commands=inline_commands, inline_command_rows=inline_command_rows)
 
         payload = {
             COMMANDS: command.create_command(
@@ -81,7 +91,10 @@ class Bot(BaseBot):
     async def send_media(self,
                          chat_id: str,
                          file: str,
-                         file_type: FileType):
+                         file_type: FileType,
+                         content: str = "",
+                         local_id: str = None,
+                         reply_keyboard: list = None):
         result = await self.upload_file(file)
         if result.get(UPLOADED_FILES):
             media = Media(
@@ -92,11 +105,40 @@ class Bot(BaseBot):
             command = Command(media=[media])
 
             payload = {
-                COMMANDS: command.create_command(SEND_MESSAGE, chat_id)
+                COMMANDS: command.create_command(SEND_MESSAGE, chat_id, content, local_id=local_id,
+                                                 reply_keyboard=reply_keyboard)
             }
             result = await self.request(SEND_MESSAGE, payload)
-
+            if local_id:
+                while not self.local_id_to_message_id.get(local_id):
+                    await asyncio.sleep(0.5)
+                return self.local_id_to_message_id.pop(local_id)
             return result
+
+    async def send_media_by_id(self,
+                               chat_id: str,
+                               file_id: str,
+                               file_type: FileType,
+                               content: str = "",
+                               local_id: str = None,
+                               reply_keyboard: list = None):
+        media = Media(
+            file_id=file_id,
+            name=file_id,
+            file_type=file_type
+        )
+        command = Command(media=[media])
+
+        payload = {
+            COMMANDS: command.create_command(SEND_MESSAGE, chat_id, content, local_id=local_id,
+                                             reply_keyboard=reply_keyboard)
+        }
+        result = await self.request(SEND_MESSAGE, payload)
+        if local_id:
+            while not self.local_id_to_message_id.get(local_id):
+                await asyncio.sleep(0.5)
+            return self.local_id_to_message_id.pop(local_id)
+        return result
 
     async def send_form(
             self,
@@ -164,6 +206,24 @@ class Bot(BaseBot):
             )
         }
         result = await self.request(DELETE_MESSAGE, payload)
+        return result
+
+    async def edit_message_reply_markup(self, peer_id: str,
+                                        message_id: str,
+                                        inline_commands: List[InlineCommand] = None,
+                                        inline_command_rows: List[List[InlineCommand]] = None):
+        command = Command(inline_commands=inline_commands, inline_command_rows=inline_command_rows)
+
+        payload = {
+            COMMANDS: command.create_command(
+                EDIT_MESSAGE,
+                content=None,
+                peer_id=peer_id,
+                message_id=message_id
+            )
+        }
+
+        result = await self.request(EDIT_MESSAGE, payload)
         return result
 
     async def get_webhook(self) -> WebhookInfo:
