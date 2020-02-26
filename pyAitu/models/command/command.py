@@ -5,7 +5,7 @@ from ..peer import Recipient
 from ..form import Form
 from ..media import Media, Contact
 from ...utils.strings import UI_STATE, RECIPIENT, TYPE, CONTENT, INLINE_COMMANDS, MEDIA_LIST, INPUT_MEDIA, LOCAL_ID, \
-    MESSAGE_ID, FROM_DIALOG, TO_DIALOG, DIALOG, DELETE_MESSAGE, INLINE_COMMAND_ROWS
+MESSAGE_ID, FROM_DIALOG, TO_DIALOG, DIALOG, DELETE_MESSAGE, INLINE_COMMAND_ROWS
 
 
 class Command:
