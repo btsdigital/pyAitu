@@ -31,7 +31,7 @@ class UiState:
                 self.quick_button_commands.append(command.to_dict())
 
     def to_dict(self):
-        return {
+        return self.remove_empty_keyboard({
             SHOW_CAMERA_BUTTON: self.show_camera_button,
             SHOW_GALLERY_BUTTON: self.show_gallery_button,
             SHOW_RECORD_AUDIO_BUTTON: self.show_record_audio_button,
@@ -39,4 +39,11 @@ class UiState:
             REPLY_KEYBOARD: self.reply_keyboard,
             QUICK_BUTTON_COMMANDS: self.quick_button_commands,
             FORM_MESSAGE: self.form_message
-        }
+        })
+
+    def remove_empty_keyboard(self, command: dict):
+        if not command.get(REPLY_KEYBOARD):
+            command.pop(REPLY_KEYBOARD)
+        if not command.get(QUICK_BUTTON_COMMANDS):
+            command.pop(QUICK_BUTTON_COMMANDS)
+        return command

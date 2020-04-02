@@ -18,6 +18,7 @@ class BaseBot:
         self.token = token
         connector = aiohttp.TCPConnector(loop=self.loop, verify_ssl=False)
         self.session = aiohttp.ClientSession(connector=connector, loop=self.loop, json_serialize=json.dumps)
+        self.local_id_to_message_id = {}
 
     async def request(self,
                       method: str,
