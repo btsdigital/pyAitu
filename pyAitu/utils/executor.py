@@ -38,6 +38,7 @@ class Executor:
         self._freeze = False
 
         self._on_startup_polling = []
+        self._on_shutdown_polling = []
 
     @property
     def frozen(self):
@@ -46,10 +47,12 @@ class Executor:
     def on_startup(self, callback: callable, polling=True, webhook=False):
         logger = logging.getLogger('Executor(on_startup)')
         logger.info('on START')
+        self._on_startup_polling.append(callback)
 
     def on_shutdown(self, callback: callable, polling=True, webhook=False):
         logger = logging.getLogger('Executor(on_shutdown)')
         logger.info('on SHUT')
+        self._on_shutdown_polling.append(callback)
 
     def _check_frozen(self):
         if self.frozen:
@@ -82,9 +85,11 @@ class Executor:
         if self.skip_updates:
             await self._skip_updates()
         for callback in self._on_startup_polling:
-            await callback(self.dispatcher)
+            await callback()
 
     async def _shutdown_polling(self):
+        for callback in self._on_shutdown_polling:
+            await callback()
         await self._shutdown()
 
     async def _shutdown(self):

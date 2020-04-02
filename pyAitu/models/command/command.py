@@ -5,17 +5,25 @@ from ..peer import Recipient
 from ..form import Form
 from ..media import Media, Contact
 from ...utils.strings import UI_STATE, RECIPIENT, TYPE, CONTENT, INLINE_COMMANDS, MEDIA_LIST, INPUT_MEDIA, LOCAL_ID, \
-    MESSAGE_ID, FROM_DIALOG, TO_DIALOG, DIALOG, DELETE_MESSAGE
+MESSAGE_ID, FROM_DIALOG, TO_DIALOG, DIALOG, DELETE_MESSAGE, INLINE_COMMAND_ROWS
 
 
 class Command:
-    def __init__(self, inline_commands: list = None, media: List[Media] = None):
+    def __init__(self, inline_commands: list = None, inline_command_rows: list = None, media: List[Media] = None):
         self.media = []
         self.inline_commands = []
+        self.inline_command_rows = []
 
         if inline_commands:
             for command in inline_commands:
                 self.inline_commands.append(command.to_dict())
+
+        if inline_command_rows:
+            for row in inline_command_rows:
+                row_list = []
+                for command in row:
+                    row_list.append(command.to_dict())
+                self.inline_command_rows.append(row_list)
 
         if media:
             for item in media:
@@ -52,6 +60,7 @@ class Command:
             CONTENT: content,
             UI_STATE: ui_state.to_dict(),
             INLINE_COMMANDS: self.inline_commands,
+            INLINE_COMMAND_ROWS: self.inline_command_rows,
             MEDIA_LIST: self.media,
             INPUT_MEDIA: input_media,
             LOCAL_ID: local_id,
