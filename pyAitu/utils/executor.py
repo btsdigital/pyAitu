@@ -7,7 +7,7 @@ import datetime
 from uuid import UUID
 from . import context
 from typing import Callable, Union, Optional, Any
-from ..dispatcher.webhook import BOT_DISPATCHER_KEY, DEFAULT_ROUTE_NAME
+from ..dispatcher.webhook import BOT_DISPATCHER_KEY, DEFAULT_ROUTE_NAME, WebhookRequestHandler
 from aiohttp import web
 
 APP_EXECUTOR_KEY = 'APP_EXECUTOR'
@@ -56,12 +56,13 @@ def start_polling(dispatcher, *, loop=None, skip_updates=False, timeout=20, rela
 def set_webhook(dispatcher, webhook_path: str, *, loop=None,
                 skip_updates=False, on_startup=None,
                 on_shutdown=None, retry_after: Optional[Union[str, int]],
-                route_name= DEFAULT_ROUTE_NAME,
-                web_app: None):
+                route_name=DEFAULT_ROUTE_NAME,
+                web_app=None):
 
-    executor = Executor(dispatcher, loop=loop, skip_updates=skip_updates)
+    executor = Executor(dispatcher, loop=loop, skip_updates=skip_updates, retry_after=retry_after)
     _setup_callbacks(executor, on_startup, on_shutdown)
-    # executor.set_webhook(webhook_path, route_name=route_name, web_app=web_app)
+
+    executor.set_webhook(webhook_path, route_name=route_name, web_app=web_app)
     return executor
 
 
@@ -118,7 +119,7 @@ class Executor:
 
     def __init__(self, dispatcher, skip_updates=None, retry_after=None, loop=None):
         if loop is None:
-            self._loop = loop
+            self._loop = dispatcher.loop
 
         self.dispatcher = dispatcher
         self.skip_updates = skip_updates
@@ -156,7 +157,7 @@ class Executor:
         """
         self._web_app = application
 
-    def on_startup(self, callback: callable, polling=True, webhook=False):
+    def on_startup(self, callback: callable, polling=True, webhook=True):
         """
         Register a callback for the startup process
 
@@ -179,7 +180,7 @@ class Executor:
         if webhook:
             self._on_startup_webhook.append(callback)
 
-    def on_shutdown(self, callback: callable, polling=True, webhook=False):
+    def on_shutdown(self, callback: callable, polling=True, webhook=True):
         """
         Register a callback for the shutdown process
 
@@ -209,7 +210,7 @@ class Executor:
     #
     # WebHook
 
-    def _prepare_webhook(self, path=None, handler=None, route_name=DEFAULT_ROUTE_NAME, app=None):
+    def _prepare_webhook(self, path=None, handler=WebhookRequestHandler, route_name=DEFAULT_ROUTE_NAME, app=None):
         self._check_frozen()
         self._freeze = True
 
@@ -244,14 +245,14 @@ class Executor:
         app[BOT_DISPATCHER_KEY] = self.dispatcher
         app[self._identity] = datetime.datetime.now()
 
-    def set_webhook(self, webhook_path=None, request_handler=None, route_name=DEFAULT_ROUTE_NAME, web_app=None):
+    def set_webhook(self, webhook_path=None, request_handler=WebhookRequestHandler, route_name=DEFAULT_ROUTE_NAME, web_app=None):
         self._prepare_webhook(webhook_path, request_handler, route_name, web_app)
         self.loop.run_until_complete(self._startup_webhook())
 
     def run_app(self, **kwargs):
         web.run_app(self._web_app, **kwargs)
 
-    def start_webhook(self, webhook_path=None, request_handler=None, route_name=DEFAULT_ROUTE_NAME, **kwargs):
+    def start_webhook(self, webhook_path=None, request_handler=WebhookRequestHandler, route_name=DEFAULT_ROUTE_NAME, **kwargs):
         """
         Start bot in webhook mode
 
@@ -367,6 +368,5 @@ class Executor:
         await self.dispatcher.stop_polling()
 
     async def _welcome(self):
-        user = await self.dispatcher.bot.me
-        log.info(f"Bot: {user.full_name} [@{user.username}]")
-
+        user = await self.dispatcher.bot.me()
+        log.info(f"Bot: {user}]")

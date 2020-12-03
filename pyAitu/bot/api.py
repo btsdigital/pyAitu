@@ -3,13 +3,19 @@ import aiohttp
 import json
 import os
 from http import HTTPStatus
+from ..models import Bot
 
 log = logging.getLogger('pyAitu')
 
-API_URL = "https://messapi.btsdapps.net/bot/v1/updates/"
-FILE_UPLOAD_URL = "https://messapi.btsdapps.net/bot/v1/upload/"
-FILE_DOWNLOAD_URL = "https://messapi.btsdapps.net/bot/v1/download/"
-WEBHOOK_INFO_URL = "https://messapi.btsdapps.net/bot/v1/webhook/"
+if os.getenv("DEV", "TRUE"):
+    BASE_URL = "https://botapi.dev.btsdapps.net/bot/v1/"
+else:
+    BASE_URL = "https://botapi.btsdapps.net/bot/v1/"
+
+API_URL = BASE_URL + "updates"
+FILE_UPLOAD_URL = BASE_URL + "upload/"
+FILE_DOWNLOAD_URL = BASE_URL + "download/"
+WEBHOOK_INFO_URL = BASE_URL + "webhook/"
 
 
 def _compose_data(params=None, files=None):
@@ -60,6 +66,10 @@ async def request(session, token, method, data=None, proxy=None, files=None, **k
             if method == "GetUpdates":
                 async with session.get(API_URL, proxy=proxy, headers={"X-BOT-TOKEN": token}, **kwargs) as response:
                     return await _check_result(method, response)
+            elif method == "getMe":
+                async with session.get(BASE_URL+method, proxy=proxy, headers={"X-BOT-TOKEN": token}, **kwargs) as response:
+                    json_object =  await _check_result(method, response)
+                    return Bot(json_object)
             else:
                 async with session.post(API_URL, proxy=proxy, json=data, headers={"X-BOT-TOKEN": token}, **kwargs) as response:
                     return await _check_result(method, response)

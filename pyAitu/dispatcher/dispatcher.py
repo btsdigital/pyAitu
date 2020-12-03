@@ -84,6 +84,20 @@ class Dispatcher:
             log.info('Stop polling...')
             self._polling = False
 
+    async def reset_webhook(self, check=True) -> bool:
+        """
+        Reset webhook
+
+        :param check: check before deleting
+        :return:
+        """
+        if check:
+            wh = await self.bot.get_webhook()
+            if not wh.url:
+                return False
+
+        return await self.bot.delete_webhook()
+
     def message_handler(self, *custom_filters, commands=None, content_types=None, state=None, run_task=None, **kwargs):
         def decorator(callback):
             self.register_message_handler(callback,

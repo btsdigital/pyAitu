@@ -8,7 +8,7 @@ import itertools
 import typing
 import json
 
-from ..models.update import Update
+from ..models import Update
 from ..utils import helper
 
 DEFAULT_WEB_PATH = '/webhook'
