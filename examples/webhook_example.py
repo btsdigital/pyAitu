@@ -1,15 +1,16 @@
 import logging
+import os
 
 from pyAitu import Bot, Dispatcher
 from pyAitu.utils.executor import start_webhook
 
 import pyAitu.models as models
 
-API_TOKEN = 'YOUR_API_TOKEN'
+API_TOKEN = os.getenv('API_TOKEN')
 
 # webhook settings
-WEBHOOK_HOST = 'https://your.domain'
-WEBHOOK_PATH = '/path/to/api'
+WEBHOOK_HOST = os.getenv('WEBHOOK_HOST', 'localhost:3001')
+WEBHOOK_PATH = '/webhook'
 WEBHOOK_URL = f"{WEBHOOK_HOST}{WEBHOOK_PATH}"
 
 # webserver settings
@@ -30,7 +31,10 @@ async def echo(message: models.Message):
 
 
 async def on_startup(dp):
+    logging.info("on_startup")
     await bot.set_webhook(WEBHOOK_URL)
+    result = await bot.get_webhook()
+    logging.info(result.url)
     # insert code here to run it after start
 
 
@@ -57,5 +61,5 @@ if __name__ == '__main__':
         on_shutdown=on_shutdown,
         skip_updates=True,
         host=WEBAPP_HOST,
-        port=WEBAPP_PORT,
+        port=WEBAPP_PORT
     )
