@@ -288,3 +288,12 @@ class Dispatcher:
             user=update.sender.id if hasattr(update, "sender") else update.dialog.id,
             state=state
         )
+
+    async def skip_updates(self):
+        """
+        You can skip old incoming updates from queue.
+        This method is not recommended to use if you use payments or you bot has high-load.
+
+        :return: None
+        """
+        await self.bot.get_updates()
