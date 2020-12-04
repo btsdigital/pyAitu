@@ -7,7 +7,7 @@ from ..models import Bot
 
 log = logging.getLogger('pyAitu')
 
-if os.getenv("DEV", "TRUE"):
+if os.getenv("DEV", "FALSE") == "TRUE":
     BASE_URL = "https://botapi.dev.btsdapps.net/bot/v1/"
 else:
     BASE_URL = "https://botapi.btsdapps.net/bot/v1/"

@@ -42,9 +42,12 @@ class Dispatcher:
 
         self.updates_handler.register(self.process_update)
 
-    async def start_polling(self):
+    async def start_polling(self, reset_webhook=False):
         if self._polling:
             raise RuntimeError('Polling already started')
+
+        if reset_webhook:
+            await self.reset_webhook(True)
 
         log.info('Polling started')
 
