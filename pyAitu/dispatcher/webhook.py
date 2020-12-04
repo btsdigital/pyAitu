@@ -62,16 +62,18 @@ class WebhookRequestHandler(web.View):
         """
         return self.request.app[BOT_DISPATCHER_KEY]
 
-    async def parse_update(self, bot):
+    async def parse_updates(self):
         """
-        Read update from stream and deserialize it.
-
-        :param bot: bot instance. You an get it from Dispatcher
-        :return: :class:`aiogram.types.Update`
+        Read updates from stream and deserialize it.
         """
         data = await self.request.json()
-        update = Update(**data)
-        return update
+        updates = []
+
+        for jsonUpdate in data['updates']:
+            update = Update(jsonUpdate)
+            updates.append(update)
+
+        return updates
 
     async def post(self):
         """
@@ -82,21 +84,12 @@ class WebhookRequestHandler(web.View):
 
         :return: :class:`aiohttp.web.Response`
         """
-        dispatcher = self.get_dispatcher()
-        update = await self.parse_update(dispatcher.bot)
+        updates = await self.parse_updates()
+        for update in updates:
+            dispatcher = self.get_dispatcher()
+            await dispatcher.updates_handler.notify(update)
 
-        results = await self.process_update(update)
-        response = self.get_response(results)
-
-        if response:
-            web_response = response.get_web_response()
-        else:
-            web_response = web.Response(text='ok')
-
-        if self.request.app.get('RETRY_AFTER', None):
-            web_response.headers['Retry-After'] = self.request.app['RETRY_AFTER']
-
-        return web_response
+        return web.Response(text='{"updates":[]}', content_type='application/json')
 
     async def get(self):
         return web.Response(text='')
@@ -104,81 +97,6 @@ class WebhookRequestHandler(web.View):
     async def head(self):
         return web.Response(text='')
 
-    async def process_update(self, update):
-        """
-        Need respond in less than 60 seconds in to webhook.
-
-        So... If you respond greater than 55 seconds webhook automatically respond 'ok'
-        and execute callback response via simple HTTP request.
-
-        :param update:
-        :return:
-        """
-        dispatcher = self.get_dispatcher()
-        loop = dispatcher.loop or asyncio.get_event_loop()
-
-        # Analog of `asyncio.wait_for` but without cancelling task
-        waiter = loop.create_future()
-        timeout_handle = loop.call_later(RESPONSE_TIMEOUT, asyncio.tasks._release_waiter, waiter)
-        cb = functools.partial(asyncio.tasks._release_waiter, waiter)
-
-        fut = asyncio.ensure_future(dispatcher.updates_handler.notify(update), loop=loop)
-        fut.add_done_callback(cb)
-
-        try:
-            try:
-                await waiter
-            except asyncio.CancelledError:
-                fut.remove_done_callback(cb)
-                fut.cancel()
-                raise
-
-            if fut.done():
-                return fut.result()
-            else:
-                # context.set_value(WEBHOOK_CONNECTION, False)
-                fut.remove_done_callback(cb)
-                fut.add_done_callback(self.respond_via_request)
-        finally:
-            timeout_handle.cancel()
-
-    def respond_via_request(self, task):
-        """
-        Handle response after 55 second.
-
-        :param task:
-        :return:
-        """
-        log.warning(f"Detected slow response into webhook. "
-             f"(Greater than {RESPONSE_TIMEOUT} seconds)\n"
-             f"Recommended to use 'async_task' decorator from Dispatcher for handler with long timeouts.",
-             TimeoutWarning)
-
-        dispatcher = self.get_dispatcher()
-        loop = dispatcher.loop or asyncio.get_event_loop()
-
-        try:
-            results = task.result()
-        except Exception as e:
-            loop.create_task(
-                dispatcher.errors_handlers.notify(dispatcher, Update.get_current(), e))
-        else:
-            response = self.get_response(results)
-            if response is not None:
-                asyncio.ensure_future(response.execute_response(dispatcher.bot), loop=loop)
-
-    def get_response(self, results):
-        """
-        Get response object from results.
-
-        :param results: list
-        :return:
-        """
-        if results is None:
-            return None
-        for result in itertools.chain.from_iterable(results):
-            if isinstance(result, BaseResponse):
-                return result
 
 
 class BaseResponse:

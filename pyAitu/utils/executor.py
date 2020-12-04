@@ -30,8 +30,8 @@ def _setup_callbacks(executor, on_startup=None, on_shutdown=None):
         executor.on_shutdown(on_shutdown)
 
 
-def start_polling(dispatcher, *, loop=None, skip_updates=False, timeout=20, relax=0.1,
-                  fast=True, on_startup=None, on_shutdown=None, reset_webhook=True):
+def start_polling(dispatcher, *, loop=None, skip_updates=False,
+                  on_startup=None, on_shutdown=None, reset_webhook=True):
     """
     Start bot in long-polling mode
 
@@ -50,7 +50,7 @@ def start_polling(dispatcher, *, loop=None, skip_updates=False, timeout=20, rela
     executor = Executor(dispatcher, skip_updates=skip_updates, loop=loop)
     _setup_callbacks(executor, on_startup, on_shutdown)
 
-    executor.start_polling(reset_webhook=reset_webhook, timeout=timeout, relax=relax, fast=fast)
+    executor.start_polling(reset_webhook=reset_webhook)
 
 
 def set_webhook(dispatcher, webhook_path: str, *, loop=None,
@@ -274,7 +274,7 @@ class Executor:
 
         # self.loop.set_task_factory(context.task_factory)
 
-    def start_polling(self, timeout=None, reset_webhook=None, relax=0.1, fast=True):
+    def start_polling(self, reset_webhook=None):
         """
         Start bot in long-polling mode
 
@@ -286,9 +286,8 @@ class Executor:
 
         try:
             loop.run_until_complete(self._startup_polling())
-            loop.create_task(self.dispatcher.start_polling(reset_webhook=reset_webhook,
-                                                           timeout=timeout, relax=relax,
-                                                           fast=fast))
+            loop.create_task(self.dispatcher.start_polling(reset_webhook=reset_webhook
+                                                           ))
             loop.run_forever()
         except (KeyboardInterrupt, SystemExit):
             pass
