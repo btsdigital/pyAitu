@@ -1,10 +1,11 @@
 import logging
+import os
 from pyAitu import Bot, Dispatcher, executor
 from pyAitu.models import Message, QuickButtonSelected, InlineCommandSelected, ContentType, \
     QuickButtonCommand, InlineCommand, ReplyCommand, Media, Contact, MessageIdAssigned
 import pyAitu.models.constants.file_type as file_type
 
-API_TOKEN = 'YOUR_API_TOKEN'
+API_TOKEN = os.getenv('API_TOKEN')
 
 logging.basicConfig(level=logging.INFO)
 
