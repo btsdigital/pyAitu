@@ -1,5 +1,5 @@
 class Indent:
-    def __init__(self, left: int = None, top: int = None, right: int = None, bottom: int = None):
+    def __init__(self, left: float = None, top: float = None, right: float = None, bottom: float = None):
         self.left = left
         self.top = top
         self.right = right
