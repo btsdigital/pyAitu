@@ -7,8 +7,10 @@ from .form import SimpleCatalog, Item, ItemInfo, Options, Form, Header, TextArea
     FormAction, Submit, LabeledText, Divider, Image, FileMetadata, Text, Indent, Input, Currency, UserInfo,\
     DatePicker, Checkbox, Switch, Radiogroup, CustomContainer, BottomBar, MediaPicker
 from .constants import Alignment, Orientation, Currency, FileType, TextSize, TextStyle, OptionMediaType, InputType
+from .peer.bot import Bot
 
 __all__ = [
+    Bot,
     Message,
     ContentType,
     Update,

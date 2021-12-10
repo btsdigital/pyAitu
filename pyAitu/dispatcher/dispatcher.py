@@ -42,9 +42,12 @@ class Dispatcher:
 
         self.updates_handler.register(self.process_update)
 
-    async def start_polling(self):
+    async def start_polling(self, reset_webhook=False):
         if self._polling:
             raise RuntimeError('Polling already started')
+
+        if reset_webhook:
+            await self.reset_webhook(True)
 
         log.info('Polling started')
 
@@ -83,6 +86,20 @@ class Dispatcher:
         if self._polling:
             log.info('Stop polling...')
             self._polling = False
+
+    async def reset_webhook(self, check=True) -> bool:
+        """
+        Reset webhook
+
+        :param check: check before deleting
+        :return:
+        """
+        if check:
+            wh = await self.bot.get_webhook()
+            if not wh.url:
+                return False
+
+        return await self.bot.delete_webhook()
 
     def message_handler(self, *custom_filters, commands=None, content_types=None, state=None, run_task=None, **kwargs):
         def decorator(callback):
@@ -288,3 +305,12 @@ class Dispatcher:
             user=update.sender.id if hasattr(update, "sender") else update.dialog.id,
             state=state
         )
+
+    async def skip_updates(self):
+        """
+        You can skip old incoming updates from queue.
+        This method is not recommended to use if you use payments or you bot has high-load.
+
+        :return: None
+        """
+        await self.bot.get_updates()

@@ -5,7 +5,7 @@ from pyAitu.models import Message, QuickButtonSelected, InlineCommandSelected, C
     QuickButtonCommand, InlineCommand, ReplyCommand, Media, Contact, MessageIdAssigned
 import pyAitu.models.constants.file_type as file_type
 
-API_TOKEN = os.getenv('API_TOKEN')
+API_TOKEN = os.getenv("API_TOKEN", "YOU API TOKEN")
 
 logging.basicConfig(level=logging.INFO)
 

@@ -9,6 +9,10 @@ import asyncio
 
 
 class Bot(BaseBot):
+    async def me(self):
+        result = await self.request('getMe')
+        return result
+
     async def get_updates(self) -> List[Update]:
         result = await self.request(method=GET_UPDATES)
         for each in result.get("updates", []):
