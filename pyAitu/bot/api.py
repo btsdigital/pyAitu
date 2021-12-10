@@ -6,10 +6,10 @@ from http import HTTPStatus
 
 log = logging.getLogger('pyAitu')
 
-API_URL = "https://messapi.btsdapps.net/bot/v1/updates/"
-FILE_UPLOAD_URL = "https://messapi.btsdapps.net/bot/v1/upload/"
-FILE_DOWNLOAD_URL = "https://messapi.btsdapps.net/bot/v1/download/"
-WEBHOOK_INFO_URL = "https://messapi.btsdapps.net/bot/v1/webhook/"
+API_URL = "https://api.aitu.io/bot/v1/updates/"
+FILE_UPLOAD_URL = "https://api.aitu.io/bot/v1/upload/"
+FILE_DOWNLOAD_URL = "https://api.aitu.io/bot/v1/download/"
+WEBHOOK_INFO_URL = "https://api.aitu.io/bot/v1/webhook/"
 
 
 def _compose_data(params=None, files=None):

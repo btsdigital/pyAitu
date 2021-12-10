@@ -140,58 +140,6 @@ class Bot(BaseBot):
             return self.local_id_to_message_id.pop(local_id)
         return result
 
-    async def send_form(
-            self,
-            chat_id: str,
-            form: Form
-    ):
-        command = Command()
-        payload = {
-            COMMANDS: command.create_command(SEND_UI_STATE, chat_id, form=form)
-        }
-
-        result = await self.request(SEND_UI_STATE, payload)
-        return result
-
-    async def send_container_message(
-            self,
-            chat_id: str,
-            content: List
-    ):
-
-        dict_content = []
-
-        for i in content:
-            dict_content.append(i.__dict__)
-
-        str_content = json.dumps(dict_content)
-
-        command = Command()
-        payload = {
-            COMMANDS: command.create_command(SEND_CONTAINER_MESSAGE, chat_id, content=str_content)
-        }
-
-        result = await self.request(SEND_CONTAINER_MESSAGE, payload)
-        return result
-
-    async def send_quick_button(
-            self,
-            chat_id: str,
-            quick_button_commands: List[QuickButtonCommand] = None) -> Dict:
-
-        command = Command()
-
-        payload = {
-            COMMANDS: command.create_command(
-                SEND_UI_STATE,
-                chat_id,
-                quick_button_commands=quick_button_commands,
-            )
-        }
-
-        result = await self.request(SEND_UI_STATE, payload)
-        return result
-
     async def upload_file(self, file):
         files = {
             "file": file
