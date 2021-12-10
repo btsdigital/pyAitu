@@ -7,10 +7,7 @@ from ..models import Bot
 
 log = logging.getLogger('pyAitu')
 
-if os.getenv("DEV", "FALSE") == "TRUE":
-    BASE_URL = "https://botapi.aitu.dev/bot/v1/"
-else:
-    BASE_URL = "https://botapi.aitu.io/bot/v1/"
+BASE_URL = "https://botapi.aitu.io/bot/v1/"
 
 API_URL = BASE_URL + "updates"
 FILE_UPLOAD_URL = BASE_URL + "upload/"
