@@ -1,10 +1,9 @@
-from typing import List, Dict, Optional
+from typing import List, Dict
 from .base import BaseBot
 from ..models import Update, Media, Command, InlineCommand, Contact, \
     WebhookInfo, SetWebhook, FileType
 from ..utils.strings import COMMANDS, SEND_MESSAGE, GET_UPDATES, UPLOADED_FILES, SEND_CONTACT_MESSAGE, \
     EDIT_MESSAGE, FORWARD_MESSAGE, DELETE_MESSAGE
-import json
 import asyncio
 
 
