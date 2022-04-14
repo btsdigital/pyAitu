@@ -1,6 +1,6 @@
 from typing import List, Dict, Optional
 from .base import BaseBot
-from ..models import Update, Media, Command, InlineCommand, ReplyCommand, Contact, \
+from ..models import Update, Media, Command, InlineCommand, Contact, \
     WebhookInfo, SetWebhook, FileType
 from ..utils.strings import COMMANDS, SEND_MESSAGE, GET_UPDATES, UPLOADED_FILES, SEND_CONTACT_MESSAGE, \
     EDIT_MESSAGE, FORWARD_MESSAGE, DELETE_MESSAGE
@@ -25,7 +25,6 @@ class Bot(BaseBot):
                            content: str,
                            inline_commands: List[InlineCommand] = None,
                            inline_command_rows: List[List[InlineCommand]] = None,
-                           reply_keyboard: List[ReplyCommand] = None,
                            media_list: List[Media] = None,
                            local_id: str = None
                            ) -> Dict:
@@ -36,7 +35,6 @@ class Bot(BaseBot):
                 SEND_MESSAGE,
                 peer_id = peer_id,
                 content=content,
-                reply_keyboard=reply_keyboard,
                 local_id=local_id
             )
         }
