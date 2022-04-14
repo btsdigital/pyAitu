@@ -1,9 +1,9 @@
 from typing import List, Dict, Optional
 from .base import BaseBot
-from ..models import Update, Media, Command, QuickButtonCommand, InlineCommand, ReplyCommand, Form, Contact, \
+from ..models import Update, Media, Command, InlineCommand, ReplyCommand, Contact, \
     WebhookInfo, SetWebhook, FileType
-from ..utils.strings import COMMANDS, SEND_MESSAGE, GET_UPDATES, UPLOADED_FILES, SEND_UI_STATE, SEND_CONTACT_MESSAGE, \
-    EDIT_MESSAGE, SEND_CONTAINER_MESSAGE, FORWARD_MESSAGE, DELETE_MESSAGE
+from ..utils.strings import COMMANDS, SEND_MESSAGE, GET_UPDATES, UPLOADED_FILES, SEND_CONTACT_MESSAGE, \
+    EDIT_MESSAGE, FORWARD_MESSAGE, DELETE_MESSAGE
 import json
 import asyncio
 
@@ -23,7 +23,6 @@ class Bot(BaseBot):
     async def send_message(self,
                            peer_id: str,
                            content: str,
-                           quick_button_commands: List[QuickButtonCommand] = None,
                            inline_commands: List[InlineCommand] = None,
                            inline_command_rows: List[List[InlineCommand]] = None,
                            reply_keyboard: List[ReplyCommand] = None,
@@ -38,7 +37,6 @@ class Bot(BaseBot):
                 peer_id = peer_id,
                 content=content,
                 reply_keyboard=reply_keyboard,
-                quick_button_commands=quick_button_commands,
                 local_id=local_id
             )
         }
@@ -161,7 +159,7 @@ class Bot(BaseBot):
             COMMANDS: command.create_command(SEND_CONTACT_MESSAGE, chat_id, input_media=contact)
         }
 
-        result = await self.request(SEND_UI_STATE, payload)
+        result = await self.request(SEND_CONTACT_MESSAGE, payload)
         return result
     
     async def delete_message(self, dialog: str, message_id: str):
