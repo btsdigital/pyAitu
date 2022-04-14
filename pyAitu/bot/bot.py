@@ -1,10 +1,9 @@
-from typing import List, Dict, Optional
+from typing import List, Dict
 from .base import BaseBot
-from ..models import Update, Media, Command, QuickButtonCommand, InlineCommand, ReplyCommand, Form, Contact, \
+from ..models import Update, Media, Command, InlineCommand, Contact, \
     WebhookInfo, SetWebhook, FileType
-from ..utils.strings import COMMANDS, SEND_MESSAGE, GET_UPDATES, UPLOADED_FILES, SEND_UI_STATE, SEND_CONTACT_MESSAGE, \
-    EDIT_MESSAGE, SEND_CONTAINER_MESSAGE, FORWARD_MESSAGE, DELETE_MESSAGE
-import json
+from ..utils.strings import COMMANDS, SEND_MESSAGE, GET_UPDATES, UPLOADED_FILES, SEND_CONTACT_MESSAGE, \
+    EDIT_MESSAGE, FORWARD_MESSAGE, DELETE_MESSAGE
 import asyncio
 
 
@@ -23,10 +22,8 @@ class Bot(BaseBot):
     async def send_message(self,
                            peer_id: str,
                            content: str,
-                           quick_button_commands: List[QuickButtonCommand] = None,
                            inline_commands: List[InlineCommand] = None,
                            inline_command_rows: List[List[InlineCommand]] = None,
-                           reply_keyboard: List[ReplyCommand] = None,
                            media_list: List[Media] = None,
                            local_id: str = None
                            ) -> Dict:
@@ -37,8 +34,6 @@ class Bot(BaseBot):
                 SEND_MESSAGE,
                 peer_id = peer_id,
                 content=content,
-                reply_keyboard=reply_keyboard,
-                quick_button_commands=quick_button_commands,
                 local_id=local_id
             )
         }
@@ -97,8 +92,8 @@ class Bot(BaseBot):
                          file: str,
                          file_type: FileType,
                          content: str = "",
-                         local_id: str = None,
-                         reply_keyboard: list = None):
+                         local_id: str = None
+                         ):
         result = await self.upload_file(file)
         if result.get(UPLOADED_FILES):
             media = Media(
@@ -109,8 +104,7 @@ class Bot(BaseBot):
             command = Command(media=[media])
 
             payload = {
-                COMMANDS: command.create_command(SEND_MESSAGE, chat_id, content, local_id=local_id,
-                                                 reply_keyboard=reply_keyboard)
+                COMMANDS: command.create_command(SEND_MESSAGE, chat_id, content, local_id=local_id)
             }
             result = await self.request(SEND_MESSAGE, payload)
             if local_id:
@@ -124,8 +118,8 @@ class Bot(BaseBot):
                                file_id: str,
                                file_type: FileType,
                                content: str = "",
-                               local_id: str = None,
-                               reply_keyboard: list = None):
+                               local_id: str = None
+                               ):
         media = Media(
             file_id=file_id,
             name=file_id,
@@ -134,66 +128,13 @@ class Bot(BaseBot):
         command = Command(media=[media])
 
         payload = {
-            COMMANDS: command.create_command(SEND_MESSAGE, chat_id, content, local_id=local_id,
-                                             reply_keyboard=reply_keyboard)
+            COMMANDS: command.create_command(SEND_MESSAGE, chat_id, content, local_id=local_id)
         }
         result = await self.request(SEND_MESSAGE, payload)
         if local_id:
             while not self.local_id_to_message_id.get(local_id):
                 await asyncio.sleep(0.5)
             return self.local_id_to_message_id.pop(local_id)
-        return result
-
-    async def send_form(
-            self,
-            chat_id: str,
-            form: Form
-    ):
-        command = Command()
-        payload = {
-            COMMANDS: command.create_command(SEND_UI_STATE, chat_id, form=form)
-        }
-
-        result = await self.request(SEND_UI_STATE, payload)
-        return result
-
-    async def send_container_message(
-            self,
-            chat_id: str,
-            content: List
-    ):
-
-        dict_content = []
-
-        for i in content:
-            dict_content.append(i.__dict__)
-
-        str_content = json.dumps(dict_content)
-
-        command = Command()
-        payload = {
-            COMMANDS: command.create_command(SEND_CONTAINER_MESSAGE, chat_id, content=str_content)
-        }
-
-        result = await self.request(SEND_CONTAINER_MESSAGE, payload)
-        return result
-
-    async def send_quick_button(
-            self,
-            chat_id: str,
-            quick_button_commands: List[QuickButtonCommand] = None) -> Dict:
-
-        command = Command()
-
-        payload = {
-            COMMANDS: command.create_command(
-                SEND_UI_STATE,
-                chat_id,
-                quick_button_commands=quick_button_commands,
-            )
-        }
-
-        result = await self.request(SEND_UI_STATE, payload)
         return result
 
     async def upload_file(self, file):
@@ -213,7 +154,7 @@ class Bot(BaseBot):
             COMMANDS: command.create_command(SEND_CONTACT_MESSAGE, chat_id, input_media=contact)
         }
 
-        result = await self.request(SEND_UI_STATE, payload)
+        result = await self.request(SEND_CONTACT_MESSAGE, payload)
         return result
     
     async def delete_message(self, dialog: str, message_id: str):

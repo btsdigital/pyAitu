@@ -23,7 +23,7 @@ def set_value(key, value):
 
 
 def get_current_state() -> Dict:
-    task = asyncio.Task.current_task()
+    task = asyncio.current_task()
     if task is None:
         raise RuntimeError('Can be used only in Task context.')
     context_ = getattr(task, 'context', None)

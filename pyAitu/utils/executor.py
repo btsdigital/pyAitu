@@ -5,8 +5,7 @@ import functools
 import datetime
 
 from uuid import UUID
-from . import context
-from typing import Callable, Union, Optional, Any
+from typing import Union, Optional
 from ..dispatcher.webhook import BOT_DISPATCHER_KEY, DEFAULT_ROUTE_NAME, WebhookRequestHandler
 from aiohttp import web
 

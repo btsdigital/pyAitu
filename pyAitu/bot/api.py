@@ -7,16 +7,12 @@ from ..models import Bot
 
 log = logging.getLogger('pyAitu')
 
-if os.getenv("DEV", "FALSE") == "TRUE":
-    BASE_URL = "https://botapi.dev.btsdapps.net/bot/v1/"
-else:
-    BASE_URL = "https://botapi.btsdapps.net/bot/v1/"
+BASE_URL = "https://botapi.aitu.io/bot/v1/"
 
 API_URL = BASE_URL + "updates"
 FILE_UPLOAD_URL = BASE_URL + "upload/"
 FILE_DOWNLOAD_URL = BASE_URL + "download/"
 WEBHOOK_INFO_URL = BASE_URL + "webhook/"
-
 
 def _compose_data(params=None, files=None):
     data = aiohttp.formdata.FormData(quote_fields=False)
