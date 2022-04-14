@@ -93,8 +93,8 @@ class Bot(BaseBot):
                          file: str,
                          file_type: FileType,
                          content: str = "",
-                         local_id: str = None,
-                         reply_keyboard: list = None):
+                         local_id: str = None
+                         ):
         result = await self.upload_file(file)
         if result.get(UPLOADED_FILES):
             media = Media(
@@ -105,8 +105,7 @@ class Bot(BaseBot):
             command = Command(media=[media])
 
             payload = {
-                COMMANDS: command.create_command(SEND_MESSAGE, chat_id, content, local_id=local_id,
-                                                 reply_keyboard=reply_keyboard)
+                COMMANDS: command.create_command(SEND_MESSAGE, chat_id, content, local_id=local_id)
             }
             result = await self.request(SEND_MESSAGE, payload)
             if local_id:
@@ -120,8 +119,8 @@ class Bot(BaseBot):
                                file_id: str,
                                file_type: FileType,
                                content: str = "",
-                               local_id: str = None,
-                               reply_keyboard: list = None):
+                               local_id: str = None
+                               ):
         media = Media(
             file_id=file_id,
             name=file_id,
@@ -130,8 +129,7 @@ class Bot(BaseBot):
         command = Command(media=[media])
 
         payload = {
-            COMMANDS: command.create_command(SEND_MESSAGE, chat_id, content, local_id=local_id,
-                                             reply_keyboard=reply_keyboard)
+            COMMANDS: command.create_command(SEND_MESSAGE, chat_id, content, local_id=local_id)
         }
         result = await self.request(SEND_MESSAGE, payload)
         if local_id:
