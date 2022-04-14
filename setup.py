@@ -31,9 +31,9 @@ REQUIRED_PACKAGES = [
 
 setup(
     name="pyAitu",
-    version="0.0.7",
-    author="Yerassyl Zeinolla",
-    author_email="yerassyl.zeinolla@btsdigital.kz",
+    version="1.0.0",
+    author="aitu.io",
+    author_email="support@aitu.io",
     description="Asynchronous Python framework for Aitu Bot API",
     long_description=get_description(),
     url="https://github.com/btsdigital/pyAitu",
