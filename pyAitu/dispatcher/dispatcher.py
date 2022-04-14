@@ -31,12 +31,8 @@ class Dispatcher:
 
         self.updates_handler = Handler(self, middleware_key='update')
         self.message_handlers = Handler(self, middleware_key='message')
-        self.quick_button_handlers = Handler(self, middleware_key='quick_button')
         self.message_id_assigned_handlers = Handler(self, middleware_key='message_id_assigned')
         self.inline_command_handlers = Handler(self, middleware_key='inline_command')
-        self.form_closed_handlers = Handler(self, middleware_key='form_closed')
-        self.form_submitted_handlers = Handler(self, middleware_key='form_submitted')
-        self.form_message_sent_handlers = Handler(self, middleware_key='form_message_sent')
         self.error_handlers = Handler(self, once=False, middleware_key='error')
         self.middleware = MiddlewareManager(self)
 
@@ -136,14 +132,6 @@ class Dispatcher:
                                                **kwargs)
         self.message_handlers.register(self._wrap_async_task(callback, run_task), filters_set)
 
-    def quick_button_handler(self, *custom_filters, func=None, state=None, run_task=None, **kwargs):
-        def decorator(callback):
-            self.register_quick_button_handler(callback, func=func, state=state,
-                                               custom_filters=custom_filters, run_task=run_task, **kwargs)
-            return callback
-
-        return decorator
-
     def message_id_assigned_handler(self, *custom_filters, func=None, state=None, run_task=None, **kwargs):
         def decorator(callback):
             self.register_message_id_assigned_handler(callback, func=func, state=state,
@@ -164,18 +152,6 @@ class Dispatcher:
                                                **kwargs)
         self.message_id_assigned_handlers.register(self._wrap_async_task(callback, run_task), filters_set)
 
-    def register_quick_button_handler(self, callback, *, func=None,
-                                      state=None, custom_filters=None, run_task=None, **kwargs):
-        if custom_filters is None:
-            custom_filters = []
-
-        filters_set = generate_default_filters(self,
-                                               *custom_filters,
-                                               func=func,
-                                               state=state,
-                                               **kwargs)
-        self.quick_button_handlers.register(self._wrap_async_task(callback, run_task), filters_set)
-
     def inline_command_handler(self, *custom_filters, func=None, state=None, run_task=None, **kwargs):
         def decorator(callback):
             self.register_inline_command_handler(callback, func=func, state=state,
@@ -195,63 +171,6 @@ class Dispatcher:
                                               **kwargs)
         self.inline_command_handlers.register(self._wrap_async_task(callback, run_task), filter_set)
 
-    def form_closed_handler(self, *custom_filters, func=None, state=None, run_task=None, **kwargs):
-        def decorator(callback):
-            self.register_form_closed_handler(callback, *custom_filters, func=func,
-                                              state=state, run_task=run_task, **kwargs)
-            return callback
-
-        return decorator
-
-    def register_form_closed_handler(self, callback, *, func=None, state=None,
-                                     custom_filters=None, run_task=None, **kwargs):
-        if custom_filters is None:
-            custom_filters = []
-        filter_set = generate_default_filters(self,
-                                              *custom_filters,
-                                              func=func,
-                                              state=state,
-                                              **kwargs)
-        self.form_closed_handlers.register(self._wrap_async_task(callback, run_task), filter_set)
-
-    def form_submitted_handler(self, *custom_filters, func=None, state=None, run_task=None, **kwargs):
-        def decorator(callback):
-            self.register_form_submitted_handler(callback, *custom_filters, func=func,
-                                                 state=state, run_task=run_task, **kwargs)
-            return callback
-
-        return decorator
-
-    def register_form_submitted_handler(self, callback, *, func=None, state=None,
-                                        custom_filters=None, run_task=None, **kwargs):
-        if custom_filters is None:
-            custom_filters = []
-        filter_set = generate_default_filters(self,
-                                              *custom_filters,
-                                              func=func,
-                                              state=state,
-                                              **kwargs)
-        self.form_submitted_handlers.register(self._wrap_async_task(callback, run_task), filter_set)
-
-    def form_message_sent_handler(self, *custom_filters, func=None, state=None, run_task=None, **kwargs):
-        def decorator(callback):
-            self.register_form_message_sent_handler(callback, *custom_filters, func=func,
-                                                    state=state, run_task=run_task, **kwargs)
-            return callback
-
-        return decorator
-
-    def register_form_message_sent_handler(self, callback, *, func=None, state=None,
-                                           custom_filters=None, run_task=None, **kwargs):
-        if custom_filters is None:
-            custom_filters = []
-        filter_set = generate_default_filters(self,
-                                              *custom_filters,
-                                              func=func,
-                                              state=state,
-                                              **kwargs)
-        self.form_message_sent_handlers.register(self._wrap_async_task(callback, run_task), filter_set)
-
     def _wrap_async_task(self, callback, run_task=None) -> callable:
         if run_task is None:
             run_task = self.run_tasks_by_default
@@ -270,21 +189,9 @@ class Dispatcher:
             if update.message:
                 await self.state_updater(update.message)
                 return await self.message_handlers.notify(update.message)
-            elif update.quick_button_selected:
-                await self.state_updater(update.quick_button_selected)
-                return await self.quick_button_handlers.notify(update.quick_button_selected)
             elif update.inline_command_selected:
                 await self.state_updater(update.inline_command_selected)
                 return await self.inline_command_handlers.notify(update.inline_command_selected)
-            elif update.form_closed:
-                await self.state_updater(update.form_closed)
-                return await self.form_closed_handlers.notify(update.form_closed)
-            elif update.form_message_sent:
-                await self.state_updater(update.form_message_sent)
-                return await self.form_message_sent_handlers.notify(update.form_message_sent)
-            elif update.form_submitted:
-                await self.state_updater(update.form_submitted)
-                return await self.form_submitted_handlers.notify(update.form_submitted)
             elif update.message_id_assigned:
                 await self.state_updater(update.message_id_assigned)
                 return await self.message_id_assigned_handlers.notify(update.message_id_assigned)
